@@ -1,0 +1,12 @@
+APIJSON后端部署 - .net core
+
+1.下载安装sdk:
+  windows:https://www.microsoft.com/net/download/thank-you/dotnet-sdk-2.1.301-windows-x64-installer
+  linux:https://www.microsoft.com/net/download/linux
+  macos:https://www.microsoft.com/net/download/macos
+  
+2.发布项目
+   dotnet publish -c release
+    （生成在bin/release/netcoreapp2.1/publish目录下
+3.运行项目
+      打开publish文件 运行命令： dotnet APIJSON.NET.dll
