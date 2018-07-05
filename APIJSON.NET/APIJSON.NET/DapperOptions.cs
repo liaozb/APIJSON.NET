@@ -2,6 +2,7 @@
 {
     public class DapperOptions
     {
-        public string ConnectionString { get; set; }
+        public string SqlServer { get; set; }
+        public string MySql { get; set; }
     }
 }

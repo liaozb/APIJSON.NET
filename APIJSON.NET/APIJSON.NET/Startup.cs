@@ -27,7 +27,8 @@
             
             services.Configure<DapperOptions>(options =>
             {
-                options.ConnectionString = Configuration.GetConnectionString("Default");
+                options.MySql = Configuration.GetConnectionString("MySql");
+                options.SqlServer = Configuration.GetConnectionString("SqlServer");
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -35,6 +36,8 @@
             {
                 c.SwaggerDoc("v1", new Info { Title = "APIJSON.NET", Version = "v1" });
             });
+            services.AddSingleton<DapperHelper>();
+            services.AddSingleton<JsonToSql>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +49,7 @@
             }
 
             app.UseMvc();
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

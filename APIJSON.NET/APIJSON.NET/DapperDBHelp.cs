@@ -1,21 +1,46 @@
 ﻿namespace APIJSON.NET
 {
     using Dapper;
+    using Microsoft.Extensions.Options;
+    using MySql.Data.MySqlClient;
     using System.Collections.Generic;
+    using System.Data;
     using System.Data.SqlClient;
-    public static class DapperDBHelp
+    public  class DapperHelper
     {
-        public static dynamic QueryFirstOrDefault(string ConnectionString, string sql, object param)
+      
+        private DapperOptions _options;
+
+        public DapperHelper(IOptions<DapperOptions> options)
         {
-            using (var sqlConnection = new SqlConnection(ConnectionString))
+            this._options = options.Value;
+        }
+        public IDbConnection Connection
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_options.MySql))
+                {
+                    return new MySqlConnection(_options.MySql);
+                }
+                else
+                {
+                    return new SqlConnection(_options.SqlServer);
+                }
+            }
+        }
+     
+        public  dynamic QueryFirstOrDefault(string sql, object param)
+        {
+            using (var sqlConnection = Connection)
             {
                 sqlConnection.Open();
                 return sqlConnection.QueryFirstOrDefault(sql, param);
             }
         }
-        public static IEnumerable<dynamic> Query(string ConnectionString, string sql, object param)
+        public  IEnumerable<dynamic> Query( string sql, object param)
         {
-            using (var sqlConnection = new SqlConnection(ConnectionString))
+            using (var sqlConnection = Connection)
             {
                 sqlConnection.Open();
                 return sqlConnection.Query(sql, param);

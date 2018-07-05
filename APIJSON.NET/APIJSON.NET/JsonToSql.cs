@@ -1,16 +1,35 @@
 ﻿namespace APIJSON.NET
 {
     using Dapper;
+    using Microsoft.Extensions.Options;
     using Newtonsoft.Json.Linq;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
-    public static class JsonToSql
+    public class JsonToSql
     {
-        public static SqlBuilder.Template GetSqlBuilder(string subtable, int page, int count, string json, JObject dd)
+        /// <summary>
+        /// 对应数据表
+        /// </summary>
+        static Dictionary<string, string> dict = new Dictionary<string, string>
+            {
+                {"user", "apijson_user"},
+            };
+        private DapperOptions _options;
+
+        public JsonToSql(IOptions<DapperOptions> options)
+        {
+            this._options = options.Value;
+        }
+        public SqlBuilder.Template GetSqlBuilder(string subtable, int page, int count, string json, JObject dd)
         {
             if (!subtable.IsTable())
             {
                 throw new Exception($"表名{subtable}不正确！");
+            }
+            if (dict.ContainsKey(subtable.ToLower()))
+            {
+                subtable = dict.GetValueOrDefault(subtable.ToLower());
             }
             JObject values = JObject.Parse(json);
             page = values["page"] == null ? page : int.Parse(values["page"].ToString());
@@ -18,11 +37,19 @@
             values.Remove("page");
             values.Remove("count");
             var builder = new SqlBuilder();
-            string pagesql = $"select /**select**/ from [{subtable}] /**where**/ /**groupby**/ /**having**/";
+            string pagesql = $"select /**select**/ from {subtable} /**where**/ /**groupby**/ /**having**/";
             if (count > 0)
             {
-                pagesql = $@"select * from (select row_number()over(order by id)rownumber,/**select**/  from [{subtable}] /**where**/ /**groupby**/ /**having**/) a 
+                if (!string.IsNullOrEmpty(_options.MySql))
+                {
+                    pagesql = $@"select /**select**/  from {subtable} /**where**/ /**groupby**/ /**having**/  limit {(page * count) + 1},{(page * count) + count}";
+                }
+                else
+                {
+                    pagesql = $@"select * from (select row_number()over(order by id)rownumber,/**select**/  from {subtable} /**where**/ /**groupby**/ /**having**/) a 
                            where rownumber between {(page * count) + 1} and {(page * count) + count}";
+                }
+
             }
             var template = builder.AddTemplate(pagesql);
             //查询字段

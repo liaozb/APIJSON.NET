@@ -12,12 +12,13 @@
     [ApiController]
     public class JsonController : ControllerBase
     {
-        private DapperOptions _options;
-        public JsonController(IOptions<DapperOptions> options)
+        private  DapperHelper db;
+        private JsonToSql sqlbuilder;
+        public JsonController(DapperHelper helper, JsonToSql jsonToSql)
         {
-            this._options = options.Value;
+            db = helper;
+            sqlbuilder = jsonToSql;
         }
-
         /// <summary>
         /// 查询
         /// </summary>
@@ -54,8 +55,8 @@
                         if (tables.Count > 0)
                         {
                             string table = tables[0];
-                            var template = JsonToSql.GetSqlBuilder(table, page, count, where[0], null);
-                            foreach (var dd in DapperDBHelp.Query(_options.ConnectionString, template.RawSql, template.Parameters))
+                            var template = sqlbuilder.GetSqlBuilder(table, page, count, where[0], null);
+                            foreach (var dd in db.Query(template.RawSql, template.Parameters))
                             {
                                 var zht = new JObject();
                                 zht.Add(table, JToken.FromObject(dd));
@@ -69,9 +70,9 @@
                                         var jbb = JObject.Parse(where[i]);
                                         page = jbb["page"] == null ? 0 : int.Parse(jbb["page"].ToString());
                                         count = jbb["count"] == null ? 0 : int.Parse(jbb["count"].ToString());
-                                        template = JsonToSql.GetSqlBuilder(subtable, page, count, jbb[subtable].ToString(), zht);
+                                        template = sqlbuilder.GetSqlBuilder(subtable, page, count, jbb[subtable].ToString(), zht);
                                         var lt = new JArray();
-                                        foreach (var d in DapperDBHelp.Query(_options.ConnectionString, template.RawSql, template.Parameters))
+                                        foreach (var d in db.Query( template.RawSql, template.Parameters))
                                         {
                                             lt.Add(JToken.FromObject(d));
                                         }
@@ -79,8 +80,8 @@
                                     }
                                     else
                                     {
-                                        template = JsonToSql.GetSqlBuilder(subtable, 0, 0, where[i].ToString(), zht);
-                                        var df = DapperDBHelp.QueryFirstOrDefault(_options.ConnectionString, template.RawSql, template.Parameters);
+                                        template = sqlbuilder.GetSqlBuilder(subtable, 0, 0, where[i].ToString(), zht);
+                                        var df = db.QueryFirstOrDefault( template.RawSql, template.Parameters);
                                         if (df != null)
                                         {
                                             zht.Add(subtable, JToken.FromObject(df));
@@ -103,8 +104,8 @@
                         jb.Remove("count");
                         foreach (var t in jb)
                         {
-                            var template = JsonToSql.GetSqlBuilder(t.Key, page, count, t.Value.ToString(), null);
-                            foreach (var d in DapperDBHelp.Query(_options.ConnectionString, template.RawSql, template.Parameters))
+                            var template = sqlbuilder.GetSqlBuilder(t.Key, page, count, t.Value.ToString(), null);
+                            foreach (var d in db.Query( template.RawSql, template.Parameters))
                             {
                                 htt.Add(JToken.FromObject(d));
                             }
@@ -113,8 +114,8 @@
                     }
                     else
                     {
-                        var template = JsonToSql.GetSqlBuilder(key, 0, 0, item.Value.ToString(), ht);
-                        var df = DapperDBHelp.QueryFirstOrDefault(_options.ConnectionString, template.RawSql, template.Parameters);
+                        var template = sqlbuilder.GetSqlBuilder(key, 0, 0, item.Value.ToString(), ht);
+                        var df = db.QueryFirstOrDefault( template.RawSql, template.Parameters);
                         if (df != null)
                         {
                             ht.Add(key, JToken.FromObject(df));
@@ -161,7 +162,7 @@
                     }
                     string sql = sb.ToString().TrimEnd(',') + val.ToString().TrimEnd(',') + ");SELECT CAST(SCOPE_IDENTITY() as int);";
 
-                    using (var sqlConnection = new SqlConnection(_options.ConnectionString))
+                    using (var sqlConnection = db.Connection)
                     {
                         sqlConnection.Open();
                         int id = sqlConnection.ExecuteScalar<int>(sql, p);
@@ -217,7 +218,7 @@
                         p.Add($"@{f.Key}", f.Value.ToString());
                     }
                     string sql = sb.ToString().TrimEnd(',') + " where id=@id;";
-                    using (var sqlConnection = new SqlConnection(_options.ConnectionString))
+                    using (var sqlConnection = db.Connection)
                     {
                         sqlConnection.Open();
                         sqlConnection.Execute(sql, p);
@@ -269,7 +270,7 @@
                         p.Add($"@{f.Key}", f.Value.ToString());
                     }
                     string sql = sb.ToString().TrimEnd(',');
-                    using (var sqlConnection = new SqlConnection(_options.ConnectionString))
+                    using (var sqlConnection = db.Connection)
                     {
                         sqlConnection.Open();
                         sqlConnection.Execute(sql, p);
