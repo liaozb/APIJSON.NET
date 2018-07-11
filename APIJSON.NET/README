@@ -12,5 +12,5 @@ APIJSON后端部署 - .net core
       打开publish文件 运行cmd命令： dotnet APIJSON.NET.dll
       
       
-4.数据库支持mysql,sqlserver
+4.数据库支持(0:MySql,1:SqlServer,2:Sqlite,3:Oracle,4:PostgreSQL)
    APIJSON.NET文件夹下appsettings.json 设置对应数据连接
