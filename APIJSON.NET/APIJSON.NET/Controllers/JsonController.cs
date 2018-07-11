@@ -2,22 +2,24 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Data.SqlClient;
     using System.Web;
-    using Dapper;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
     using Newtonsoft.Json.Linq;
+    using SqlSugar;
+
     [Route("api/[controller]")]
     [ApiController]
     public class JsonController : ControllerBase
     {
-        private  DapperHelper db;
+        private DbOptions _options;
         private JsonToSql sqlbuilder;
-        public JsonController(DapperHelper helper, JsonToSql jsonToSql)
+        private DbContext db;
+        public JsonController(IOptions<DbOptions> options, JsonToSql jsonToSql, DbContext _db)
         {
-            db = helper;
+            _options = options.Value;
             sqlbuilder = jsonToSql;
+            db = _db;
         }
         /// <summary>
         /// 查询
@@ -55,24 +57,23 @@
                         if (tables.Count > 0)
                         {
                             string table = tables[0];
-                            var template = sqlbuilder.GetSqlBuilder(table, page, count, where[0], null);
-                            foreach (var dd in db.Query(template.RawSql, template.Parameters))
+                            var template = sqlbuilder.GetTableData(table, page, count, where[0], null);
+                            foreach (var dd in template)
                             {
                                 var zht = new JObject();
                                 zht.Add(table, JToken.FromObject(dd));
                                 for (int i = 1; i < tables.Count; i++)
                                 {
                                     string subtable = tables[i];
-
                                     if (tables[i].EndsWith("[]"))
                                     {
                                         subtable = tables[i].Replace("[]", "");
                                         var jbb = JObject.Parse(where[i]);
                                         page = jbb["page"] == null ? 0 : int.Parse(jbb["page"].ToString());
                                         count = jbb["count"] == null ? 0 : int.Parse(jbb["count"].ToString());
-                                        template = sqlbuilder.GetSqlBuilder(subtable, page, count, jbb[subtable].ToString(), zht);
+                                        template = sqlbuilder.GetTableData(subtable, page, count, jbb[subtable].ToString(), zht);
                                         var lt = new JArray();
-                                        foreach (var d in db.Query( template.RawSql, template.Parameters))
+                                        foreach (var d in template)
                                         {
                                             lt.Add(JToken.FromObject(d));
                                         }
@@ -80,11 +81,11 @@
                                     }
                                     else
                                     {
-                                        template = sqlbuilder.GetSqlBuilder(subtable, 0, 0, where[i].ToString(), zht);
-                                        var df = db.QueryFirstOrDefault( template.RawSql, template.Parameters);
-                                        if (df != null)
+                                        template = sqlbuilder.GetTableData(subtable, 0, 0, where[i].ToString(), zht);
+
+                                        if (template != null)
                                         {
-                                            zht.Add(subtable, JToken.FromObject(df));
+                                            zht.Add(subtable, JToken.FromObject(template));
                                         }
 
                                     }
@@ -96,7 +97,7 @@
                     }
                     else if (key.EndsWith("[]"))
                     {
-                        var builder = new SqlBuilder();
+                      
                         var htt = new JArray();
                         var jb = JObject.Parse(item.Value.ToString());
                         int page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString()), count = jb["count"] == null ? 0 : int.Parse(jb["count"].ToString());
@@ -104,8 +105,8 @@
                         jb.Remove("count");
                         foreach (var t in jb)
                         {
-                            var template = sqlbuilder.GetSqlBuilder(t.Key, page, count, t.Value.ToString(), null);
-                            foreach (var d in db.Query( template.RawSql, template.Parameters))
+                            var template = sqlbuilder.GetTableData(t.Key, page, count, t.Value.ToString(), null);
+                            foreach (var d in template)
                             {
                                 htt.Add(JToken.FromObject(d));
                             }
@@ -114,11 +115,10 @@
                     }
                     else
                     {
-                        var template = sqlbuilder.GetSqlBuilder(key, 0, 0, item.Value.ToString(), ht);
-                        var df = db.QueryFirstOrDefault( template.RawSql, template.Parameters);
-                        if (df != null)
+                        var template = sqlbuilder.GetTableData(key, 0, 0, item.Value.ToString(), ht);
+                        if (template != null)
                         {
-                            ht.Add(key, JToken.FromObject(df));
+                            ht.Add(key, JToken.FromObject(template));
                         }
                     }
                 }
@@ -147,27 +147,20 @@
             {
                 JObject jobject = JObject.Parse(json);
                 var sb = new System.Text.StringBuilder(100);
+              
                 foreach (var item in jobject)
                 {
                     string key = item.Key.Trim();
-                    sb.Append($"insert into [{key}](");
-                    var val = new System.Text.StringBuilder(100);
-                    val.Append($")values(");
-                    var p = new DynamicParameters();
+
+                    var dt = new Dictionary<string, object>();
                     foreach (var f in JObject.Parse(item.Value.ToString()))
                     {
-                        sb.Append($"{f.Key},");
-                        val.Append($"@{f.Key},");
-                        p.Add($"@{f.Key}", f.Value.ToString());
+                        dt.Add(f.Key, f.Value);
                     }
-                    string sql = sb.ToString().TrimEnd(',') + val.ToString().TrimEnd(',') + ");SELECT CAST(SCOPE_IDENTITY() as int);";
+                   
+                    int id = db.Db.Insertable(dt).AS(key).ExecuteReturnIdentity();
+                    ht.Add(key, JToken.FromObject(new { code = 200, msg = "success", id }));
 
-                    using (var sqlConnection = db.Connection)
-                    {
-                        sqlConnection.Open();
-                        int id = sqlConnection.ExecuteScalar<int>(sql, p);
-                        ht.Add(key, JToken.FromObject(new { code = 200, msg = "success", id }));
-                    }
                 }
 
             }
@@ -194,36 +187,28 @@
             try
             {
                 JObject jobject = JObject.Parse(json);
+               
                 foreach (var item in jobject)
                 {
                     string key = item.Key.Trim();
                     var value = JObject.Parse(item.Value.ToString());
-                    var sb = new System.Text.StringBuilder(100);
-
-                    sb.Append($"update [{key}] set ");
                     if (!value.ContainsKey("id"))
                     {
                         ht["code"] = "500";
                         ht["msg"] = "未传主键id";
                         break;
                     }
-                    var p = new DynamicParameters();
+                    var dt = new Dictionary<string, object>();
+                    dt.Add("id", value["id"]);
                     foreach (var f in value)
                     {
                         if (f.Key.ToLower() != "id")
                         {
-                            sb.Append($"{f.Key}=@{f.Key},");
+                            dt.Add(f.Key, f.Value);
                         }
-
-                        p.Add($"@{f.Key}", f.Value.ToString());
                     }
-                    string sql = sb.ToString().TrimEnd(',') + " where id=@id;";
-                    using (var sqlConnection = db.Connection)
-                    {
-                        sqlConnection.Open();
-                        sqlConnection.Execute(sql, p);
-                        ht.Add(key, JToken.FromObject(new { code = 200, msg = "success", id = value["id"].ToString() }));
-                    }
+                    db.Db.Updateable(dt).AS(key).ExecuteCommand();
+                    ht.Add(key, JToken.FromObject(new { code = 200, msg = "success", id = value["id"].ToString() }));
                 }
             }
             catch (Exception ex)
@@ -249,12 +234,12 @@
             try
             {
                 JObject jobject = JObject.Parse(json);
+              
                 foreach (var item in jobject)
                 {
                     string key = item.Key.Trim();
                     var value = JObject.Parse(item.Value.ToString());
                     var sb = new System.Text.StringBuilder(100);
-
                     sb.Append($"delete [{key}] where");
                     if (!value.ContainsKey("id"))
                     {
@@ -262,20 +247,18 @@
                         ht["msg"] = "未传主键id";
                         break;
                     }
-                    var p = new DynamicParameters();
+                    var p = new List<SugarParameter>();
                     foreach (var f in value)
                     {
                         sb.Append($"{f.Key}=@{f.Key},");
 
-                        p.Add($"@{f.Key}", f.Value.ToString());
+                        p.Add(new SugarParameter($"@{f.Key}", f.Value.ToString()));
                     }
+                   
                     string sql = sb.ToString().TrimEnd(',');
-                    using (var sqlConnection = db.Connection)
-                    {
-                        sqlConnection.Open();
-                        sqlConnection.Execute(sql, p);
-                        ht.Add(key, JToken.FromObject(new { code = 200, msg = "success", id = value["id"].ToString() }));
-                    }
+                    db.Db.Ado.ExecuteCommand(sql, p);
+                    ht.Add(key, JToken.FromObject(new { code = 200, msg = "success", id = value["id"].ToString() }));
+                   
                 }
             }
             catch (Exception ex)

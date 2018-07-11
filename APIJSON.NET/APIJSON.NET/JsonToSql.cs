@@ -1,13 +1,16 @@
 ﻿namespace APIJSON.NET
 {
-    using Dapper;
     using Microsoft.Extensions.Options;
     using Newtonsoft.Json.Linq;
+    using SqlSugar;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    public class JsonToSql
+    public class JsonToSql: DbContext
     {
+        public JsonToSql(IOptions<DbOptions> options) : base(options)
+        {
+
+        }
         /// <summary>
         /// 对应数据表
         /// </summary>
@@ -15,13 +18,7 @@
             {
                 {"user", "apijson_user"},
             };
-        private DapperOptions _options;
-
-        public JsonToSql(IOptions<DapperOptions> options)
-        {
-            this._options = options.Value;
-        }
-        public SqlBuilder.Template GetSqlBuilder(string subtable, int page, int count, string json, JObject dd)
+        public dynamic GetTableData(string subtable, int page, int count, string json, JObject dd)
         {
             if (!subtable.IsTable())
             {
@@ -31,89 +28,13 @@
             {
                 subtable = dict.GetValueOrDefault(subtable.ToLower());
             }
+            var tb = Db.Queryable(subtable, "tb");
             JObject values = JObject.Parse(json);
             page = values["page"] == null ? page : int.Parse(values["page"].ToString());
             count = values["count"] == null ? count : int.Parse(values["count"].ToString());
             values.Remove("page");
             values.Remove("count");
-            var builder = new SqlBuilder();
-            string pagesql = $"select /**select**/ from {subtable} /**where**/ /**groupby**/ /**having**/";
-            if (count > 0)
-            {
-                if (!string.IsNullOrEmpty(_options.MySql))
-                {
-                    pagesql = $@"select /**select**/  from {subtable} /**where**/ /**groupby**/ /**having**/  limit {(page * count) + 1},{(page * count) + count}";
-                }
-                else
-                {
-                    pagesql = $@"select * from (select row_number()over(order by id)rownumber,/**select**/  from {subtable} /**where**/ /**groupby**/ /**having**/) a 
-                           where rownumber between {(page * count) + 1} and {(page * count) + count}";
-                }
-
-            }
-            var template = builder.AddTemplate(pagesql);
-            //查询字段
-            if (values["@column"].IsValue())
-            {
-                foreach (var item in values["@column"].ToString().Split(","))
-                {
-                    string[] ziduan = item.Split(":");
-                    if (ziduan.Length > 1)
-                    {
-                        if (ziduan[0].IsField() && ziduan[1].IsTable())
-                        {
-                            builder.Select(ziduan[0] + " as " + ziduan[1]);
-                        }
-                    }
-                    else
-                    {
-                        if (item.IsField())
-                        {
-                            builder.Select(item);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                builder.Select("*");
-            }
-            //排序
-            if (values["@order"].IsValue())
-            {
-                foreach (var item in values["@order"].ToString().Split(","))
-                {
-                    if (item.Replace("-", "").IsTable())
-                    {
-                        if (item.EndsWith("-"))
-                        {
-                            builder.OrderBy($"{item.Replace("-", " desc")}");
-                        }
-                        else
-                        {
-                            builder.OrderBy($"{item.ToString()}");
-                        }
-                    }
-                }
-            }
-            else
-            {
-
-            }
-            if (values["@group"].IsValue())
-            {
-                foreach (var and in values["@group"].ToString().Split(','))
-                {
-                    if (and.IsField())
-                    {
-                        builder.GroupBy($"{and}");
-                    }
-                }
-            }
-            if (values["@having"].IsValue())
-            {
-                builder.Having($"{values["@having"].ToString()}");
-            }
+            List<IConditionalModel> conModels = new List<IConditionalModel>();
             foreach (var va in values)
             {
                 string vakey = va.Key.Trim();
@@ -125,10 +46,7 @@
                 {
                     if (vakey.TrimEnd('$').IsTable())
                     {
-                        vakey = vakey.TrimEnd('$').GetParamName();
-                        var p = new DynamicParameters();
-                        p.Add($"@{vakey}", va.Value.ToString());
-                        builder.Where($"{va.Key.TrimEnd('$')} like @{vakey}", p);
+                        conModels.Add(new ConditionalModel() { FieldName = va.Key.TrimEnd('$'), ConditionalType = ConditionalType.Like, FieldValue = va.Value.ToString() });
                     }
                 }
                 else if (vakey.EndsWith("{}"))//逻辑运算
@@ -136,90 +54,40 @@
                     string field = va.Key.TrimEnd("{}".ToCharArray());
                     if (va.Value.HasValues)
                     {
-                        JArray jArray = JArray.Parse(va.Value.ToString());
-                        var p = new DynamicParameters();
-                        p.Add($"@{field}", jArray.Select(jv => (string)jv).ToArray());
-                        builder.Where($"{field} {(field.EndsWith("!") ? "not" : "")} in @{field}", p);
+                        conModels.Add(new ConditionalModel() { FieldName = field, ConditionalType = field.EndsWith("!") ? ConditionalType.NotIn : ConditionalType.In, FieldValue = va.Value.ToString() });
                     }
                     else
                     {
-                        if (field.EndsWith("&"))
+                        var ddt = new List<KeyValuePair<WhereType, ConditionalModel>>();
+                        foreach (var and in va.Value.ToString().Split(','))
                         {
-                            field = field.TrimEnd("&".ToCharArray());
-                            if (field.IsTable())
+                            var model = new ConditionalModel();
+                            model.FieldName = field;
+                            if (and.StartsWith(">="))
                             {
-                                foreach (var and in va.Value.ToString().Split(','))
-                                {
+                                model.ConditionalType = ConditionalType.GreaterThanOrEqual;
+                                model.FieldValue = and.TrimStart(">=".ToCharArray());
+                            }
+                            else if (and.StartsWith("<="))
+                            {
 
-                                    if (and.StartsWith(">="))
-                                    {
-                                        if (int.TryParse(and.TrimStart(">=".ToCharArray()), out int opt))
-                                        {
-                                            builder.Where($"{field}>={opt}");
-                                        }
-                                    }
-                                    else if (and.StartsWith("<="))
-                                    {
-                                        if (int.TryParse(and.TrimStart("<=".ToCharArray()), out int opt))
-                                        {
-                                            builder.Where($"{field}<={opt}");
-                                        }
-                                    }
-                                    else if (and.StartsWith(">"))
-                                    {
-                                        if (int.TryParse(and.TrimStart('>'), out int opt))
-                                        {
-                                            builder.Where($"{field}>{opt}");
-                                        }
-                                    }
-                                    else if (and.StartsWith("<"))
-                                    {
-                                        if (int.TryParse(and.TrimStart('<'), out int opt))
-                                        {
-                                            builder.Where($"{field}<{opt}");
-                                        }
-                                    }
-                                }
+                                model.ConditionalType = ConditionalType.LessThanOrEqual;
+                                model.FieldValue = and.TrimStart("<=".ToCharArray());
                             }
-                        }
-                        else
-                        {
-                            field = field.TrimEnd("|".ToCharArray());
-                            if (field.IsTable())
+                            else if (and.StartsWith(">"))
                             {
-                                foreach (var and in va.Value.ToString().Split(','))
-                                {
-                                    if (and.StartsWith(">="))
-                                    {
-                                        if (int.TryParse(and.TrimStart(">=".ToCharArray()), out int opt))
-                                        {
-                                            builder.OrWhere($"{field}>={opt}");
-                                        }
-                                    }
-                                    else if (and.StartsWith("<="))
-                                    {
-                                        if (int.TryParse(and.TrimStart("<=".ToCharArray()), out int opt))
-                                        {
-                                            builder.OrWhere($"{field}<={opt}");
-                                        }
-                                    }
-                                    else if (and.StartsWith(">"))
-                                    {
-                                        if (int.TryParse(and.TrimStart('>'), out int opt))
-                                        {
-                                            builder.OrWhere($"{field}>{opt}");
-                                        }
-                                    }
-                                    else if (and.StartsWith("<"))
-                                    {
-                                        if (int.TryParse(and.TrimStart('<'), out int opt))
-                                        {
-                                            builder.OrWhere($"{field}<{opt}");
-                                        }
-                                    }
-                                }
+
+                                model.ConditionalType = ConditionalType.GreaterThan;
+                                model.FieldValue = and.TrimStart('>');
                             }
+                            else if (and.StartsWith("<"))
+                            {
+                                model.ConditionalType = ConditionalType.LessThan;
+                                model.FieldValue = and.TrimStart('<');
+                            }
+                            ddt.Add(new KeyValuePair<WhereType, ConditionalModel>((field.EndsWith("&") ? WhereType.And : WhereType.Or), model));
                         }
+                        conModels.Add(new ConditionalCollections() { ConditionalList = ddt });
                     }
                 }
                 else if (vakey.EndsWith("@") && dd != null) // 关联上一个table
@@ -234,18 +102,92 @@
                     {
                         value = dd[str[0]][str[1]].ToString();
                     }
-                    var p = new DynamicParameters();
-                    p.Add($"@{vakey.TrimEnd('@')}", value);
-                    builder.Where($"{vakey.TrimEnd('@')} = @{vakey.TrimEnd('@')}", p);
+
+                    conModels.Add(new ConditionalModel() { FieldName = vakey.TrimEnd('@'), ConditionalType = ConditionalType.Equal, FieldValue = value });
+         
                 }
                 else if (vakey.IsTable()) //其他where条件
                 {
-                    var p = new DynamicParameters();
-                    p.Add($"@{vakey}", va.Value.ToString());
-                    builder.Where($"{vakey} = @{vakey}", p);
+                    conModels.Add(new ConditionalModel() { FieldName = vakey, ConditionalType =   ConditionalType.Equal, FieldValue = va.Value.ToString() });
                 }
             }
-            return template;
+            tb.Where(conModels);
+            //查询字段
+            if (values["@column"].IsValue())
+            {
+                var str = new System.Text.StringBuilder(100);
+                foreach (var item in values["@column"].ToString().Split(","))
+                {
+                    string[] ziduan = item.Split(":");
+                    if (ziduan.Length > 1)
+                    {
+                        if (ziduan[0].IsField() && ziduan[1].IsTable())
+                        {
+
+                            str.Append(ziduan[0] + " as " + ziduan[1] + ",");
+                        }
+                    }
+                    else
+                    {
+                        if (item.IsField())
+                        {
+                            str.Append(item + ",");
+                        }
+                    }
+                }
+                tb.Select(str.ToString().TrimEnd(','));
+            }
+            else
+            {
+                tb.Select("*");
+            }
+            //排序
+            if (values["@order"].IsValue())
+            {
+                foreach (var item in values["@order"].ToString().Split(","))
+                {
+                    if (item.Replace("-", "").IsTable())
+                    {
+                        if (item.EndsWith("-"))
+                        {
+                            tb.OrderBy($"{item.Replace("-", " desc")}");
+                        }
+                        else
+                        {
+                            tb.OrderBy($"{item.ToString()}");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                tb.OrderBy("id");
+            }
+            if (values["@group"].IsValue())
+            {
+                var str = new System.Text.StringBuilder(100);
+                foreach (var and in values["@group"].ToString().Split(','))
+                {
+                    if (and.IsField())
+                    {
+                        str.Append(and + ",");
+                    }
+                }
+                tb.GroupBy(str.ToString().TrimEnd(','));
+            }
+            if (values["@having"].IsValue())
+            {
+                tb.Having($"{values["@having"].ToString()}");
+            }
+            if (count > 0)
+            {
+                return tb.ToPageList(page, count);
+            }
+            else
+            {
+                return tb.ToList();
+            }
+           
         }
     }
 }
