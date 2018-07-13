@@ -1,7 +1,9 @@
 ﻿namespace APIJSON.NET
 {
     using System;
+    using System.Collections.Generic;
     using System.Text;
+    using APIJSON.NET.Models;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
@@ -28,6 +30,7 @@
                 options.DbType = (SqlSugar.DbType)Enum.Parse(typeof(SqlSugar.DbType), Configuration.GetConnectionString("DbType"));
                 options.ConnectionString = Configuration.GetConnectionString("ConnectionString");
             });
+            services.Configure<List<Role>>(Configuration.GetSection("RoleList"));
             services.Configure<TokenAuthConfiguration>(tokenAuthConfig =>
             {
                 tokenAuthConfig.SecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Authentication:JwtBearer:SecurityKey"]));
@@ -56,12 +59,12 @@
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            app.UseMvc(routes =>
             {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseMvc();
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
             app.UseCors(_defaultCorsPolicyName);
             app.UseSwagger();
             app.UseSwaggerUI(c =>
