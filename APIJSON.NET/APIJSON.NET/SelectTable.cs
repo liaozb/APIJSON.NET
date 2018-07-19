@@ -1,6 +1,7 @@
 ﻿namespace APIJSON.NET
 {
     using APIJSON.NET.Models;
+    using APIJSON.NET.Services;
     using Microsoft.Extensions.Options;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
@@ -10,12 +11,14 @@
     using System.IO;
     using System.Linq;
 
-    public class JsonToSql: DbContext
+    public class SelectTable: DbContext
     {
-        protected List<Role> roles;
-        public JsonToSql(IOptions<DbOptions> options, IOptions<List<Role>> _roles) : base(options)
+       
+        private readonly IIdentityService _identitySvc;
+        public SelectTable(IOptions<DbOptions> options, IIdentityService identityService) : base(options)
         {
-            roles = _roles.Value;
+          
+            _identitySvc = identityService;
         }
         /// <summary>
         /// 对应数据表
@@ -24,23 +27,10 @@
             {
                 {"user", "apijson_user"},
             };
-        public Role GetRole(string rolename)
+      
+        public (bool, string) GetSelectRole(string table)
         {
-            var role = new Role();
-            if (string.IsNullOrEmpty(rolename))
-            {
-                role = roles.FirstOrDefault();
-                
-            }
-            else
-            {
-                role = roles.FirstOrDefault(it => it.Name.Equals(rolename, StringComparison.CurrentCultureIgnoreCase));
-            }
-            return role;
-        }
-        public (bool, string) GetSelectRole(string rolename, string table)
-        {
-            var role = GetRole(rolename);
+            var role = _identitySvc.GetRole();
             if (role == null || role.Select == null || role.Select.Table == null)
             {
                 return (false, $"select.json权限配置不正确！");
@@ -55,13 +45,13 @@
             string selectrole = role.Select.Column[index];
             return (true, selectrole);
         }
-        public dynamic GetTableData(string subtable, int page, int count, string json, JObject dd,string rolename)
+        public dynamic GetTableData(string subtable, int page, int count, string json, JObject dd)
         {
             if (!subtable.IsTable())
             {
                 throw new Exception($"表名{subtable}不正确！");
             }
-            var role = GetSelectRole(rolename, subtable);
+            var role = GetSelectRole(subtable);
             if (!role.Item1)
             {
                 throw new Exception(role.Item2);

@@ -35,8 +35,8 @@ namespace APIJSON.NET.Controllers
             }
 
             var identity = new ClaimsIdentity();
-            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, username));
-            identity.AddClaim(new Claim(ClaimTypes.Name, username));
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "1"));
+            identity.AddClaim(new Claim(ClaimTypes.Name, "1"));
             identity.AddClaim(new Claim(ClaimTypes.Role, ""));
             identity.AddClaim(new Claim(JwtRegisteredClaimNames.Sub, username));
             identity.AddClaim(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));

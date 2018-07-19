@@ -4,8 +4,10 @@
     using System.Collections.Generic;
     using System.Text;
     using APIJSON.NET.Models;
+    using APIJSON.NET.Services;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -50,10 +52,11 @@
             {
                 c.SwaggerDoc("v1", new Info { Title = "APIJSON.NET", Version = "v1" });
             });
-            services.AddTransient<DbContext>();
-            services.AddSingleton<JsonToSql>();
+            services.AddSingleton<DbContext>();
+            services.AddSingleton<SelectTable>();
             services.AddSingleton<TokenAuthConfiguration>();
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IIdentityService, IdentityService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

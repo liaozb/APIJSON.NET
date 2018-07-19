@@ -2,37 +2,36 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Security.Claims;
     using System.Web;
     using APIJSON.NET.Models;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Options;
     using Newtonsoft.Json.Linq;
     using SqlSugar;
     using System.Linq;
+    using APIJSON.NET.Services;
     [Route("api/[controller]")]
     [ApiController]
     public class JsonController : ControllerBase
     {
 
-        private JsonToSql jsonToSql;
+        private SelectTable selectTable;
         private DbContext db;
-        protected List<Role> roles;
-        public JsonController(JsonToSql jsonTo, DbContext _db, IOptions<List<Role>> _roles)
+        private readonly IIdentityService _identitySvc;
+        public JsonController(SelectTable _selectTable, DbContext _db,IIdentityService identityService)
         {
 
-            jsonToSql = jsonTo;
+            selectTable = _selectTable;
             db = _db;
-            roles = _roles.Value;
+            _identitySvc = identityService;
         }
         /// <summary>
         /// 查询
         /// </summary>
         /// <param name="json"></param>
         /// <returns></returns>
-        [HttpPost("/Query")]
-        public ActionResult Query([FromBody]string json)
+        [HttpGet("/get/{json}")]
+        public ActionResult Query(string json)
         {
             json = HttpUtility.UrlDecode(json);
             JObject ht = new JObject();
@@ -44,12 +43,12 @@
                 foreach (var item in jobject)
                 {
                     string key = item.Key.Trim();
+                    var jb = JObject.Parse(item.Value.ToString());
+                    int page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString()), count = jb["count"] == null ? 0 : int.Parse(jb["count"].ToString()), query = jb["query"] == null ? 0 : int.Parse(jb["query"].ToString());
+                    jb.Remove("page"); jb.Remove("count");
                     if (key.Equals("[]"))
                     {
                         var htt = new JArray();
-                        var jb = JObject.Parse(item.Value.ToString());
-                        int page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString()), count = jb["count"] == null ? 0 : int.Parse(jb["count"].ToString()) , query = jb["query"] == null ? 0 : int.Parse(jb["query"].ToString());
-                        jb.Remove("page");jb.Remove("count");
                         List<string> tables = new List<string>(), where = new List<string>();
                         foreach (var t in jb)
                         {
@@ -58,7 +57,7 @@
                         if (tables.Count > 0)
                         {
                             string table = tables[0];
-                            var template = jsonToSql.GetTableData(table, page, count, where[0], null, User.FindFirstValue(ClaimTypes.Role));
+                            var template = selectTable.GetTableData(table, page, count, where[0], null);
                             foreach (var dd in template)
                             {
                                 var zht = new JObject();
@@ -66,15 +65,15 @@
                                 for (int i = 1; i < tables.Count; i++)
                                 {
                                     string subtable = tables[i];
-                                    if (tables[i].EndsWith("[]"))
+                                    if (subtable.EndsWith("[]"))
                                     {
-                                        subtable = tables[i].Replace("[]", "");
+                                        subtable = subtable.TrimEnd("[]".ToCharArray());
                                         var jbb = JObject.Parse(where[i]);
                                         page = jbb["page"] == null ? 0 : int.Parse(jbb["page"].ToString());
                                         count = jbb["count"] == null ? 0 : int.Parse(jbb["count"].ToString());
 
                                         var lt = new JArray();
-                                        foreach (var d in jsonToSql.GetTableData(subtable, page, count, jbb[subtable].ToString(), zht, User.FindFirstValue(ClaimTypes.Role)))
+                                        foreach (var d in selectTable.GetTableData(subtable, page, count, jbb[subtable].ToString(), zht))
                                         {
                                             lt.Add(JToken.FromObject(d));
                                         }
@@ -82,8 +81,7 @@
                                     }
                                     else
                                     {
-                                        var ddf = jsonToSql.GetTableData(subtable, 0, 0, where[i].ToString(), zht, User.FindFirstValue(ClaimTypes.Role));
-
+                                        var ddf = selectTable.GetTableData(subtable, 0, 0, where[i].ToString(), zht);
                                         if (ddf != null)
                                         {
                                             zht.Add(subtable, JToken.FromObject(ddf));
@@ -98,15 +96,10 @@
                     }
                     else if (key.EndsWith("[]"))
                     {
-
                         var htt = new JArray();
-                        var jb = JObject.Parse(item.Value.ToString());
-                        int page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString()), count = jb["count"] == null ? 0 : int.Parse(jb["count"].ToString());
-                        jb.Remove("page");
-                        jb.Remove("count");
                         foreach (var t in jb)
                         {
-                            foreach (var d in jsonToSql.GetTableData(t.Key, page, count, t.Value.ToString(), null, User.FindFirstValue(ClaimTypes.Role)))
+                            foreach (var d in selectTable.GetTableData(t.Key, page, count, t.Value.ToString(), null))
                             {
                                 htt.Add(JToken.FromObject(d));
                             }
@@ -115,7 +108,7 @@
                     }
                     else
                     {
-                        var template = jsonToSql.GetTableData(key, 0, 0, item.Value.ToString(), ht, User.FindFirstValue(ClaimTypes.Role));
+                        var template = selectTable.GetTableData(key, 0, 0, item.Value.ToString(), ht);
                         if (template != null)
                         {
                             ht.Add(key, JToken.FromObject(template));
@@ -151,7 +144,7 @@
                 foreach (var item in jobject)
                 {
                     string key = item.Key.Trim();
-                    var role = jsonToSql.GetRole(User.FindFirstValue(ClaimTypes.Role));
+                    var role = _identitySvc.GetRole();
                     if (!role.Insert.Table.Contains(key, StringComparer.CurrentCultureIgnoreCase))
                     {
                         ht["code"] = "500";
@@ -194,7 +187,7 @@
                 foreach (var item in jobject)
                 {
                     string key = item.Key.Trim();
-                    var role = jsonToSql.GetRole(User.FindFirstValue(ClaimTypes.Role));
+                    var role = _identitySvc.GetRole();
                     if (!role.Update.Table.Contains(key, StringComparer.CurrentCultureIgnoreCase))
                     {
                         ht["code"] = "500";
@@ -244,7 +237,7 @@
             ht.Add("msg", "success");
             try
             {
-                var role = jsonToSql.GetRole(User.FindFirstValue(ClaimTypes.Role));
+                var role = _identitySvc.GetRole();
                 JObject jobject = JObject.Parse(json);
                 foreach (var item in jobject)
                 {
