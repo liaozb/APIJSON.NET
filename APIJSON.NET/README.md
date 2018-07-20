@@ -16,4 +16,5 @@ APIJSON后端部署 - .net core
    APIJSON.NET文件夹下appsettings.json 设置对应数据连接
 
 5：appsettings.json文件配置说明
-![配置说明](https://github.com/liaozb/APIJSON.NET/blob/master/APIJSON.NET/1.png)
+
+![](1.png)
