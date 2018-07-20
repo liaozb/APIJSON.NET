@@ -1,66 +1,34 @@
 ﻿namespace APIJSON.NET
 {
-    using APIJSON.NET.Models;
     using APIJSON.NET.Services;
     using Microsoft.Extensions.Options;
-    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using SqlSugar;
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
-
     public class SelectTable: DbContext
     {
-       
         private readonly IIdentityService _identitySvc;
-        public SelectTable(IOptions<DbOptions> options, IIdentityService identityService) : base(options)
+        private readonly ITableMapper _tableMapper;
+        public SelectTable(IOptions<DbOptions> options, IIdentityService identityService, ITableMapper tableMapper) : base(options)
         {
-          
             _identitySvc = identityService;
+            _tableMapper = tableMapper;
         }
-        /// <summary>
-        /// 对应数据表
-        /// </summary>
-        static Dictionary<string, string> dict = new Dictionary<string, string>
-            {
-                {"user", "apijson_user"},
-            };
-      
-        public (bool, string) GetSelectRole(string table)
-        {
-            var role = _identitySvc.GetRole();
-            if (role == null || role.Select == null || role.Select.Table == null)
-            {
-                return (false, $"select.json权限配置不正确！");
-            }
-            string tablerole = role.Select.Table.FirstOrDefault(it => it.Equals(table, StringComparison.CurrentCultureIgnoreCase));
-
-            if (string.IsNullOrEmpty(tablerole))
-            {
-                return (false, $"表名{table}没权限查询！");
-            }
-            int index = Array.IndexOf(role.Select.Table, tablerole);
-            string selectrole = role.Select.Column[index];
-            return (true, selectrole);
-        }
-        public dynamic GetTableData(string subtable, int page, int count, string json, JObject dd)
-        {
+        public (dynamic,int) GetTableData(string subtable, int page, int count, string json, JObject dd)
+        {   
             if (!subtable.IsTable())
             {
                 throw new Exception($"表名{subtable}不正确！");
             }
-            var role = GetSelectRole(subtable);
-            if (!role.Item1)
+            var role = _identitySvc.GetSelectRole(subtable);
+            if (!role.Item1)//没有权限返回异常
             {
                 throw new Exception(role.Item2);
             }
             string selectrole = role.Item2;
-            if (dict.ContainsKey(subtable.ToLower()))
-            {
-                subtable = dict.GetValueOrDefault(subtable.ToLower());
-            }
+            subtable = _tableMapper.GetTableName(subtable);
             JObject values = JObject.Parse(json);
             var tb = Db.Queryable(subtable, "tb");
             if (values["@column"].IsValue())
@@ -71,7 +39,7 @@
                     string[] ziduan = item.Split(":");
                     if (ziduan.Length > 1)
                     {
-                        if (ziduan[0].IsField() && ziduan[1].IsTable()&&(selectrole =="*"|| selectrole.Split(',').Contains(ziduan[0],StringComparer.CurrentCultureIgnoreCase)))
+                        if (_identitySvc.ColIsRole(ziduan[0], selectrole.Split(",")))
                         {
 
                             str.Append(ziduan[0] + " as " + ziduan[1] + ",");
@@ -79,11 +47,15 @@
                     }
                     else
                     {
-                        if (item.IsField() && (selectrole == "*" || selectrole.Split(',').Contains(item, StringComparer.CurrentCultureIgnoreCase)))
+                        if (_identitySvc.ColIsRole(item, selectrole.Split(",")))
                         {
                             str.Append(item + ",");
                         }
                     }
+                }
+                if (string.IsNullOrEmpty(str.ToString()))
+                {
+                    throw new Exception($"表名{subtable}没有可查询的字段！");
                 }
                 tb.Select(str.ToString().TrimEnd(','));
             }
@@ -103,12 +75,12 @@
                 {
                     if (vakey.TrimEnd('$').IsTable())
                     {
-                        conModels.Add(new ConditionalModel() { FieldName = va.Key.TrimEnd('$'), ConditionalType = ConditionalType.Like, FieldValue = va.Value.ToString() });
+                        conModels.Add(new ConditionalModel() { FieldName = vakey.TrimEnd('$'), ConditionalType = ConditionalType.Like, FieldValue = va.Value.ToString() });
                     }
                 }
                 else if (vakey.EndsWith("{}"))//逻辑运算
                 {
-                    string field = va.Key.TrimEnd("{}".ToCharArray());
+                    string field = vakey.TrimEnd("{}".ToCharArray());
                     if (va.Value.HasValues)
                     {
                         conModels.Add(new ConditionalModel() { FieldName = field, ConditionalType = field.EndsWith("!") ? ConditionalType.NotIn : ConditionalType.In, FieldValue = va.Value.ToString() });
@@ -189,7 +161,10 @@
             }
             else
             {
-                tb.OrderBy("id");
+                if (count>0)
+                {
+                    tb.OrderBy("id");
+                }
             }
             if (values["@group"].IsValue())
             {
@@ -209,11 +184,12 @@
             }
             if (count > 0)
             {
-                return tb.ToPageList(page, count);
+                int total = 0;
+                return (tb.ToPageList(page, count,ref total),total);
             }
             else
             {
-                return tb.ToList();
+                return (tb.ToList(),tb.Count());
             }
            
         }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace APIJSON.NET.Services
@@ -23,7 +24,7 @@ namespace APIJSON.NET.Services
         {
             return _context.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
-
+        
         public string GetUserRoleName()
         {
             return _context.HttpContext.User.FindFirstValue(ClaimTypes.Role);
@@ -41,6 +42,57 @@ namespace APIJSON.NET.Services
                 role = roles.FirstOrDefault(it => it.Name.Equals(GetUserRoleName(), StringComparison.CurrentCultureIgnoreCase));
             }
             return role;
+        }
+        public (bool, string) GetSelectRole(string table)
+        {
+            var role = GetRole();
+            if (role == null || role.Select == null || role.Select.Table == null)
+            {
+                return (false, $"select.json权限配置不正确！");
+            }
+            string tablerole = role.Select.Table.FirstOrDefault(it => it.Equals(table, StringComparison.CurrentCultureIgnoreCase));
+
+            if (string.IsNullOrEmpty(tablerole))
+            {
+                return (false, $"表名{table}没权限查询！");
+            }
+            int index = Array.IndexOf(role.Select.Table, tablerole);
+            string selectrole = role.Select.Column[index];
+            return (true, selectrole);
+        }
+        public bool ColIsRole(string col, string[] selectrole)
+        {
+            if (selectrole.Contains("*"))
+            {
+                return true;
+            }
+            else
+            {
+                if (col.Contains("(") && col.Contains(")"))
+                {
+                    Regex reg = new Regex(@"\(([^)]*)\)");
+                    Match m = reg.Match(col);
+                    if (selectrole.Contains(m.Result("$1"), StringComparer.CurrentCultureIgnoreCase))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (selectrole.Contains(col, StringComparer.CurrentCultureIgnoreCase))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
         }
     }
 }

@@ -33,6 +33,7 @@
                 options.ConnectionString = Configuration.GetConnectionString("ConnectionString");
             });
             services.Configure<List<Role>>(Configuration.GetSection("RoleList"));
+            services.Configure<Dictionary<string,string>>(Configuration.GetSection("tablempper"));
             services.Configure<TokenAuthConfiguration>(tokenAuthConfig =>
             {
                 tokenAuthConfig.SecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Authentication:JwtBearer:SecurityKey"]));
@@ -57,6 +58,7 @@
             services.AddSingleton<TokenAuthConfiguration>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IIdentityService, IdentityService>();
+            services.AddTransient<ITableMapper, TableMapper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,6 +75,7 @@
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+               
             });
             app.UseAuthentication();
         }

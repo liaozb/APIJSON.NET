@@ -10,6 +10,8 @@
     using SqlSugar;
     using System.Linq;
     using APIJSON.NET.Services;
+
+
     [Route("api/[controller]")]
     [ApiController]
     public class JsonController : ControllerBase
@@ -30,8 +32,8 @@
         /// </summary>
         /// <param name="json"></param>
         /// <returns></returns>
-        [HttpGet("/get/{json}")]
-        public ActionResult Query(string json)
+        [HttpPost("/get")]
+        public ActionResult Query([FromBody]string json)
         {
             json = HttpUtility.UrlDecode(json);
             JObject ht = new JObject();
@@ -40,14 +42,18 @@
             try
             {
                 JObject jobject = JObject.Parse(json);
+                int page = 0, count = 0, query = 0, total = 0;
                 foreach (var item in jobject)
                 {
                     string key = item.Key.Trim();
-                    var jb = JObject.Parse(item.Value.ToString());
-                    int page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString()), count = jb["count"] == null ? 0 : int.Parse(jb["count"].ToString()), query = jb["query"] == null ? 0 : int.Parse(jb["query"].ToString());
-                    jb.Remove("page"); jb.Remove("count");
+                    JObject jb;
                     if (key.Equals("[]"))
                     {
+                        jb = JObject.Parse(item.Value.ToString());
+                        page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString());
+                        count = jb["count"] == null ? 0 : int.Parse(jb["count"].ToString());
+                        query = jb["query"] == null ? 0 : int.Parse(jb["query"].ToString());
+                        jb.Remove("page"); jb.Remove("count"); jb.Remove("query");
                         var htt = new JArray();
                         List<string> tables = new List<string>(), where = new List<string>();
                         foreach (var t in jb)
@@ -57,8 +63,13 @@
                         if (tables.Count > 0)
                         {
                             string table = tables[0];
-                            var template = selectTable.GetTableData(table, page, count, where[0], null);
-                            foreach (var dd in template)
+                            var temp = selectTable.GetTableData(table, page, count, where[0], null);
+                            if (query >0)
+                            {
+                                total = temp.Item2;
+                            }
+                            
+                            foreach (var dd in temp.Item1)
                             {
                                 var zht = new JObject();
                                 zht.Add(table, JToken.FromObject(dd));
@@ -73,7 +84,7 @@
                                         count = jbb["count"] == null ? 0 : int.Parse(jbb["count"].ToString());
 
                                         var lt = new JArray();
-                                        foreach (var d in selectTable.GetTableData(subtable, page, count, jbb[subtable].ToString(), zht))
+                                        foreach (var d in selectTable.GetTableData(subtable, page, count, jbb[subtable].ToString(), zht).Item1)
                                         {
                                             lt.Add(JToken.FromObject(d));
                                         }
@@ -82,37 +93,49 @@
                                     else
                                     {
                                         var ddf = selectTable.GetTableData(subtable, 0, 0, where[i].ToString(), zht);
-                                        if (ddf != null)
+                                        if (ddf.Item1 != null)
                                         {
-                                            zht.Add(subtable, JToken.FromObject(ddf));
+                                            zht.Add(subtable, JToken.FromObject(ddf.Item1));
                                         }
-
                                     }
                                 }
                                 htt.Add(zht);
                             }
+
                         }
-                        ht.Add("[]", htt);
+                        if (query != 1)
+                        {
+                            ht.Add("[]", htt);
+                        }
                     }
                     else if (key.EndsWith("[]"))
                     {
+                        jb = JObject.Parse(item.Value.ToString());
+                        page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString());
+                        count = jb["count"] == null ? 0 : int.Parse(jb["count"].ToString());
+                        query = jb["query"] == null ? 0 : int.Parse(jb["query"].ToString());
+                        jb.Remove("page"); jb.Remove("count"); jb.Remove("query");
                         var htt = new JArray();
                         foreach (var t in jb)
                         {
-                            foreach (var d in selectTable.GetTableData(t.Key, page, count, t.Value.ToString(), null))
+                            foreach (var d in selectTable.GetTableData(t.Key, page, count, t.Value.ToString(), null).Item1)
                             {
                                 htt.Add(JToken.FromObject(d));
                             }
                         }
                         ht.Add(key, htt);
                     }
-                    else
+                    else if (key.IsTable())
                     {
-                        var template = selectTable.GetTableData(key, 0, 0, item.Value.ToString(), ht);
+                        var template = selectTable.GetTableData(key, 0, 0, item.Value.ToString(), ht).Item1;
                         if (template != null)
                         {
                             ht.Add(key, JToken.FromObject(template));
                         }
+                    }
+                    else if (key.Equals("total@"))
+                    {
+                        ht.Add("total", total);
                     }
                 }
             }

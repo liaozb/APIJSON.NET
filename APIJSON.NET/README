@@ -14,3 +14,6 @@ APIJSON后端部署 - .net core
       
 4.数据库支持(0:MySql,1:SqlServer,2:Sqlite,3:Oracle,4:PostgreSQL)
    APIJSON.NET文件夹下appsettings.json 设置对应数据连接
+
+5：权限配置 
+  ![avatar](1.png)

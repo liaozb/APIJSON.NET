@@ -15,9 +15,10 @@
     <PackageReference Include="MySql.Data" Version="8.0.11" />
     <PackageReference Include="sqlSugarCore" Version="4.6.4.9" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="3.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="3.0.0" />
   </ItemGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="http://json.schemastore.org/config" /></VisualStudio></ProjectExtensions>
 
 </Project>
