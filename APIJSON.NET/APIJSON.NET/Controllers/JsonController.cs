@@ -10,7 +10,7 @@
     using SqlSugar;
     using System.Linq;
     using APIJSON.NET.Services;
-
+    using System.Reflection;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -27,6 +27,7 @@
             db = _db;
             _identitySvc = identityService;
         }
+        
         /// <summary>
         /// 查询
         /// </summary>
@@ -64,11 +65,11 @@
                         {
                             string table = tables[0];
                             var temp = selectTable.GetTableData(table, page, count, where[0], null);
-                            if (query >0)
+                            if (query > 0)
                             {
                                 total = temp.Item2;
                             }
-                            
+
                             foreach (var dd in temp.Item1)
                             {
                                 var zht = new JObject();
@@ -125,6 +126,34 @@
                         }
                         ht.Add(key, htt);
                     }
+                    else if (key.Equals("func"))
+                    {
+                        jb = JObject.Parse(item.Value.ToString());
+                        Type type = typeof(MethodList);
+                        Object obj = Activator.CreateInstance(type);
+                        var bb = new JObject();
+                        foreach (var f in jb)
+                        {
+                            var types = new List<Type>();
+                            var param = new List<string>();
+                            foreach (var va in JArray.Parse(f.Value.ToString()))
+                            {
+                                types.Add(typeof(string));
+                                param.Add(va.ToString());
+                            }
+                            MethodInfo mt = type.GetMethod(f.Key, types.ToArray());
+                            if (mt == null)
+                            {
+                                bb.Add(f.Key, "没有获取到相应的函数!");
+                            }
+                            else
+                            {
+                                bb.Add(f.Key, JToken.FromObject(mt.Invoke(obj, param.ToArray())));
+                            }
+
+                        }
+                        ht.Add("func", bb);
+                    }
                     else if (key.IsTable())
                     {
                         var template = selectTable.GetFirstData(key, item.Value.ToString(), ht);
@@ -137,6 +166,7 @@
                     {
                         ht.Add("total", total);
                     }
+                    
                 }
             }
             catch (Exception ex)
