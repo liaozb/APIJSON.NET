@@ -26,7 +26,6 @@ namespace APIJSON.NET
                     d.passWordSalt = Guid.NewGuid().ToString();
                     d.passWord = SimpleStringCipher.Instance.Encrypt("123456", null, Encoding.ASCII.GetBytes(d.passWordSalt));
                     d.roleCode = "role1";
-                    d.CreateTime = DateTime.Now;
                     ds.Add(d);
                 }
                 db.LoginDb.InsertRange(ds.ToArray());

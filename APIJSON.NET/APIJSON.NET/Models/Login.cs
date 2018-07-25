@@ -15,7 +15,6 @@ namespace APIJSON.NET.Models
         public string passWordSalt { get; set; }
         [SugarColumn(Length = 100, ColumnDescription = "权限组")]
         public string roleCode { get; set; }
-        [SugarColumn(Length = 6)]
-        public DateTime CreateTime { get; set; }
+       
     }
 }
