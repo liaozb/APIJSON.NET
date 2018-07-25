@@ -10,7 +10,7 @@ namespace APIJSON.NET.Controllers
     {
         public IActionResult Index()
         {
-            return Redirect("/swagger");
+            return Redirect("index.html");
         }
     }
 }

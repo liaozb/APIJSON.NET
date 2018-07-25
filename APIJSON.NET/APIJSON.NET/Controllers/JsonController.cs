@@ -92,10 +92,10 @@
                                     }
                                     else
                                     {
-                                        var ddf = selectTable.GetTableData(subtable, 0, 0, where[i].ToString(), zht);
-                                        if (ddf.Item1 != null)
+                                        var ddf = selectTable.GetFirstData(subtable, where[i].ToString(), zht);
+                                        if (ddf != null)
                                         {
-                                            zht.Add(subtable, JToken.FromObject(ddf.Item1));
+                                            zht.Add(subtable, JToken.FromObject(ddf));
                                         }
                                     }
                                 }
@@ -127,7 +127,7 @@
                     }
                     else if (key.IsTable())
                     {
-                        var template = selectTable.GetTableData(key, 0, 0, item.Value.ToString(), ht).Item1;
+                        var template = selectTable.GetFirstData(key, item.Value.ToString(), ht);
                         if (template != null)
                         {
                             ht.Add(key, JToken.FromObject(template));

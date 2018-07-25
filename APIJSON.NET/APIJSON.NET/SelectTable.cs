@@ -7,15 +7,18 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    public class SelectTable: DbContext
+    public class SelectTable
     {
         private readonly IIdentityService _identitySvc;
         private readonly ITableMapper _tableMapper;
-        public SelectTable(IOptions<DbOptions> options, IIdentityService identityService, ITableMapper tableMapper) : base(options)
+        private readonly DbContext db;
+        public SelectTable(IIdentityService identityService, ITableMapper tableMapper, DbContext _db) 
         {
             _identitySvc = identityService;
             _tableMapper = tableMapper;
+            db = _db;
         }
+        
         public (dynamic,int) GetTableData(string subtable, int page, int count, string json, JObject dd)
         {   
             if (!subtable.IsTable())
@@ -30,7 +33,45 @@
             string selectrole = role.Item2;
             subtable = _tableMapper.GetTableName(subtable);
             JObject values = JObject.Parse(json);
-            var tb = Db.Queryable(subtable, "tb");
+            page = values["page"] == null ? page : int.Parse(values["page"].ToString());
+            count = values["count"] == null ? count : int.Parse(values["count"].ToString());
+            values.Remove("page");
+            values.Remove("count");
+            var tb = sugarQueryable(subtable, selectrole, values, dd);
+            if (count > 0)
+            {
+                int total = 0;
+                return (tb.ToPageList(page, count,ref total),total);
+            }
+            else
+            {
+                return (tb.ToList(),tb.Count());
+            }
+        }
+        public dynamic GetFirstData(string subtable,  string json, JObject dd)
+        {
+            if (!subtable.IsTable())
+            {
+                throw new Exception($"表名{subtable}不正确！");
+            }
+            var role = _identitySvc.GetSelectRole(subtable);
+            if (!role.Item1)//没有权限返回异常
+            {
+                throw new Exception(role.Item2);
+            }
+            string selectrole = role.Item2;
+            subtable = _tableMapper.GetTableName(subtable);
+            JObject values = JObject.Parse(json);
+            values.Remove("page");
+            values.Remove("count");
+            var tb = sugarQueryable(subtable, selectrole, values, dd);
+            return tb.First();
+            
+        }
+        private ISugarQueryable<System.Dynamic.ExpandoObject> sugarQueryable(string subtable, string selectrole, JObject values, JObject dd)
+        {
+          
+            var tb = db.Db.Queryable(subtable, "tb");
             if (values["@column"].IsValue())
             {
                 var str = new System.Text.StringBuilder(100);
@@ -63,10 +104,7 @@
             {
                 tb.Select(selectrole);
             }
-            page = values["page"] == null ? page : int.Parse(values["page"].ToString());
-            count = values["count"] == null ? count : int.Parse(values["count"].ToString());
-            values.Remove("page");
-            values.Remove("count");
+         
             List<IConditionalModel> conModels = new List<IConditionalModel>();
             foreach (var va in values)
             {
@@ -132,15 +170,15 @@
                     }
 
                     conModels.Add(new ConditionalModel() { FieldName = vakey.TrimEnd('@'), ConditionalType = ConditionalType.Equal, FieldValue = value });
-         
+
                 }
                 else if (vakey.IsTable()) //其他where条件
                 {
-                    conModels.Add(new ConditionalModel() { FieldName = vakey, ConditionalType =   ConditionalType.Equal, FieldValue = va.Value.ToString() });
+                    conModels.Add(new ConditionalModel() { FieldName = vakey, ConditionalType = ConditionalType.Equal, FieldValue = va.Value.ToString() });
                 }
             }
             tb.Where(conModels);
-     
+
             //排序
             if (values["@order"].IsValue())
             {
@@ -159,13 +197,7 @@
                     }
                 }
             }
-            else
-            {
-                if (count>0)
-                {
-                    tb.OrderBy("id");
-                }
-            }
+
             if (values["@group"].IsValue())
             {
                 var str = new System.Text.StringBuilder(100);
@@ -182,16 +214,7 @@
             {
                 tb.Having($"{values["@having"].ToString()}");
             }
-            if (count > 0)
-            {
-                int total = 0;
-                return (tb.ToPageList(page, count,ref total),total);
-            }
-            else
-            {
-                return (tb.ToList(),tb.Count());
-            }
-           
+            return tb;
         }
     }
 }

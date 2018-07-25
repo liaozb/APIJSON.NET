@@ -27,11 +27,7 @@
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.Configure<DbOptions>(options =>
-            {
-                options.DbType = (SqlSugar.DbType)Enum.Parse(typeof(SqlSugar.DbType), Configuration.GetConnectionString("DbType"));
-                options.ConnectionString = Configuration.GetConnectionString("ConnectionString");
-            });
+            
             services.Configure<List<Role>>(Configuration.GetSection("RoleList"));
             services.Configure<Dictionary<string,string>>(Configuration.GetSection("tablempper"));
             services.Configure<TokenAuthConfiguration>(tokenAuthConfig =>
@@ -70,6 +66,7 @@
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.UseStaticFiles();
             app.UseCors(_defaultCorsPolicyName);
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -78,6 +75,7 @@
                
             });
             app.UseAuthentication();
+            DbInit.Initialize(app);
         }
     }
 }
