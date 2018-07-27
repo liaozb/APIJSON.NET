@@ -48,7 +48,7 @@ namespace APIJSON.NET.Services
             var role = GetRole();
             if (role == null || role.Select == null || role.Select.Table == null)
             {
-                return (false, $"select.json权限配置不正确！");
+                return (false, $"appsettings.json权限配置不正确！");
             }
             string tablerole = role.Select.Table.FirstOrDefault(it => it.Equals(table, StringComparison.CurrentCultureIgnoreCase));
 

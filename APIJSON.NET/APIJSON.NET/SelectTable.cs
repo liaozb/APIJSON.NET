@@ -18,10 +18,29 @@
             _tableMapper = tableMapper;
             db = _db;
         }
-        
+        /// <summary>
+        /// 判断表名是否正确
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
+        public bool IsTable(string table)
+        {
+            return db.Db.DbMaintenance.GetTableInfoList().Any(it => it.Name.Equals(table, StringComparison.CurrentCultureIgnoreCase));
+        }
+        /// <summary>
+        /// 判断表的列名是否正确
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="col"></param>
+        /// <returns></returns>
+        public bool IsCol(string table, string col)
+        {
+            return db.Db.DbMaintenance.GetColumnInfosByTableName(table).Any(it => it.DbColumnName.Equals(table, StringComparison.CurrentCultureIgnoreCase));
+        }
+
         public (dynamic,int) GetTableData(string subtable, int page, int count, string json, JObject dd)
         {   
-            if (!subtable.IsTable())
+            if (!IsTable(subtable))
             {
                 throw new Exception($"表名{subtable}不正确！");
             }
@@ -32,6 +51,7 @@
             }
             string selectrole = role.Item2;
             subtable = _tableMapper.GetTableName(subtable);
+          
             JObject values = JObject.Parse(json);
             page = values["page"] == null ? page : int.Parse(values["page"].ToString());
             count = values["count"] == null ? count : int.Parse(values["count"].ToString());
@@ -50,7 +70,7 @@
         }
         public dynamic GetFirstData(string subtable,  string json, JObject dd)
         {
-            if (!subtable.IsTable())
+            if (IsTable(subtable))
             {
                 throw new Exception($"表名{subtable}不正确！");
             }
@@ -70,7 +90,6 @@
         }
         private ISugarQueryable<System.Dynamic.ExpandoObject> sugarQueryable(string subtable, string selectrole, JObject values, JObject dd)
         {
-          
             var tb = db.Db.Queryable(subtable, "tb");
             if (values["@column"].IsValue())
             {
@@ -80,7 +99,7 @@
                     string[] ziduan = item.Split(":");
                     if (ziduan.Length > 1)
                     {
-                        if (_identitySvc.ColIsRole(ziduan[0], selectrole.Split(",")))
+                        if (IsCol(subtable,ziduan[0]) &&_identitySvc.ColIsRole(ziduan[0], selectrole.Split(",")))
                         {
 
                             str.Append(ziduan[0] + " as " + ziduan[1] + ",");
@@ -88,7 +107,7 @@
                     }
                     else
                     {
-                        if (_identitySvc.ColIsRole(item, selectrole.Split(",")))
+                        if (IsCol(subtable, item) && _identitySvc.ColIsRole(item, selectrole.Split(",")))
                         {
                             str.Append(item + ",");
                         }
@@ -111,7 +130,7 @@
                 string vakey = va.Key.Trim();
                 if (vakey.EndsWith("$"))//模糊查询
                 {
-                    if (vakey.TrimEnd('$').IsTable())
+                    if (IsCol(subtable,vakey.TrimEnd('$')))
                     {
                         conModels.Add(new ConditionalModel() { FieldName = vakey.TrimEnd('$'), ConditionalType = ConditionalType.Like, FieldValue = va.Value.ToString() });
                     }
@@ -172,7 +191,7 @@
                     conModels.Add(new ConditionalModel() { FieldName = vakey.TrimEnd('@'), ConditionalType = ConditionalType.Equal, FieldValue = value });
 
                 }
-                else if (vakey.IsTable()) //其他where条件
+                else if (IsCol(subtable,vakey)) //其他where条件
                 {
                     conModels.Add(new ConditionalModel() { FieldName = vakey, ConditionalType = ConditionalType.Equal, FieldValue = va.Value.ToString() });
                 }
@@ -184,7 +203,7 @@
             {
                 foreach (var item in values["@order"].ToString().Split(","))
                 {
-                    if (item.Replace("-", "").IsTable())
+                    if (IsCol(subtable,item.Replace("-", "")))
                     {
                         if (item.EndsWith("-"))
                         {
@@ -203,7 +222,7 @@
                 var str = new System.Text.StringBuilder(100);
                 foreach (var and in values["@group"].ToString().Split(','))
                 {
-                    if (and.IsField())
+                    if (IsCol(subtable, and))
                     {
                         str.Append(and + ",");
                     }
@@ -212,7 +231,54 @@
             }
             if (values["@having"].IsValue())
             {
-                tb.Having($"{values["@having"].ToString()}");
+                List<IConditionalModel> hw = new List<IConditionalModel>();
+                JArray jArray = JArray.Parse(values["@having"].ToString());
+                foreach (var item in jArray)
+                {
+                    string and = item.ToString();
+                    var model = new ConditionalModel();
+                    if (and.Contains(">="))
+                    {
+                        model.FieldName = and.Split(new string[] { ">=" }, StringSplitOptions.RemoveEmptyEntries)[0];
+                        model.ConditionalType = ConditionalType.GreaterThanOrEqual;
+                        model.FieldValue = and.Split(new string[] { ">=" }, StringSplitOptions.RemoveEmptyEntries)[1];
+                    }
+                    else if (and.Contains("<="))
+                    {
+                        
+                        model.FieldName = and.Split(new string[] { "<=" }, StringSplitOptions.RemoveEmptyEntries)[0];
+                        model.ConditionalType = ConditionalType.LessThanOrEqual;
+                        model.FieldValue = and.Split(new string[] { "<=" }, StringSplitOptions.RemoveEmptyEntries)[1];
+                    }
+                    else if (and.Contains(">"))
+                    {
+                        model.FieldName = and.Split(new string[] { ">" }, StringSplitOptions.RemoveEmptyEntries)[0];
+                        model.ConditionalType = ConditionalType.GreaterThan;
+                        model.FieldValue = and.Split(new string[] { ">" }, StringSplitOptions.RemoveEmptyEntries)[1];
+                    }
+                    else if (and.Contains("<"))
+                    {
+                        model.FieldName = and.Split(new string[] { "<" }, StringSplitOptions.RemoveEmptyEntries)[0];
+                        model.ConditionalType = ConditionalType.LessThan;
+                        model.FieldValue = and.Split(new string[] { "<" }, StringSplitOptions.RemoveEmptyEntries)[1];
+                    }
+                    else if (and.Contains("!="))
+                    {
+                        model.FieldName = and.Split(new string[] { "!=" }, StringSplitOptions.RemoveEmptyEntries)[0];
+                        model.ConditionalType = ConditionalType.NoEqual;
+                        model.FieldValue = and.Split(new string[] { "!=" }, StringSplitOptions.RemoveEmptyEntries)[1];
+                    }
+                    else if (and.Contains("="))
+                    {
+                        model.FieldName = and.Split(new string[] { "=" }, StringSplitOptions.RemoveEmptyEntries)[0];
+                        model.ConditionalType = ConditionalType.Equal;
+                        model.FieldValue = and.Split(new string[] { "=" }, StringSplitOptions.RemoveEmptyEntries)[1];
+                    }
+                    hw.Add(model);
+                }
+           
+                var d=db.Db.Context.Utilities.ConditionalModelToSql(hw);
+                tb.Having(d.Key,d.Value);
             }
             return tb;
         }

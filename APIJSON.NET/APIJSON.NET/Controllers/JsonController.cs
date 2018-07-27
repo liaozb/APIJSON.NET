@@ -154,7 +154,7 @@
                         }
                         ht.Add("func", bb);
                     }
-                    else if (key.IsTable())
+                    else if (selectTable.IsTable(key))
                     {
                         var template = selectTable.GetFirstData(key, item.Value.ToString(), ht);
                         if (template != null)
