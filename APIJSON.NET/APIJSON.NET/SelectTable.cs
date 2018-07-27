@@ -35,15 +35,12 @@
         /// <returns></returns>
         public bool IsCol(string table, string col)
         {
-            return db.Db.DbMaintenance.GetColumnInfosByTableName(table).Any(it => it.DbColumnName.Equals(table, StringComparison.CurrentCultureIgnoreCase));
+            return db.Db.DbMaintenance.GetColumnInfosByTableName(table).Any(it => it.DbColumnName.Equals(col, StringComparison.CurrentCultureIgnoreCase));
         }
 
         public (dynamic,int) GetTableData(string subtable, int page, int count, string json, JObject dd)
         {   
-            if (!IsTable(subtable))
-            {
-                throw new Exception($"表名{subtable}不正确！");
-            }
+           
             var role = _identitySvc.GetSelectRole(subtable);
             if (!role.Item1)//没有权限返回异常
             {
@@ -70,10 +67,7 @@
         }
         public dynamic GetFirstData(string subtable,  string json, JObject dd)
         {
-            if (IsTable(subtable))
-            {
-                throw new Exception($"表名{subtable}不正确！");
-            }
+           
             var role = _identitySvc.GetSelectRole(subtable);
             if (!role.Item1)//没有权限返回异常
             {
@@ -90,6 +84,10 @@
         }
         private ISugarQueryable<System.Dynamic.ExpandoObject> sugarQueryable(string subtable, string selectrole, JObject values, JObject dd)
         {
+            if (!IsTable(subtable))
+            {
+                throw new Exception($"表名{subtable}不正确！");
+            }
             var tb = db.Db.Queryable(subtable, "tb");
             if (values["@column"].IsValue())
             {
