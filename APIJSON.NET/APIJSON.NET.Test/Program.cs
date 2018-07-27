@@ -39,8 +39,10 @@ namespace APIJSON.NET.Test
             //                        ");
             //IRestResponse response2 = client.Execute(request);
             //Console.WriteLine(response2.Content);
-            
-            
+            string str = "isContain(praiseUserIdList,userId)";
+            Console.WriteLine(str.Substring(0,str.IndexOf("(")));
+            Console.WriteLine(str.Substring(str.IndexOf("(")+1).TrimEnd(')'));
+
             Console.ReadLine();
         }
     }

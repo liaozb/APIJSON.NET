@@ -97,6 +97,7 @@
                                         if (ddf != null)
                                         {
                                             zht.Add(subtable, JToken.FromObject(ddf));
+
                                         }
                                     }
                                 }
@@ -129,28 +130,19 @@
                     else if (key.Equals("func"))
                     {
                         jb = JObject.Parse(item.Value.ToString());
-                        Type type = typeof(MethodList);
+                        Type type = typeof(FuncList);
                         Object obj = Activator.CreateInstance(type);
                         var bb = new JObject();
                         foreach (var f in jb)
                         {
                             var types = new List<Type>();
-                            var param = new List<string>();
+                            var param = new List<object>();
                             foreach (var va in JArray.Parse(f.Value.ToString()))
                             {
-                                types.Add(typeof(string));
-                                param.Add(va.ToString());
+                                types.Add(typeof(object));
+                                param.Add(va);
                             }
-                            MethodInfo mt = type.GetMethod(f.Key, types.ToArray());
-                            if (mt == null)
-                            {
-                                bb.Add(f.Key, "没有获取到相应的函数!");
-                            }
-                            else
-                            {
-                                bb.Add(f.Key, JToken.FromObject(mt.Invoke(obj, param.ToArray())));
-                            }
-
+                            bb.Add(f.Key, JToken.FromObject(selectTable.ExecFunc(f.Key,param.ToArray(), types.ToArray())));
                         }
                         ht.Add("func", bb);
                     }

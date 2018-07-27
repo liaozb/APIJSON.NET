@@ -7,6 +7,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
+    using System.Text.RegularExpressions;
+
     public class SelectTable
     {
         private readonly IIdentityService _identitySvc;
@@ -36,6 +39,24 @@
         public bool IsCol(string table, string col)
         {
             return db.Db.DbMaintenance.GetColumnInfosByTableName(table).Any(it => it.DbColumnName.Equals(col, StringComparison.CurrentCultureIgnoreCase));
+        }
+        /// <summary>
+        /// 动态调用方法
+        /// </summary>
+        /// <param name="funcname"></param>
+        /// <param name="param"></param>
+        /// <param name="types"></param>
+        /// <returns></returns>
+        public object ExecFunc(string funcname,object[] param, Type[] types)
+        {
+            Type type = typeof(FuncList);
+            Object obj = Activator.CreateInstance(type);
+            MethodInfo mt = type.GetMethod(funcname,types);
+            if (mt==null)
+            {
+                throw new Exception($"{funcname}没有获取到相应的函数");
+            }
+            return mt.Invoke(obj, param);
         }
 
         public (dynamic,int) GetTableData(string subtable, int page, int count, string json, JObject dd)
@@ -78,8 +99,26 @@
             JObject values = JObject.Parse(json);
             values.Remove("page");
             values.Remove("count");
-            var tb = sugarQueryable(subtable, selectrole, values, dd);
-            return tb.First();
+            var tb = sugarQueryable(subtable, selectrole, values, dd).First();
+            var dic = (IDictionary<string, object>)tb;
+            foreach (var item in values.Properties().Where(it => it.Name.EndsWith("()")))
+            {
+                if (item.Value.IsValue())
+                {
+                    string func = item.Value.ToString().Substring(0, item.Value.ToString().IndexOf("("));
+                    string param = item.Value.ToString().Substring(item.Value.ToString().IndexOf("(") + 1).TrimEnd(')') ;
+                    var types = new List<Type>();
+                    var paramss = new List<object>();
+                    foreach (var va in param.Split(","))
+                    {
+                        types.Add(typeof(object));
+                        paramss.Add(tb.Where(it => it.Key.Equals(va)).Select(i => i.Value));
+                    }
+                  dic[item.Name] =ExecFunc(func, paramss.ToArray(), types.ToArray());
+                }
+            }
+           
+            return tb;
             
         }
         private ISugarQueryable<System.Dynamic.ExpandoObject> sugarQueryable(string subtable, string selectrole, JObject values, JObject dd)
