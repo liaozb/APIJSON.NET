@@ -34,6 +34,7 @@
         /// <param name="json"></param>
         /// <returns></returns>
         [HttpPost("/get")]
+
         public ActionResult Query([FromBody]string json)
         {
             json = HttpUtility.UrlDecode(json);
@@ -146,7 +147,11 @@
                         }
                         ht.Add("func", bb);
                     }
-                    else if (selectTable.IsTable(key))
+                    else if (key.Equals("total@"))
+                    {
+                        ht.Add("total", total);
+                    }
+                    else
                     {
                         var template = selectTable.GetFirstData(key, item.Value.ToString(), ht);
                         if (template != null)
@@ -154,11 +159,7 @@
                             ht.Add(key, JToken.FromObject(template));
                         }
                     }
-                    else if (key.Equals("total@"))
-                    {
-                        ht.Add("total", total);
-                    }
-                    
+
                 }
             }
             catch (Exception ex)

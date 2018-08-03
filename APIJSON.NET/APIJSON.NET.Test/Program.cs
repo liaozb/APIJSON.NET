@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestSharp;
+using System;
 
 namespace APIJSON.NET.Test
 {
@@ -6,44 +7,47 @@ namespace APIJSON.NET.Test
     {
         static void Main(string[] args)
         {
-            //var client = new RestClient("http://localhost:5000/");
-            //var request = new RestRequest("get", Method.POST);
-            //request.AddJsonBody(@"{
-            //                'User': {
-            //                    'id': 38710
-            //                }
-            //            }
-            //            ");
-            //IRestResponse response = client.Execute(request);
-            //Console.WriteLine(response.Content);
+            var client = new RestClient("http://localhost:5000/");
 
-            //request = new RestRequest("get", Method.POST);
-            //request.AddJsonBody(@"{
-            //    'User': {
-            //        'id': 38710
-            //    },
-            //    '[]': {
-            //        'page': 0,
-            //        'count': 3,
-            //        'Moment': {
-            //            'userId': 38710
-            //        },
-            //        'Comment[]': {
-            //            'count': 3,
-            //            'Comment': {
-            //                'momentId@': '[]/Moment/id'
-            //            }
-            //        }
-            //    }
-            //}
-            //                        ");
-            //IRestResponse response2 = client.Execute(request);
-            //Console.WriteLine(response2.Content);
-            string str = "isContain(praiseUserIdList,userId)";
-            Console.WriteLine(str.Substring(0,str.IndexOf("(")));
-            Console.WriteLine(str.Substring(str.IndexOf("(")+1).TrimEnd(')'));
+            var login = new RestRequest("token", Method.POST);
+            login.AddJsonBody(new TokenInput() { username = "admin1", password = "123456" });
+            IRestResponse<TokenData> token = client.Execute<TokenData>(login);
+
+            Console.WriteLine(token.Data.data.AccessToken);
+
+            var request = new RestRequest("get", Method.POST);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Authorization", "Bearer " + token.Data.data.AccessToken);
+            request.AddJsonBody(@"{
+                            'User': {
+                                'id': 38710
+                            }
+                        }
+                        ");
+            IRestResponse response = client.Execute(request);
+            Console.WriteLine(response.Content);
+ 
+       
+
 
             Console.ReadLine();
         }
+    }
+    public class TokenInput
+    {
+        public string username { get; set; }
+        public string password { get; set; }
+    }
+    public class TokenData
+    {
+        public AuthenticateResultModel data { get; set; }
+    }
+    public class AuthenticateResultModel
+    {
+        public string AccessToken { get; set; }
+
+        public int ExpireInSeconds { get; set; }
+
+
     }
 }

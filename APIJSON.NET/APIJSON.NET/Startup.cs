@@ -75,6 +75,7 @@
                
             });
             app.UseAuthentication();
+            app.UseJwtTokenMiddleware();
             DbInit.Initialize(app);
         }
     }

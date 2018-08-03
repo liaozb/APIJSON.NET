@@ -6,6 +6,7 @@
     using SqlSugar;
     using System;
     using System.Collections.Generic;
+    using System.Dynamic;
     using System.Linq;
     using System.Reflection;
     using System.Text.RegularExpressions;
@@ -121,7 +122,7 @@
             return tb;
             
         }
-        private ISugarQueryable<System.Dynamic.ExpandoObject> sugarQueryable(string subtable, string selectrole, JObject values, JObject dd)
+        private ISugarQueryable<ExpandoObject> sugarQueryable(string subtable, string selectrole, JObject values, JObject dd)
         {
             if (!IsTable(subtable))
             {

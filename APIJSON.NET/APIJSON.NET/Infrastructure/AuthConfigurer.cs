@@ -16,9 +16,9 @@
             {
                 services.AddAuthentication(sharedOptions =>
                 {
-                    sharedOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    sharedOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                }).AddJwtBearer(options =>
+                    sharedOptions.DefaultAuthenticateScheme = "JwtBearer";
+                    sharedOptions.DefaultChallengeScheme = "JwtBearer";
+                }).AddJwtBearer("JwtBearer", options =>
                     {
                         options.Audience = configuration["Authentication:JwtBearer:Audience"];
                         options.TokenValidationParameters = new TokenValidationParameters
