@@ -74,7 +74,7 @@ namespace APIJSON.NET.Controllers
         [HttpGet] 
         public IActionResult GetRole()
         {
-            return Ok(User.Identity.Name);
+            return Ok(User.FindFirstValue(ClaimTypes.Role));
         }
         private string CreateAccessToken(IEnumerable<Claim> claims, TimeSpan? expiration = null)
         {

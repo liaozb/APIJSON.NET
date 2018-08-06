@@ -200,7 +200,7 @@
                     var dt = new Dictionary<string, object>();
                     foreach (var f in JObject.Parse(item.Value.ToString()))
                     {
-                        if (f.Key.ToLower() != "id" && role.Insert.Column.Contains(f.Key, StringComparer.CurrentCultureIgnoreCase))
+                        if (f.Key.ToLower() != "id" && selectTable.IsCol(key, f.Key) && (role.Insert.Column.Contains("*") || role.Insert.Column.Contains(f.Key, StringComparer.CurrentCultureIgnoreCase)))
                             dt.Add(f.Key, f.Value);
                     }
                     int id = db.Db.Insertable(dt).AS(key).ExecuteReturnIdentity();
@@ -252,7 +252,7 @@
                     dt.Add("id", value["id"]);
                     foreach (var f in value)
                     {
-                        if (f.Key.ToLower() != "id"&& role.Update.Column.Contains(f.Key, StringComparer.CurrentCultureIgnoreCase))
+                        if (f.Key.ToLower() != "id"&& selectTable.IsCol(key,f.Key) && (role.Update.Column.Contains ("*")||role.Update.Column.Contains(f.Key, StringComparer.CurrentCultureIgnoreCase)))
                         {
                             dt.Add(f.Key, f.Value);
                         }
@@ -290,7 +290,7 @@
                     string key = item.Key.Trim();
                     var value = JObject.Parse(item.Value.ToString());
                     var sb = new System.Text.StringBuilder(100);
-                    sb.Append($"delete [{key}] where");
+                    sb.Append($"delete FROM {key} where");
                     if (role.Delete==null||role.Delete.Table==null)
                     {
                         ht["code"] = "500";

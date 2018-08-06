@@ -8,7 +8,7 @@
     using System.Collections.Generic;
     using System.Dynamic;
     using System.Linq;
-    using System.Reflection;
+    using AspectCore.Extensions.Reflection;
     using System.Text.RegularExpressions;
 
     public class SelectTable
@@ -50,14 +50,19 @@
         /// <returns></returns>
         public object ExecFunc(string funcname,object[] param, Type[] types)
         {
-            Type type = typeof(FuncList);
-            Object obj = Activator.CreateInstance(type);
-            MethodInfo mt = type.GetMethod(funcname,types);
-            if (mt==null)
-            {
-                throw new Exception($"{funcname}没有获取到相应的函数");
-            }
-            return mt.Invoke(obj, param);
+            var method = typeof(FuncList).GetMethod(funcname);
+     
+            var reflector = method.GetReflector();
+            var result = reflector.Invoke(new FuncList(), param);
+            //Type type = typeof(FuncList);
+            //Object obj = Activator.CreateInstance(type);
+            //MethodInfo mt = type.GetMethod(funcname,types);
+            //if (mt==null)
+            //{
+            //    throw new Exception($"{funcname}没有获取到相应的函数");
+            //}
+            //return mt.Invoke(obj, param);
+            return result;
         }
 
         public (dynamic,int) GetTableData(string subtable, int page, int count, string json, JObject dd)
