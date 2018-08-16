@@ -32,7 +32,7 @@ namespace APIJSON.NET.Services
         public Role GetRole()
         {
             var role = new Role();
-            if (string.IsNullOrEmpty(GetUserRoleName()))
+            if (string.IsNullOrEmpty(GetUserRoleName()))//没登录默认取第一个
             {
                 role = roles.FirstOrDefault();
 
