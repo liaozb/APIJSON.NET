@@ -4,7 +4,9 @@ using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -12,37 +14,53 @@ using Newtonsoft.Json.Linq;
 
 namespace APIJSON.NET.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class TokenController : ControllerBase
     {
-        private DbOptions _options;
+        private DbContext db;
         private readonly IOptions<TokenAuthConfiguration> _configuration;
-        public TokenController(IOptions<DbOptions> options,  IOptions<TokenAuthConfiguration> configuration)
+        public TokenController(DbContext _db, IOptions<TokenAuthConfiguration> configuration)
         {
-            this._options = options.Value;
             _configuration = configuration;
+            db = _db;
         }
         [HttpPost("/token")]
-        public IActionResult Create(string username, string password)
+        [AllowAnonymous]
+        public IActionResult Create([FromBody]TokenInput input)
         {
             JObject ht = new JObject();
             ht.Add("code", "200");
             ht.Add("msg", "success");
-            if (username!=password)
+            var us = db.LoginDb.GetSingle(it => it.userName == input.username);
+            if (us==null)
             {
-
+                ht["code"] = "201";
+                ht["msg"] = "用户名或者密码错误！";
+                return Ok(ht);
             }
-
+            string str = SimpleStringCipher.Instance.Encrypt(input.password,null, Encoding.ASCII.GetBytes(us.passWordSalt));
+            if (!us.passWord.Equals(str))
+            {
+                ht["code"]="201";
+                ht["msg"]= "用户名或者密码错误！";
+                return Ok(ht);
+            }
             var identity = new ClaimsIdentity();
-            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, username));
-            identity.AddClaim(new Claim(ClaimTypes.Name, username));
-            identity.AddClaim(new Claim(ClaimTypes.Role, ""));
-            identity.AddClaim(new Claim(JwtRegisteredClaimNames.Sub, username));
-            identity.AddClaim(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
-            identity.AddClaim(new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.Now.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64));
-          
-            var accessToken = CreateAccessToken(identity.Claims.ToList());
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, us.userId.ToString(CultureInfo.InvariantCulture)));
+            identity.AddClaim(new Claim(ClaimTypes.Name, us.userId.ToString(CultureInfo.InvariantCulture)));
+            identity.AddClaim(new Claim(ClaimTypes.Role, us.roleCode.ToString(CultureInfo.InvariantCulture)));
+            var claims = identity.Claims.ToList();
+
+            claims.AddRange(new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub,us.userId.ToString(CultureInfo.InvariantCulture)),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.Now.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
+            });
+
+            var accessToken = CreateAccessToken(claims);
 
             var data = new AuthenticateResultModel()
             {
@@ -52,6 +70,11 @@ namespace APIJSON.NET.Controllers
     
             ht.Add("data", JToken.FromObject(data));
             return Ok(ht);
+        }
+        [HttpGet] 
+        public IActionResult GetRole()
+        {
+            return Ok(User.FindFirstValue(ClaimTypes.Role));
         }
         private string CreateAccessToken(IEnumerable<Claim> claims, TimeSpan? expiration = null)
         {
@@ -68,6 +91,11 @@ namespace APIJSON.NET.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
         }
+    }
+    public class TokenInput
+    {
+        public string username { get; set; }
+        public string password { get; set; }
     }
     public class AuthenticateResultModel
     {

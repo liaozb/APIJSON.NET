@@ -1,9 +1,13 @@
 ﻿namespace APIJSON.NET
 {
     using System;
+    using System.Collections.Generic;
     using System.Text;
+    using APIJSON.NET.Models;
+    using APIJSON.NET.Services;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -23,11 +27,9 @@
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.Configure<DbOptions>(options =>
-            {
-                options.DbType = (SqlSugar.DbType)Enum.Parse(typeof(SqlSugar.DbType), Configuration.GetConnectionString("DbType"));
-                options.ConnectionString = Configuration.GetConnectionString("ConnectionString");
-            });
+            
+            services.Configure<List<Role>>(Configuration.GetSection("RoleList"));
+            services.Configure<Dictionary<string,string>>(Configuration.GetSection("tablempper"));
             services.Configure<TokenAuthConfiguration>(tokenAuthConfig =>
             {
                 tokenAuthConfig.SecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Authentication:JwtBearer:SecurityKey"]));
@@ -47,28 +49,35 @@
             {
                 c.SwaggerDoc("v1", new Info { Title = "APIJSON.NET", Version = "v1" });
             });
-            services.AddTransient<DbContext>();
-            services.AddSingleton<JsonToSql>();
+            services.AddSingleton<DbContext>();
+            services.AddSingleton<SelectTable>();
             services.AddSingleton<TokenAuthConfiguration>();
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IIdentityService, IdentityService>();
+            services.AddTransient<ITableMapper, TableMapper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            app.UseAuthentication();
+            app.UseMvc(routes =>
             {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseMvc();
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
+            app.UseStaticFiles();
             app.UseCors(_defaultCorsPolicyName);
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+               
             });
-            app.UseAuthentication();
+      
+            app.UseJwtTokenMiddleware();
+            DbInit.Initialize(app);
         }
     }
 }
