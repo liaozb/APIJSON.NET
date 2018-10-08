@@ -11,9 +11,11 @@
     using System.Linq;
     using APIJSON.NET.Services;
     using System.Reflection;
+    using Microsoft.AspNetCore.Cors;
 
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("localhost")]
     public class JsonController : ControllerBase
     {
 

@@ -54,14 +54,6 @@
      
             var reflector = method.GetReflector();
             var result = reflector.Invoke(new FuncList(), param);
-            //Type type = typeof(FuncList);
-            //Object obj = Activator.CreateInstance(type);
-            //MethodInfo mt = type.GetMethod(funcname,types);
-            //if (mt==null)
-            //{
-            //    throw new Exception($"{funcname}没有获取到相应的函数");
-            //}
-            //return mt.Invoke(obj, param);
             return result;
         }
 

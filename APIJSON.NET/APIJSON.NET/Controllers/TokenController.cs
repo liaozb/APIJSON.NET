@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -17,6 +18,7 @@ namespace APIJSON.NET.Controllers
     [Route("api/[controller]/[action]")]
     [ApiController]
     [Authorize]
+    [EnableCors("localhost")]
     public class TokenController : ControllerBase
     {
         private DbContext db;
@@ -28,7 +30,7 @@ namespace APIJSON.NET.Controllers
         }
         [HttpPost("/token")]
         [AllowAnonymous]
-        public IActionResult Create([FromBody]TokenInput input)
+        public ActionResult Create([FromBody]TokenInput input)
         {
             JObject ht = new JObject();
             ht.Add("code", "200");
@@ -72,7 +74,7 @@ namespace APIJSON.NET.Controllers
             return Ok(ht);
         }
         [HttpGet] 
-        public IActionResult GetRole()
+        public ActionResult GetRole()
         {
             return Ok(User.FindFirstValue(ClaimTypes.Role));
         }
