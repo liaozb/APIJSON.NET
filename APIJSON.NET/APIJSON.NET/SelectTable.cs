@@ -126,6 +126,8 @@
                 throw new Exception($"表名{subtable}不正确！");
             }
             var tb = db.Db.Queryable(subtable, "tb");
+            
+           
             if (values["@column"].IsValue())
             {
                 var str = new System.Text.StringBuilder(100);
@@ -160,6 +162,10 @@
             }
          
             List<IConditionalModel> conModels = new List<IConditionalModel>();
+            if (values["identity"].IsValue())
+            {
+                conModels.Add(new ConditionalModel() { FieldName = values["identity"].ToString(), ConditionalType = ConditionalType.Equal, FieldValue = _identitySvc.GetUserIdentity() });
+            }
             foreach (var va in values)
             {
                 string vakey = va.Key.Trim();
