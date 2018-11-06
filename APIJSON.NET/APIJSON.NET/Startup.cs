@@ -12,7 +12,11 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
+    using SqlKata.Execution;
     using Swashbuckle.AspNetCore.Swagger;
+    using MySql.Data.MySqlClient;
+    using SqlKata.Compilers;
+
     public class Startup
     {
         private const string _defaultCorsPolicyName = "localhost";
@@ -26,8 +30,7 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            
+         
             services.Configure<List<Role>>(Configuration.GetSection("RoleList"));
             services.Configure<Dictionary<string,string>>(Configuration.GetSection("tablempper"));
             services.Configure<TokenAuthConfiguration>(tokenAuthConfig =>
@@ -40,9 +43,11 @@
             });
             AuthConfigurer.Configure(services, Configuration);
 
-            services.AddCors( options => options.AddPolicy( _defaultCorsPolicyName, builder => builder.AllowAnyOrigin()
+            services.AddCors( options => options.AddPolicy( _defaultCorsPolicyName, 
+                builder => 
+                builder.AllowAnyOrigin()
                   .AllowAnyHeader()
-                  .AllowAnyMethod()
+                  .AllowAnyMethod().AllowCredentials()
                   ));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSwaggerGen(c =>
@@ -55,12 +60,15 @@
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<ITableMapper, TableMapper>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
             app.UseAuthentication();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
