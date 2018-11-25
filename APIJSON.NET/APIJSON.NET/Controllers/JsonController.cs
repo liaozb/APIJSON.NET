@@ -292,7 +292,7 @@
                     string key = item.Key.Trim();
                     var value = JObject.Parse(item.Value.ToString());
                     var sb = new System.Text.StringBuilder(100);
-                    sb.Append($"delete FROM {key} where");
+                    sb.Append($"delete FROM {key} where ");
                     if (role.Delete==null||role.Delete.Table==null)
                     {
                         ht["code"] = "500";

@@ -18,6 +18,14 @@ namespace APIJSON.NET
                 IsAutoCloseConnection = true,
                 InitKeyType= InitKeyType.Attribute
             });
+            Db.Aop.OnLogExecuted = (sql, pars) => //SQL执行完事件
+            {
+                 
+            };
+            Db.Aop.OnLogExecuting = (sql, pars) => //SQL执行前事件
+            {
+
+            };
         }
         public SqlSugarClient Db;
         public DbSet<Login> LoginDb { get { return new DbSet<Login>(Db); } }
