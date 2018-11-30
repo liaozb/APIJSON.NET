@@ -251,7 +251,7 @@
                     }
 
                     var dt = new Dictionary<string, object>();
-                    dt.Add("id", value["id"]);
+                    dt.Add("id", value["id"].ToString());
                     foreach (var f in value)
                     {
                         if (f.Key.ToLower() != "id"&& selectTable.IsCol(key,f.Key) && (role.Update.Column.Contains ("*")||role.Update.Column.Contains(f.Key, StringComparer.CurrentCultureIgnoreCase)))
