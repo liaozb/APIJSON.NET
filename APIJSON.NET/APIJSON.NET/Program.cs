@@ -13,7 +13,9 @@ namespace APIJSON.NET
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args).UseStartup<Startup>();
+            return WebHost.CreateDefaultBuilder(args)
+                .UseUrls("http://*:89")
+                .UseStartup<Startup>();
         }
     }
 }

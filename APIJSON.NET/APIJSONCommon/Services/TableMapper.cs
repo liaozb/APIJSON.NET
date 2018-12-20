@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace APIJSON.NET.Services
+namespace ApiJson.Common.Services
 {
     public class TableMapper : ITableMapper
     {
@@ -18,7 +18,7 @@ namespace APIJSON.NET.Services
         {
             if (_options.ContainsKey(oldname))
             {
-                return _options.GetValueOrDefault(oldname);
+                return _options[oldname];
             }
             return oldname;
         }

@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIJSON.NET", "APIJSON.NET\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIJSON.NET.Test", "APIJSON.NET.Test\APIJSON.NET.Test.csproj", "{0828346E-207E-49F8-AD57-E1AB6B6E4077}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiJson.Common", "APIJSONCommon\ApiJson.Common.csproj", "{D0DF93E9-DD06-425B-96FE-935E9A82D327}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0828346E-207E-49F8-AD57-E1AB6B6E4077}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0828346E-207E-49F8-AD57-E1AB6B6E4077}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0828346E-207E-49F8-AD57-E1AB6B6E4077}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0DF93E9-DD06-425B-96FE-935E9A82D327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0DF93E9-DD06-425B-96FE-935E9A82D327}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0DF93E9-DD06-425B-96FE-935E9A82D327}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0DF93E9-DD06-425B-96FE-935E9A82D327}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -50,7 +50,7 @@ namespace APIJSON.NET.Services
             {
                 return (false, $"appsettings.json权限配置不正确！");
             }
-            string tablerole = role.Select.Table.FirstOrDefault(it => it.Equals(table, StringComparison.CurrentCultureIgnoreCase));
+            string tablerole = role.Select.Table.FirstOrDefault(it => it.Equals(table, StringComparison.CurrentCultureIgnoreCase) || it=="*");
 
             if (string.IsNullOrEmpty(tablerole))
             {

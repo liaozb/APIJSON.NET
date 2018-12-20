@@ -1,17 +1,18 @@
 ﻿namespace APIJSON.NET.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Web;
-    using APIJSON.NET.Models;
+    using APIJSON.NET.Services;
+    using Microsoft.AspNetCore.Cors;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Options;
     using Newtonsoft.Json.Linq;
     using SqlSugar;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
-    using APIJSON.NET.Services;
-    using System.Reflection;
-    using Microsoft.AspNetCore.Cors;
+    using System.Net.Http;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Web;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -22,14 +23,63 @@
         private SelectTable selectTable;
         private DbContext db;
         private readonly IIdentityService _identitySvc;
-        public JsonController(SelectTable _selectTable, DbContext _db,IIdentityService identityService)
+        public JsonController(SelectTable _selectTable, DbContext _db, IIdentityService identityService)
         {
 
             selectTable = _selectTable;
             db = _db;
             _identitySvc = identityService;
         }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Test()
+        {
+            string str = "{\"page\":1,\"count\":3,\"query\":2,\"Org\":{\"@column\":\"Id,Name\"}}";
+            var content = new StringContent(str);
+           
+            HttpClient hc = new HttpClient();
+            var response = hc.PostAsync("http://localhost:89/api/json/org", content).Result;
+            string result = (response.Content.ReadAsStringAsync().Result);//result就是返回的结果。
+            return Content(result);
+        }
+
+        [HttpPost("{table}")]
+
+        public async Task<ActionResult> Query1([FromRoute]string table)
+        {
+
+            string json = string.Empty;
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                json= await reader.ReadToEndAsync();
+            }
+
+            json = HttpUtility.UrlDecode(json);
+            JObject ht = new JObject();
+
+            JObject jobject = JObject.Parse(json);
+            ht.Add(table + "[]", jobject);
+            ht.Add("total@", "");
+
+            bool hasTableKey = false;
+            foreach (var item in jobject)
+            {
+                if (item.Key.Equals(table, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    hasTableKey = true;
+                    break;
+                }
+            }
+            if (!hasTableKey)
+            {
+                jobject.Add(table,new JObject());
+            }
+            var newJson = Newtonsoft.Json.JsonConvert.SerializeObject(ht);
+            return Query(newJson);
+        }
         /// <summary>
         /// 查询
         /// </summary>
@@ -123,7 +173,12 @@
                         var htt = new JArray();
                         foreach (var t in jb)
                         {
-                            foreach (var d in selectTable.GetTableData(t.Key, page, count, t.Value.ToString(), null).Item1)
+                            var temp = selectTable.GetTableData(t.Key, page, count, t.Value.ToString(), null);
+                            if (query > 0)
+                            {
+                                total = temp.Item2;
+                            }
+                            foreach (var d in temp.Item1)
                             {
                                 htt.Add(JToken.FromObject(d));
                             }
@@ -145,7 +200,7 @@
                                 types.Add(typeof(object));
                                 param.Add(va);
                             }
-                            bb.Add(f.Key, JToken.FromObject(selectTable.ExecFunc(f.Key,param.ToArray(), types.ToArray())));
+                            bb.Add(f.Key, JToken.FromObject(selectTable.ExecFunc(f.Key, param.ToArray(), types.ToArray())));
                         }
                         ht.Add("func", bb);
                     }
@@ -254,7 +309,7 @@
                     dt.Add("id", value["id"].ToString());
                     foreach (var f in value)
                     {
-                        if (f.Key.ToLower() != "id"&& selectTable.IsCol(key,f.Key) && (role.Update.Column.Contains ("*")||role.Update.Column.Contains(f.Key, StringComparer.CurrentCultureIgnoreCase)))
+                        if (f.Key.ToLower() != "id" && selectTable.IsCol(key, f.Key) && (role.Update.Column.Contains("*") || role.Update.Column.Contains(f.Key, StringComparer.CurrentCultureIgnoreCase)))
                         {
                             dt.Add(f.Key, f.Value);
                         }
@@ -293,13 +348,13 @@
                     var value = JObject.Parse(item.Value.ToString());
                     var sb = new System.Text.StringBuilder(100);
                     sb.Append($"delete FROM {key} where ");
-                    if (role.Delete==null||role.Delete.Table==null)
+                    if (role.Delete == null || role.Delete.Table == null)
                     {
                         ht["code"] = "500";
                         ht["msg"] = "delete权限未配置";
                         break;
                     }
-                    if (!role.Delete.Table.Contains(key,StringComparer.CurrentCultureIgnoreCase))
+                    if (!role.Delete.Table.Contains(key, StringComparer.CurrentCultureIgnoreCase))
                     {
                         ht["code"] = "500";
                         ht["msg"] = $"没权限删除{key}";
