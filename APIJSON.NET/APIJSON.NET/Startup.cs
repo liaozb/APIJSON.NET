@@ -1,9 +1,8 @@
 ﻿namespace APIJSON.NET
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using APIJSON.NET.Models;
+    using ApiJson.Common;
+    using ApiJson.Common.Models;
+    using ApiJson.Common.Services;
     using APIJSON.NET.Services;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -12,10 +11,10 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
-    using SqlKata.Execution;
     using Swashbuckle.AspNetCore.Swagger;
-    using MySql.Data.MySqlClient;
-    using SqlKata.Compilers;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
 
     public class Startup
     {
@@ -30,9 +29,9 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-         
+
             services.Configure<List<Role>>(Configuration.GetSection("RoleList"));
-            services.Configure<Dictionary<string,string>>(Configuration.GetSection("tablempper"));
+            services.Configure<Dictionary<string, string>>(Configuration.GetSection("tablempper"));
             services.Configure<TokenAuthConfiguration>(tokenAuthConfig =>
             {
                 tokenAuthConfig.SecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Authentication:JwtBearer:SecurityKey"]));
@@ -43,19 +42,18 @@
             });
             AuthConfigurer.Configure(services, Configuration);
 
-            services.AddCors( options => options.AddPolicy( _defaultCorsPolicyName, 
-                builder => 
-                builder.AllowAnyOrigin()
-                  .AllowAnyHeader()
-                  .AllowAnyMethod().AllowCredentials()
-                  ));
+            services.AddCors(options => options.AddPolicy(_defaultCorsPolicyName,
+               builder =>
+               builder.AllowAnyOrigin()
+                 .AllowAnyHeader()
+                 .AllowAnyMethod().AllowCredentials()
+                 ));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "APIJSON.NET", Version = "v1" });
             });
             services.AddSingleton<DbContext>();
-            services.AddSingleton<SelectTable>();
             services.AddSingleton<TokenAuthConfiguration>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IIdentityService, IdentityService>();
@@ -81,9 +79,9 @@
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-               
+
             });
-      
+
             app.UseJwtTokenMiddleware();
         }
     }

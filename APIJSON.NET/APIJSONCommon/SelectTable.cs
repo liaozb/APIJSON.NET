@@ -90,6 +90,29 @@ namespace ApiJson.Common
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
+        public JObject Query(string queryJson)
+        {
+            JObject resultObj = new JObject();
+
+            try
+            {
+                JObject queryJobj = JObject.Parse(queryJson);
+                resultObj = Query(queryJobj);
+            }
+            catch (Exception ex)
+            {
+                resultObj.Add("code", "500");
+                resultObj.Add("msg", ex.Message);
+            }
+
+            return resultObj;
+        }
+
+        /// <summary>
+        /// 解析并查询
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public JObject Query(JObject queryObj)
         {
             JObject resultObj = new JObject();

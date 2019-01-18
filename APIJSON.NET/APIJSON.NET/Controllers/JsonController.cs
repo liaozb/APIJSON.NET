@@ -1,6 +1,7 @@
 ﻿namespace APIJSON.NET.Controllers
 {
-    using APIJSON.NET.Services;
+    using ApiJson.Common;
+    using ApiJson.Common.Services;
     using Microsoft.AspNetCore.Cors;
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json.Linq;
@@ -20,15 +21,16 @@
     public class JsonController : ControllerBase
     {
 
-        private SelectTable selectTable;
-        private DbContext db;
+        private SelectTable _selectTable;
+        private DbContext _db;
         private readonly IIdentityService _identitySvc;
-        public JsonController(SelectTable _selectTable, DbContext _db, IIdentityService identityService)
+        private ITableMapper _tableMapper;
+        public JsonController(ITableMapper tableMapper, DbContext db, IIdentityService identityService)
         {
-
-            selectTable = _selectTable;
-            db = _db;
+            _db = db;
             _identitySvc = identityService;
+            _tableMapper = tableMapper;
+            _selectTable = new SelectTable(_identitySvc, _tableMapper, _db.Db);
         }
 
         /// <summary>
@@ -39,7 +41,7 @@
         {
             string str = "{\"page\":1,\"count\":3,\"query\":2,\"Org\":{\"@column\":\"Id,Name\"}}";
             var content = new StringContent(str);
-           
+
             HttpClient hc = new HttpClient();
             var response = hc.PostAsync("http://localhost:89/api/json/org", content).Result;
             string result = (response.Content.ReadAsStringAsync().Result);//result就是返回的结果。
@@ -50,11 +52,10 @@
 
         public async Task<ActionResult> Query1([FromRoute]string table)
         {
-
             string json = string.Empty;
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
-                json= await reader.ReadToEndAsync();
+                json = await reader.ReadToEndAsync();
             }
 
             json = HttpUtility.UrlDecode(json);
@@ -75,11 +76,13 @@
             }
             if (!hasTableKey)
             {
-                jobject.Add(table,new JObject());
+                jobject.Add(table, new JObject());
             }
-            var newJson = Newtonsoft.Json.JsonConvert.SerializeObject(ht);
-            return Query(newJson);
+
+            JObject resultJobj = new SelectTable(_identitySvc, _tableMapper, _db.Db).Query(ht);
+            return Ok(resultJobj);
         }
+
         /// <summary>
         /// 查询
         /// </summary>
@@ -90,142 +93,8 @@
         public ActionResult Query([FromBody]string json)
         {
             json = HttpUtility.UrlDecode(json);
-            JObject ht = new JObject();
-            ht.Add("code", "200");
-            ht.Add("msg", "success");
-            try
-            {
-                JObject jobject = JObject.Parse(json);
-                int page = 0, count = 0, query = 0, total = 0;
-                foreach (var item in jobject)
-                {
-                    string key = item.Key.Trim();
-                    JObject jb;
-                    if (key.Equals("[]"))
-                    {
-                        jb = JObject.Parse(item.Value.ToString());
-                        page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString());
-                        count = jb["count"] == null ? 0 : int.Parse(jb["count"].ToString());
-                        query = jb["query"] == null ? 0 : int.Parse(jb["query"].ToString());
-                        jb.Remove("page"); jb.Remove("count"); jb.Remove("query");
-                        var htt = new JArray();
-                        List<string> tables = new List<string>(), where = new List<string>();
-                        foreach (var t in jb)
-                        {
-                            tables.Add(t.Key); where.Add(t.Value.ToString());
-                        }
-                        if (tables.Count > 0)
-                        {
-                            string table = tables[0];
-                            var temp = selectTable.GetTableData(table, page, count, where[0], null);
-                            if (query > 0)
-                            {
-                                total = temp.Item2;
-                            }
-
-                            foreach (var dd in temp.Item1)
-                            {
-                                var zht = new JObject();
-                                zht.Add(table, JToken.FromObject(dd));
-                                for (int i = 1; i < tables.Count; i++)
-                                {
-                                    string subtable = tables[i];
-                                    if (subtable.EndsWith("[]"))
-                                    {
-                                        subtable = subtable.TrimEnd("[]".ToCharArray());
-                                        var jbb = JObject.Parse(where[i]);
-                                        page = jbb["page"] == null ? 0 : int.Parse(jbb["page"].ToString());
-                                        count = jbb["count"] == null ? 0 : int.Parse(jbb["count"].ToString());
-
-                                        var lt = new JArray();
-                                        foreach (var d in selectTable.GetTableData(subtable, page, count, jbb[subtable].ToString(), zht).Item1)
-                                        {
-                                            lt.Add(JToken.FromObject(d));
-                                        }
-                                        zht.Add(tables[i], lt);
-                                    }
-                                    else
-                                    {
-                                        var ddf = selectTable.GetFirstData(subtable, where[i].ToString(), zht);
-                                        if (ddf != null)
-                                        {
-                                            zht.Add(subtable, JToken.FromObject(ddf));
-
-                                        }
-                                    }
-                                }
-                                htt.Add(zht);
-                            }
-
-                        }
-                        if (query != 1)
-                        {
-                            ht.Add("[]", htt);
-                        }
-                    }
-                    else if (key.EndsWith("[]"))
-                    {
-                        jb = JObject.Parse(item.Value.ToString());
-                        page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString());
-                        count = jb["count"] == null ? 0 : int.Parse(jb["count"].ToString());
-                        query = jb["query"] == null ? 0 : int.Parse(jb["query"].ToString());
-                        jb.Remove("page"); jb.Remove("count"); jb.Remove("query");
-                        var htt = new JArray();
-                        foreach (var t in jb)
-                        {
-                            var temp = selectTable.GetTableData(t.Key, page, count, t.Value.ToString(), null);
-                            if (query > 0)
-                            {
-                                total = temp.Item2;
-                            }
-                            foreach (var d in temp.Item1)
-                            {
-                                htt.Add(JToken.FromObject(d));
-                            }
-                        }
-                        ht.Add(key, htt);
-                    }
-                    else if (key.Equals("func"))
-                    {
-                        jb = JObject.Parse(item.Value.ToString());
-                        Type type = typeof(FuncList);
-                        Object obj = Activator.CreateInstance(type);
-                        var bb = new JObject();
-                        foreach (var f in jb)
-                        {
-                            var types = new List<Type>();
-                            var param = new List<object>();
-                            foreach (var va in JArray.Parse(f.Value.ToString()))
-                            {
-                                types.Add(typeof(object));
-                                param.Add(va);
-                            }
-                            bb.Add(f.Key, JToken.FromObject(selectTable.ExecFunc(f.Key, param.ToArray(), types.ToArray())));
-                        }
-                        ht.Add("func", bb);
-                    }
-                    else if (key.Equals("total@"))
-                    {
-                        ht.Add("total", total);
-                    }
-                    else
-                    {
-                        var template = selectTable.GetFirstData(key, item.Value.ToString(), ht);
-                        if (template != null)
-                        {
-                            ht.Add(key, JToken.FromObject(template));
-                        }
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                ht["code"] = "500";
-                ht["msg"] = ex.Message;
-
-            }
-            return Ok(ht);
+            JObject resultJobj = new SelectTable(_identitySvc, _tableMapper, _db.Db).Query(json);
+            return Ok(resultJobj);
         }
         /// <summary>
         /// 新增
@@ -257,10 +126,10 @@
                     var dt = new Dictionary<string, object>();
                     foreach (var f in JObject.Parse(item.Value.ToString()))
                     {
-                        if (f.Key.ToLower() != "id" && selectTable.IsCol(key, f.Key) && (role.Insert.Column.Contains("*") || role.Insert.Column.Contains(f.Key, StringComparer.CurrentCultureIgnoreCase)))
+                        if (f.Key.ToLower() != "id" && _selectTable.IsCol(key, f.Key) && (role.Insert.Column.Contains("*") || role.Insert.Column.Contains(f.Key, StringComparer.CurrentCultureIgnoreCase)))
                             dt.Add(f.Key, f.Value);
                     }
-                    int id = db.Db.Insertable(dt).AS(key).ExecuteReturnIdentity();
+                    int id = _db.Db.Insertable(dt).AS(key).ExecuteReturnIdentity();
                     ht.Add(key, JToken.FromObject(new { code = 200, msg = "success", id }));
                 }
             }
@@ -309,12 +178,12 @@
                     dt.Add("id", value["id"].ToString());
                     foreach (var f in value)
                     {
-                        if (f.Key.ToLower() != "id" && selectTable.IsCol(key, f.Key) && (role.Update.Column.Contains("*") || role.Update.Column.Contains(f.Key, StringComparer.CurrentCultureIgnoreCase)))
+                        if (f.Key.ToLower() != "id" && _selectTable.IsCol(key, f.Key) && (role.Update.Column.Contains("*") || role.Update.Column.Contains(f.Key, StringComparer.CurrentCultureIgnoreCase)))
                         {
                             dt.Add(f.Key, f.Value);
                         }
                     }
-                    db.Db.Updateable(dt).AS(key).ExecuteCommand();
+                    _db.Db.Updateable(dt).AS(key).ExecuteCommand();
                     ht.Add(key, JToken.FromObject(new { code = 200, msg = "success", id = value["id"].ToString() }));
                 }
             }
@@ -373,7 +242,7 @@
                         p.Add(new SugarParameter($"@{f.Key}", f.Value.ToString()));
                     }
                     string sql = sb.ToString().TrimEnd(',');
-                    db.Db.Ado.ExecuteCommand(sql, p);
+                    _db.Db.Ado.ExecuteCommand(sql, p);
                     ht.Add(key, JToken.FromObject(new { code = 200, msg = "success", id = value["id"].ToString() }));
 
                 }
