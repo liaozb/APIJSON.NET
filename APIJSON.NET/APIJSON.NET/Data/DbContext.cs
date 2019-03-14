@@ -14,9 +14,8 @@ namespace APIJSON.NET
             Db = new SqlSugarClient(new ConnectionConfig()
             {
                 ConnectionString = options.GetConnectionString("ConnectionString"),
-                DbType = (DbType)Enum.Parse(typeof(SqlSugar.DbType), options.GetConnectionString("DbType")),
-                IsAutoCloseConnection = true,
-                InitKeyType= InitKeyType.Attribute
+                DbType = (DbType)Enum.Parse(typeof(SqlSugar.DbType), options.GetConnectionString("DbType")), InitKeyType= InitKeyType.Attribute,
+                IsAutoCloseConnection = true
             });
             Db.Aop.OnLogExecuted = (sql, pars) => //SQL执行完事件
             {

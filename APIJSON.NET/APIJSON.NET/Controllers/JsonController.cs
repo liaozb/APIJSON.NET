@@ -251,15 +251,14 @@
                     }
 
                     var dt = new Dictionary<string, object>();
-                    dt.Add("id", value["id"].ToString());
                     foreach (var f in value)
                     {
                         if (f.Key.ToLower() != "id"&& selectTable.IsCol(key,f.Key) && (role.Update.Column.Contains ("*")||role.Update.Column.Contains(f.Key, StringComparer.CurrentCultureIgnoreCase)))
                         {
-                            dt.Add(f.Key, f.Value);
+                            dt.Add(f.Key, f.Value.ToString());
                         }
                     }
-                    db.Db.Updateable(dt).AS(key).ExecuteCommand();
+                    db.Db.Updateable(dt).AS(key).Where("id=@id" ,new { id= value["id"].ToString() }).ExecuteCommand();
                     ht.Add(key, JToken.FromObject(new { code = 200, msg = "success", id = value["id"].ToString() }));
                 }
             }
