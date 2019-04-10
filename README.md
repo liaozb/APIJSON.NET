@@ -129,7 +129,7 @@ https://github.com/liaozb/APIJSON.NET/tree/master/APIJSON.NET
 ### 贡献者们
 <div style="float:left">
   <a href="https://github.com/liaozb"><img src="https://avatars3.githubusercontent.com/u/12622501?s=400&v=4" height="90" width="90" ></a>
-  <a href="https://github.com/liaozb/APIJSON.NET/pull/4"><img src="https://avatars1.githubusercontent.com/u/5738175?s=400&u=5b2f372f0c03fae8f249d2d754e38971c2e17b92&v=4"  height="90" width="90" ></a>
+  <a href="https://github.com/liaozb/APIJSON.NET/pull/9"><img src="https://avatars1.githubusercontent.com/u/5738175?s=400&u=5b2f372f0c03fae8f249d2d754e38971c2e17b92&v=4"  height="90" width="90" ></a>
 </div>
 <br />
 感谢大家的贡献。
