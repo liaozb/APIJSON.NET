@@ -37,15 +37,13 @@
         /// <returns></returns>
         [HttpPost("/get")]
 
-        public ActionResult Query([FromBody]string json)
+        public ActionResult Query([FromBody] JObject jobject)
         {
-            json = HttpUtility.UrlDecode(json);
             JObject ht = new JObject();
             ht.Add("code", "200");
             ht.Add("msg", "success");
             try
             {
-                JObject jobject = JObject.Parse(json);
                 int page = 0, count = 0, query = 0, total = 0;
                 foreach (var item in jobject)
                 {
@@ -178,16 +176,16 @@
         /// <param name="json"></param>
         /// <returns></returns>
         [HttpPost("/add")]
-        public ActionResult Add([FromBody]string json)
+        public ActionResult Add([FromBody]JObject jobject)
         {
-            json = HttpUtility.UrlDecode(json);
+            
             JObject ht = new JObject();
             ht.Add("code", "200");
             ht.Add("msg", "success");
             try
             {
-                JObject jobject = JObject.Parse(json);
-                var sb = new System.Text.StringBuilder(100);
+                
+                
 
                 foreach (var item in jobject)
                 {
@@ -222,16 +220,13 @@
         /// <param name="json"></param>
         /// <returns></returns>
         [HttpPost("/edit")]
-        public ActionResult Edit([FromBody]string json)
+        public ActionResult Edit([FromBody]JObject jobject)
         {
-            json = HttpUtility.UrlDecode(json);
             JObject ht = new JObject();
             ht.Add("code", "200");
             ht.Add("msg", "success");
             try
             {
-                JObject jobject = JObject.Parse(json);
-
                 foreach (var item in jobject)
                 {
                     string key = item.Key.Trim();
@@ -276,16 +271,14 @@
         /// <param name="json"></param>
         /// <returns></returns>
         [HttpPost("/remove")]
-        public ActionResult Remove([FromBody]string json)
+        public ActionResult Remove([FromBody]JObject jobject)
         {
-            json = HttpUtility.UrlDecode(json);
             JObject ht = new JObject();
             ht.Add("code", "200");
             ht.Add("msg", "success");
             try
             {
                 var role = _identitySvc.GetRole();
-                JObject jobject = JObject.Parse(json);
                 foreach (var item in jobject)
                 {
                     string key = item.Key.Trim();
