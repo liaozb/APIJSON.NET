@@ -12,10 +12,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
-    using SqlKata.Execution;
     using Swashbuckle.AspNetCore.Swagger;
-    using MySql.Data.MySqlClient;
-    using SqlKata.Compilers;
 
     public class Startup
     {
