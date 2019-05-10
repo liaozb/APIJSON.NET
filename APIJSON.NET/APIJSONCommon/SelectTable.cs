@@ -15,12 +15,13 @@
     {
         private readonly IIdentityService _identitySvc;
         private readonly ITableMapper _tableMapper;
-        private readonly DbContext db;
-        public SelectTable(IIdentityService identityService, ITableMapper tableMapper, DbContext _db) 
+        private readonly SqlSugarClient db;
+
+        public SelectTable(IIdentityService identityService, ITableMapper tableMapper, SqlSugarClient dbClient)
         {
             _identitySvc = identityService;
             _tableMapper = tableMapper;
-            db = _db;
+            db = dbClient;
         }
         /// <summary>
         /// 判断表名是否正确
@@ -29,7 +30,7 @@
         /// <returns></returns>
         public bool IsTable(string table)
         {
-            return db.Db.DbMaintenance.GetTableInfoList().Any(it => it.Name.Equals(table, StringComparison.CurrentCultureIgnoreCase));
+            return db.DbMaintenance.GetTableInfoList().Any(it => it.Name.Equals(table, StringComparison.CurrentCultureIgnoreCase));
         }
         /// <summary>
         /// 判断表的列名是否正确
@@ -39,7 +40,7 @@
         /// <returns></returns>
         public bool IsCol(string table, string col)
         {
-            return db.Db.DbMaintenance.GetColumnInfosByTableName(table).Any(it => it.DbColumnName.Equals(col, StringComparison.CurrentCultureIgnoreCase));
+            return db.DbMaintenance.GetColumnInfosByTableName(table).Any(it => it.DbColumnName.Equals(col, StringComparison.CurrentCultureIgnoreCase));
         }
         /// <summary>
         /// 动态调用方法
@@ -107,7 +108,7 @@
                     string param = item.Value.ToString().Substring(item.Value.ToString().IndexOf("(") + 1).TrimEnd(')') ;
                     var types = new List<Type>();
                     var paramss = new List<object>();
-                    foreach (var va in param.Split(","))
+                    foreach (var va in param.Split(','))
                     {
                         types.Add(typeof(object));
                         paramss.Add(tb.Where(it => it.Key.Equals(va)).Select(i => i.Value));
@@ -119,24 +120,215 @@
             return tb;
             
         }
+
+        /// <summary>
+        /// 解析并查询
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        public JObject Query(string queryJson)
+        {
+            JObject resultObj = new JObject();
+
+            try
+            {
+                JObject queryJobj = JObject.Parse(queryJson);
+                resultObj = Query(queryJobj);
+            }
+            catch (Exception ex)
+            {
+                resultObj.Add("code", "500");
+                resultObj.Add("msg", ex.Message);
+            }
+
+            return resultObj;
+        }
+
+        /// <summary>
+        /// 解析并查询
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        public JObject Query(JObject queryObj)
+        {
+            JObject resultObj = new JObject();
+            resultObj.Add("code", "200");
+            resultObj.Add("msg", "success");
+            try
+            {
+                int total = 0;
+                foreach (var item in queryObj)
+                {
+                    string key = item.Key.Trim();
+
+                    if (key.Equals("[]"))
+                    {
+                        total = QueryMoreList(resultObj, item);
+                    }
+                    else if (key.EndsWith("[]"))
+                    {
+                        total = QuerySingleList(resultObj, item);
+                    }
+                    else if (key.Equals("func"))
+                    {
+                        ExecFunc(resultObj, item);
+                    }
+                    else if (key.Equals("total@"))
+                    {
+                        resultObj.Add("total", total);
+                    }
+                    else
+                    {
+                        var template = GetFirstData(key, item.Value.ToString(), resultObj);
+                        if (template != null)
+                        {
+                            resultObj.Add(key, JToken.FromObject(template));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                resultObj["code"] = "500";
+                resultObj["msg"] = ex.Message;
+            }
+            return resultObj;
+        }
+
+        //单表查询
+        private int QuerySingleList(JObject resultObj, KeyValuePair<string, JToken> item)
+        {
+            string key = item.Key.Trim();
+            var jb = JObject.Parse(item.Value.ToString());
+            int page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString());
+            int count = jb["count"] == null ? 1 : int.Parse(jb["count"].ToString());
+            int query = jb["query"] == null ? 2 : int.Parse(jb["query"].ToString());
+            int total = 0;
+
+            jb.Remove("page"); jb.Remove("count"); jb.Remove("query");
+            var htt = new JArray();
+            foreach (var t in jb)
+            {
+                var datas = GetTableData(t.Key, page, count, t.Value.ToString(), null);
+                if (query > 0)
+                {
+                    total = datas.Item2;
+                }
+                foreach (var data in datas.Item1)
+                {
+                    htt.Add(JToken.FromObject(data));
+                }
+            }
+            resultObj.Add(key, htt);
+            return total;
+        }
+
+        //多列表查询
+        private int QueryMoreList(JObject resultObj, KeyValuePair<string, JToken> item)
+        {
+            int total = 0;
+
+            var jb = JObject.Parse(item.Value.ToString());
+            var page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString());
+            var count = jb["count"] == null ? 0 : int.Parse(jb["count"].ToString());
+            var query = jb["query"] == null ? 0 : int.Parse(jb["query"].ToString());
+            jb.Remove("page"); jb.Remove("count"); jb.Remove("query");
+            var htt = new JArray();
+            List<string> tables = new List<string>(), where = new List<string>();
+            foreach (var t in jb)
+            {
+                tables.Add(t.Key); where.Add(t.Value.ToString());
+            }
+            if (tables.Count > 0)
+            {
+                string table = tables[0];
+                var temp = GetTableData(table, page, count, where[0], null);
+                if (query > 0)
+                {
+                    total = temp.Item2;
+                }
+
+                foreach (var dd in temp.Item1)
+                {
+                    var zht = new JObject();
+                    zht.Add(table, JToken.FromObject(dd));
+                    for (int i = 1; i < tables.Count; i++)
+                    {
+                        string subtable = tables[i];
+                        if (subtable.EndsWith("[]"))
+                        {
+                            subtable = subtable.TrimEnd("[]".ToCharArray());
+                            var jbb = JObject.Parse(where[i]);
+                            page = jbb["page"] == null ? 0 : int.Parse(jbb["page"].ToString());
+                            count = jbb["count"] == null ? 0 : int.Parse(jbb["count"].ToString());
+
+                            var lt = new JArray();
+                            foreach (var d in GetTableData(subtable, page, count, jbb[subtable].ToString(), zht).Item1)
+                            {
+                                lt.Add(JToken.FromObject(d));
+                            }
+                            zht.Add(tables[i], lt);
+                        }
+                        else
+                        {
+                            var ddf = GetFirstData(subtable, where[i].ToString(), zht);
+                            if (ddf != null)
+                            {
+                                zht.Add(subtable, JToken.FromObject(ddf));
+
+                            }
+                        }
+                    }
+                    htt.Add(zht);
+                }
+
+            }
+            if (query != 1)
+            {
+                resultObj.Add("[]", htt);
+            }
+
+            return total;
+        }
+
+        private void ExecFunc(JObject resultObj, KeyValuePair<string, JToken> item)
+        {
+            JObject jb = JObject.Parse(item.Value.ToString());
+            Type type = typeof(FuncList);
+
+            var dataJObj = new JObject();
+            foreach (var f in jb)
+            {
+                var types = new List<Type>();
+                var param = new List<object>();
+                foreach (var va in JArray.Parse(f.Value.ToString()))
+                {
+                    types.Add(typeof(object));
+                    param.Add(va);
+                }
+                dataJObj.Add(f.Key, JToken.FromObject(ExecFunc(f.Key, param.ToArray(), types.ToArray())));
+            }
+            resultObj.Add("func", dataJObj);
+        }
+
         private ISugarQueryable<ExpandoObject> sugarQueryable(string subtable, string selectrole, JObject values, JObject dd)
         {
             if (!IsTable(subtable))
             {
                 throw new Exception($"表名{subtable}不正确！");
             }
-            var tb = db.Db.Queryable(subtable, "tb");
-            
-           
+            var tb = db.Queryable(subtable, "tb");
+
+
             if (values["@column"].IsValue())
             {
                 var str = new System.Text.StringBuilder(100);
-                foreach (var item in values["@column"].ToString().Split(","))
+                foreach (var item in values["@column"].ToString().Split(','))
                 {
-                    string[] ziduan = item.Split(":");
+                    string[] ziduan = item.Split(':');
                     if (ziduan.Length > 1)
                     {
-                        if (IsCol(subtable,ziduan[0]) &&_identitySvc.ColIsRole(ziduan[0], selectrole.Split(",")))
+                        if (IsCol(subtable,ziduan[0]) &&_identitySvc.ColIsRole(ziduan[0], selectrole.Split(',')))
                         {
 
                             str.Append(ziduan[0] + " as " + ziduan[1] + ",");
@@ -144,7 +336,7 @@
                     }
                     else
                     {
-                        if (IsCol(subtable, item) && _identitySvc.ColIsRole(item, selectrole.Split(",")))
+                        if (IsCol(subtable, item) && _identitySvc.ColIsRole(item, selectrole.Split(',')))
                         {
                             str.Append(item + ",");
                         }
@@ -218,7 +410,7 @@
                 }
                 else if (vakey.EndsWith("@") && dd != null) // 关联上一个table
                 {
-                    string[] str = va.Value.ToString().Split("/");
+                    string[] str = va.Value.ToString().Split('/');
                     string value = string.Empty;
                     if (str.Length == 3)
                     {
@@ -242,7 +434,7 @@
             //排序
             if (values["@order"].IsValue())
             {
-                foreach (var item in values["@order"].ToString().Split(","))
+                foreach (var item in values["@order"].ToString().Split(','))
                 {
                     if (IsCol(subtable,item.Replace("-", "")))
                     {
@@ -317,9 +509,9 @@
                     }
                     hw.Add(model);
                 }
-           
-                var d=db.Db.Context.Utilities.ConditionalModelToSql(hw);
-                tb.Having(d.Key,d.Value);
+
+                var d = db.Context.Utilities.ConditionalModelToSql(hw);
+                tb.Having(d.Key, d.Value);
             }
             return tb;
         }

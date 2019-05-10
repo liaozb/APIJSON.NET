@@ -12,6 +12,10 @@
     using APIJSON.NET.Services;
     using System.Reflection;
     using Microsoft.AspNetCore.Cors;
+    using System.Threading.Tasks;
+    using System.IO;
+    using System.Text;
+    using System.Net.Http;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -22,14 +26,28 @@
         private SelectTable selectTable;
         private DbContext db;
         private readonly IIdentityService _identitySvc;
-        public JsonController(SelectTable _selectTable, DbContext _db,IIdentityService identityService)
-        {
+        private ITableMapper _tableMapper;
 
+        public JsonController(SelectTable _selectTable, DbContext _db, IIdentityService identityService, ITableMapper tableMapper)
+        {
             selectTable = _selectTable;
             db = _db;
+            _tableMapper = tableMapper;
             _identitySvc = identityService;
         }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("/test")]
+        public ActionResult Test()
+        {
+            string str = "{\"page\":1,\"count\":3,\"query\":2,\"Org\":{\"@column\":\"Id,Name\"}}";
+            var content = new StringContent(str);
+            return Ok(content);
+        }
+
         /// <summary>
         /// 查询
         /// </summary>
@@ -39,136 +57,42 @@
 
         public ActionResult Query([FromBody] JObject jobject)
         {
-            JObject ht = new JObject();
-            ht.Add("code", "200");
-            ht.Add("msg", "success");
-            try
+            JObject resultJobj = new SelectTable(_identitySvc, _tableMapper, db.Db).Query(jobject);
+            return Ok(resultJobj);
+        }
+
+        [HttpPost("/{table}")]
+        public async Task<ActionResult> QueryByTable([FromRoute]string table)
+        {
+            string json = string.Empty;
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
-                int page = 0, count = 0, query = 0, total = 0;
-                foreach (var item in jobject)
+                json = await reader.ReadToEndAsync();
+            }
+
+            json = HttpUtility.UrlDecode(json);
+            JObject ht = new JObject();
+
+            JObject jobject = JObject.Parse(json);
+            ht.Add(table + "[]", jobject);
+            ht.Add("total@", "");
+
+            bool hasTableKey = false;
+            foreach (var item in jobject)
+            {
+                if (item.Key.Equals(table, StringComparison.CurrentCultureIgnoreCase))
                 {
-                    string key = item.Key.Trim();
-                    JObject jb;
-                    if (key.Equals("[]"))
-                    {
-                        jb = JObject.Parse(item.Value.ToString());
-                        page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString());
-                        count = jb["count"] == null ? 0 : int.Parse(jb["count"].ToString());
-                        query = jb["query"] == null ? 0 : int.Parse(jb["query"].ToString());
-                        jb.Remove("page"); jb.Remove("count"); jb.Remove("query");
-                        var htt = new JArray();
-                        List<string> tables = new List<string>(), where = new List<string>();
-                        foreach (var t in jb)
-                        {
-                            tables.Add(t.Key); where.Add(t.Value.ToString());
-                        }
-                        if (tables.Count > 0)
-                        {
-                            string table = tables[0];
-                            var temp = selectTable.GetTableData(table, page, count, where[0], null);
-                            if (query > 0)
-                            {
-                                total = temp.Item2;
-                            }
-
-                            foreach (var dd in temp.Item1)
-                            {
-                                var zht = new JObject();
-                                zht.Add(table, JToken.FromObject(dd));
-                                for (int i = 1; i < tables.Count; i++)
-                                {
-                                    string subtable = tables[i];
-                                    if (subtable.EndsWith("[]"))
-                                    {
-                                        subtable = subtable.TrimEnd("[]".ToCharArray());
-                                        var jbb = JObject.Parse(where[i]);
-                                        page = jbb["page"] == null ? 0 : int.Parse(jbb["page"].ToString());
-                                        count = jbb["count"] == null ? 0 : int.Parse(jbb["count"].ToString());
-
-                                        var lt = new JArray();
-                                        foreach (var d in selectTable.GetTableData(subtable, page, count, jbb[subtable].ToString(), zht).Item1)
-                                        {
-                                            lt.Add(JToken.FromObject(d));
-                                        }
-                                        zht.Add(tables[i], lt);
-                                    }
-                                    else
-                                    {
-                                        var ddf = selectTable.GetFirstData(subtable, where[i].ToString(), zht);
-                                        if (ddf != null)
-                                        {
-                                            zht.Add(subtable, JToken.FromObject(ddf));
-
-                                        }
-                                    }
-                                }
-                                htt.Add(zht);
-                            }
-
-                        }
-                        if (query != 1)
-                        {
-                            ht.Add("[]", htt);
-                        }
-                    }
-                    else if (key.EndsWith("[]"))
-                    {
-                        jb = JObject.Parse(item.Value.ToString());
-                        page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString());
-                        count = jb["count"] == null ? 0 : int.Parse(jb["count"].ToString());
-                        query = jb["query"] == null ? 0 : int.Parse(jb["query"].ToString());
-                        jb.Remove("page"); jb.Remove("count"); jb.Remove("query");
-                        var htt = new JArray();
-                        foreach (var t in jb)
-                        {
-                            foreach (var d in selectTable.GetTableData(t.Key, page, count, t.Value.ToString(), null).Item1)
-                            {
-                                htt.Add(JToken.FromObject(d));
-                            }
-                        }
-                        ht.Add(key, htt);
-                    }
-                    else if (key.Equals("func"))
-                    {
-                        jb = JObject.Parse(item.Value.ToString());
-                        Type type = typeof(FuncList);
-                        Object obj = Activator.CreateInstance(type);
-                        var bb = new JObject();
-                        foreach (var f in jb)
-                        {
-                            var types = new List<Type>();
-                            var param = new List<object>();
-                            foreach (var va in JArray.Parse(f.Value.ToString()))
-                            {
-                                types.Add(typeof(object));
-                                param.Add(va);
-                            }
-                            bb.Add(f.Key, JToken.FromObject(selectTable.ExecFunc(f.Key,param.ToArray(), types.ToArray())));
-                        }
-                        ht.Add("func", bb);
-                    }
-                    else if (key.Equals("total@"))
-                    {
-                        ht.Add("total", total);
-                    }
-                    else
-                    {
-                        var template = selectTable.GetFirstData(key, item.Value.ToString(), ht);
-                        if (template != null)
-                        {
-                            ht.Add(key, JToken.FromObject(template));
-                        }
-                    }
-
+                    hasTableKey = true;
+                    break;
                 }
             }
-            catch (Exception ex)
+            if (!hasTableKey)
             {
-                ht["code"] = "500";
-                ht["msg"] = ex.Message;
-
+                jobject.Add(table, new JObject());
             }
-            return Ok(ht);
+
+            JObject resultJobj = new SelectTable(_identitySvc, _tableMapper, db.Db).Query(ht);
+            return Ok(resultJobj);
         }
         /// <summary>
         /// 新增
@@ -178,14 +102,14 @@
         [HttpPost("/add")]
         public ActionResult Add([FromBody]JObject jobject)
         {
-            
+
             JObject ht = new JObject();
             ht.Add("code", "200");
             ht.Add("msg", "success");
             try
             {
-                
-                
+
+
 
                 foreach (var item in jobject)
                 {
@@ -248,12 +172,12 @@
                     var dt = new Dictionary<string, object>();
                     foreach (var f in value)
                     {
-                        if (f.Key.ToLower() != "id"&& selectTable.IsCol(key,f.Key) && (role.Update.Column.Contains ("*")||role.Update.Column.Contains(f.Key, StringComparer.CurrentCultureIgnoreCase)))
+                        if (f.Key.ToLower() != "id" && selectTable.IsCol(key, f.Key) && (role.Update.Column.Contains("*") || role.Update.Column.Contains(f.Key, StringComparer.CurrentCultureIgnoreCase)))
                         {
                             dt.Add(f.Key, f.Value.ToString());
                         }
                     }
-                    db.Db.Updateable(dt).AS(key).Where("id=@id" ,new { id= value["id"].ToString() }).ExecuteCommand();
+                    db.Db.Updateable(dt).AS(key).Where("id=@id", new { id = value["id"].ToString() }).ExecuteCommand();
                     ht.Add(key, JToken.FromObject(new { code = 200, msg = "success", id = value["id"].ToString() }));
                 }
             }
@@ -285,13 +209,13 @@
                     var value = JObject.Parse(item.Value.ToString());
                     var sb = new System.Text.StringBuilder(100);
                     sb.Append($"delete FROM {key} where ");
-                    if (role.Delete==null||role.Delete.Table==null)
+                    if (role.Delete == null || role.Delete.Table == null)
                     {
                         ht["code"] = "500";
                         ht["msg"] = "delete权限未配置";
                         break;
                     }
-                    if (!role.Delete.Table.Contains(key,StringComparer.CurrentCultureIgnoreCase))
+                    if (!role.Delete.Table.Contains(key, StringComparer.CurrentCultureIgnoreCase))
                     {
                         ht["code"] = "500";
                         ht["msg"] = $"没权限删除{key}";

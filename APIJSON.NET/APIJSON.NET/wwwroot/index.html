@@ -31,11 +31,12 @@
         <div :class="'side-left side-view-' + baseview">
             <div class="right-bar">
                 <select id="rest-url">
-                    <option value="get">get</option>
-                    <option value="add">add</option>
-                    <option value="edit">edit</option>
-                    <option value="remove">remove</option>
-                     
+                    <option value="api/json/get">get</option>
+                    <option value="api/json/add">add</option>
+                    <option value="api/json/edit">edit</option>
+                    <option value="api/json/remove">remove</option>
+                    <option value="api/json/org">org</option>
+
                 </select>
                 <button @click="hpost()">发送请求</button>
             </div>
