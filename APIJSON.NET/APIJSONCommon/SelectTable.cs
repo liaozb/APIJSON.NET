@@ -201,8 +201,8 @@
             string key = item.Key.Trim();
             var jb = JObject.Parse(item.Value.ToString());
             int page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString());
-            int count = jb["count"] == null ? 1 : int.Parse(jb["count"].ToString());
-            int query = jb["query"] == null ? 2 : int.Parse(jb["query"].ToString());
+            int count = jb["count"] == null ? 10 : int.Parse(jb["count"].ToString());
+            int query = jb["query"] == null ? 0 : int.Parse(jb["query"].ToString());
             int total = 0;
 
             jb.Remove("page"); jb.Remove("count"); jb.Remove("query");
@@ -230,7 +230,7 @@
 
             var jb = JObject.Parse(item.Value.ToString());
             var page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString());
-            var count = jb["count"] == null ? 0 : int.Parse(jb["count"].ToString());
+            var count = jb["count"] == null ? 10 : int.Parse(jb["count"].ToString());
             var query = jb["query"] == null ? 0 : int.Parse(jb["query"].ToString());
             jb.Remove("page"); jb.Remove("count"); jb.Remove("query");
             var htt = new JArray();

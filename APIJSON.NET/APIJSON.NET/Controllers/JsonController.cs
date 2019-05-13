@@ -28,12 +28,12 @@
         private readonly IIdentityService _identitySvc;
         private ITableMapper _tableMapper;
 
-        public JsonController(SelectTable _selectTable, DbContext _db, IIdentityService identityService, ITableMapper tableMapper)
+        public JsonController(IIdentityService identityService, ITableMapper tableMapper, DbContext _db)
         {
-            selectTable = _selectTable;
             db = _db;
             _tableMapper = tableMapper;
             _identitySvc = identityService;
+            selectTable = new SelectTable(_identitySvc, _tableMapper, _db.Db);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@
         /// <returns></returns>
         [HttpPost("/get")]
 
-        public ActionResult Query([FromBody] JObject jobject)
+        public async Task<ActionResult> Query([FromBody] JObject jobject)
         {
             JObject resultJobj = new SelectTable(_identitySvc, _tableMapper, db.Db).Query(jobject);
             return Ok(resultJobj);
@@ -91,8 +91,7 @@
                 jobject.Add(table, new JObject());
             }
 
-            JObject resultJobj = new SelectTable(_identitySvc, _tableMapper, db.Db).Query(ht);
-            return Ok(resultJobj);
+            return await Query(ht);
         }
         /// <summary>
         /// 新增
