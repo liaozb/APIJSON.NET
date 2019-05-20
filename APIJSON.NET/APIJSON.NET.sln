@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIJSON.NET", "APIJSON.NET\APIJSON.NET.csproj", "{FF647576-A104-4D54-954D-3547B4FDCDB2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIJSON.NET.Test", "APIJSON.NET.Test\APIJSON.NET.Test.csproj", "{0828346E-207E-49F8-AD57-E1AB6B6E4077}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiJson.Common", "APIJSONCommon\ApiJson.Common.csproj", "{3B79D4FD-0BC7-49FD-A3DD-E514433B4B35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0828346E-207E-49F8-AD57-E1AB6B6E4077}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0828346E-207E-49F8-AD57-E1AB6B6E4077}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0828346E-207E-49F8-AD57-E1AB6B6E4077}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B79D4FD-0BC7-49FD-A3DD-E514433B4B35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B79D4FD-0BC7-49FD-A3DD-E514433B4B35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B79D4FD-0BC7-49FD-A3DD-E514433B4B35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B79D4FD-0BC7-49FD-A3DD-E514433B4B35}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

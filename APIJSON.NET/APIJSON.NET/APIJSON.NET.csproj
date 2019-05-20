@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\JsonController - 副本.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Dockerfile" />
   </ItemGroup>
 
@@ -16,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="AspectCore.Extensions.Reflection" Version="1.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.4" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Rewrite" Version="2.2.0" />
@@ -24,10 +28,13 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="MySql.Data" Version="8.0.15" />
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.18.6" />
-    <PackageReference Include="sqlSugarCore" Version="4.9.9.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="4.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\APIJSONCommon\ApiJson.Common.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="http://json.schemastore.org/config" /></VisualStudio></ProjectExtensions>

@@ -18,7 +18,7 @@ namespace APIJSON.NET.Services
         {
             if (_options.ContainsKey(oldname))
             {
-                return _options.GetValueOrDefault(oldname);
+                return _options[oldname];
             }
             return oldname;
         }
