@@ -15,7 +15,7 @@ namespace APIJSON.NET.Services
         private IHttpContextAccessor _context;
         private List<Role> roles;
 
-        public IdentityService(IHttpContextAccessor context,IOptions<List<Role>> _roles)
+        public IdentityService(IHttpContextAccessor context, IOptions<List<Role>> _roles)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             roles = _roles.Value;
@@ -24,7 +24,7 @@ namespace APIJSON.NET.Services
         {
             return _context.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
-        
+
         public string GetUserRoleName()
         {
             return _context.HttpContext.User.FindFirstValue(ClaimTypes.Role);
@@ -50,7 +50,7 @@ namespace APIJSON.NET.Services
             {
                 return (false, $"appsettings.json权限配置不正确！");
             }
-            string tablerole = role.Select.Table.FirstOrDefault(it => it.Equals(table, StringComparison.CurrentCultureIgnoreCase));
+            string tablerole = role.Select.Table.FirstOrDefault(it => it == "*" || it.Equals(table, StringComparison.CurrentCultureIgnoreCase));
 
             if (string.IsNullOrEmpty(tablerole))
             {
