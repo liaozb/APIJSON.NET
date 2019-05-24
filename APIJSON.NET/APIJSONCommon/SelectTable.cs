@@ -1,22 +1,29 @@
 ﻿namespace APIJSON.NET
 {
     using APIJSON.NET.Services;
-    using Microsoft.Extensions.Options;
+    using AspectCore.Extensions.Reflection;
     using Newtonsoft.Json.Linq;
     using SqlSugar;
     using System;
     using System.Collections.Generic;
     using System.Dynamic;
     using System.Linq;
-    using AspectCore.Extensions.Reflection;
-    using System.Text.RegularExpressions;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class SelectTable
     {
         private readonly IIdentityService _identitySvc;
         private readonly ITableMapper _tableMapper;
         private readonly SqlSugarClient db;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="identityService"></param>
+        /// <param name="tableMapper"></param>
+        /// <param name="dbClient"></param>
         public SelectTable(IIdentityService identityService, ITableMapper tableMapper, SqlSugarClient dbClient)
         {
             _identitySvc = identityService;
@@ -49,18 +56,27 @@
         /// <param name="param"></param>
         /// <param name="types"></param>
         /// <returns></returns>
-        public object ExecFunc(string funcname,object[] param, Type[] types)
+        public object ExecFunc(string funcname, object[] param, Type[] types)
         {
             var method = typeof(FuncList).GetMethod(funcname);
-     
+
             var reflector = method.GetReflector();
             var result = reflector.Invoke(new FuncList(), param);
             return result;
         }
 
-        public (dynamic,int) GetTableData(string subtable, int page, int count, string json, JObject dd)
-        {   
-           
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subtable"></param>
+        /// <param name="page"></param>
+        /// <param name="count"></param>
+        /// <param name="json"></param>
+        /// <param name="dd"></param>
+        /// <returns></returns>
+        public Tuple<dynamic, int> GetTableData(string subtable, int page, int count, string json, JObject dd)
+        {
+
             var role = _identitySvc.GetSelectRole(subtable);
             if (!role.Item1)//没有权限返回异常
             {
@@ -68,7 +84,7 @@
             }
             string selectrole = role.Item2;
             subtable = _tableMapper.GetTableName(subtable);
-          
+
             JObject values = JObject.Parse(json);
             page = values["page"] == null ? page : int.Parse(values["page"].ToString());
             count = values["count"] == null ? count : int.Parse(values["count"].ToString());
@@ -78,16 +94,24 @@
             if (count > 0)
             {
                 int total = 0;
-                return (tb.ToPageList(page, count,ref total),total);
+                return new Tuple<dynamic, int>(tb.ToPageList(page, count, ref total), total);
             }
             else
             {
-                return (tb.ToList(),tb.Count());
+                return new Tuple<dynamic, int>(tb.ToList(), tb.Count());
             }
         }
-        public dynamic GetFirstData(string subtable,  string json, JObject dd)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subtable"></param>
+        /// <param name="json"></param>
+        /// <param name="dd"></param>
+        /// <returns></returns>
+        public dynamic GetFirstData(string subtable, string json, JObject dd)
         {
-           
+
             var role = _identitySvc.GetSelectRole(subtable);
             if (!role.Item1)//没有权限返回异常
             {
@@ -105,7 +129,7 @@
                 if (item.Value.IsValue())
                 {
                     string func = item.Value.ToString().Substring(0, item.Value.ToString().IndexOf("("));
-                    string param = item.Value.ToString().Substring(item.Value.ToString().IndexOf("(") + 1).TrimEnd(')') ;
+                    string param = item.Value.ToString().Substring(item.Value.ToString().IndexOf("(") + 1).TrimEnd(')');
                     var types = new List<Type>();
                     var paramss = new List<object>();
                     foreach (var va in param.Split(','))
@@ -113,12 +137,12 @@
                         types.Add(typeof(object));
                         paramss.Add(tb.Where(it => it.Key.Equals(va)).Select(i => i.Value));
                     }
-                  dic[item.Name] =ExecFunc(func, paramss.ToArray(), types.ToArray());
+                    dic[item.Name] = ExecFunc(func, paramss.ToArray(), types.ToArray());
                 }
             }
-           
+
             return tb;
-            
+
         }
 
         /// <summary>
@@ -141,6 +165,45 @@
                 resultObj.Add("msg", ex.Message);
             }
 
+            return resultObj;
+        }
+
+        /// <summary>
+        /// 单表查询
+        /// </summary>
+        /// <param name="queryObj"></param>
+        /// <returns></returns>
+        public JObject QuerySingle(JObject queryObj)
+        {
+            JObject resultObj = new JObject();
+            resultObj.Add("code", "200");
+            resultObj.Add("msg", "success");
+            try
+            {
+                int total = 0;
+                foreach (var item in queryObj)
+                {
+                    string key = item.Key.Trim();
+
+                    if (key.EndsWith("[]"))
+                    {
+                        total = QuerySingleList(resultObj, item,"Infos");
+                    }
+                    else if (key.Equals("func"))
+                    {
+                        ExecFunc(resultObj, item);
+                    }
+                    else if (key.Equals("total@"))
+                    {
+                        resultObj.Add("total", total);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                resultObj["code"] = "500";
+                resultObj["msg"] = ex.Message;
+            }
             return resultObj;
         }
 
@@ -195,14 +258,14 @@
             return resultObj;
         }
 
-        //单表查询
-        private int QuerySingleList(JObject resultObj, KeyValuePair<string, JToken> item)
+        //单表查询,返回的数据在指定的NodeName节点
+        private int QuerySingleList(JObject resultObj, KeyValuePair<string, JToken> item, string nodeName)
         {
             string key = item.Key.Trim();
             var jb = JObject.Parse(item.Value.ToString());
             int page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString());
             int count = jb["count"] == null ? 10 : int.Parse(jb["count"].ToString());
-            int query = jb["query"] == null ? 0 : int.Parse(jb["query"].ToString());
+            int query = jb["query"] == null ? 1 : int.Parse(jb["query"].ToString());
             int total = 0;
 
             jb.Remove("page"); jb.Remove("count"); jb.Remove("query");
@@ -219,8 +282,21 @@
                     htt.Add(JToken.FromObject(data));
                 }
             }
-            resultObj.Add(key, htt);
+
+            if (!string.IsNullOrEmpty(nodeName))
+            {
+                resultObj.Add(nodeName, htt);
+            }
+            else
+                resultObj.Add(key, htt);
             return total;
+        }
+
+        //单表查询
+        private int QuerySingleList(JObject resultObj, KeyValuePair<string, JToken> item)
+        {
+            string key = item.Key.Trim();
+            return QuerySingleList(resultObj, item, key);
         }
 
         //多列表查询
@@ -328,7 +404,7 @@
                     string[] ziduan = item.Split(':');
                     if (ziduan.Length > 1)
                     {
-                        if (IsCol(subtable,ziduan[0]) &&_identitySvc.ColIsRole(ziduan[0], selectrole.Split(',')))
+                        if (IsCol(subtable, ziduan[0]) && _identitySvc.ColIsRole(ziduan[0], selectrole.Split(',')))
                         {
 
                             str.Append(ziduan[0] + " as " + ziduan[1] + ",");
@@ -352,7 +428,7 @@
             {
                 tb.Select(selectrole);
             }
-         
+
             List<IConditionalModel> conModels = new List<IConditionalModel>();
             if (values["identity"].IsValue())
             {
@@ -363,7 +439,7 @@
                 string vakey = va.Key.Trim();
                 if (vakey.EndsWith("$"))//模糊查询
                 {
-                    if (IsCol(subtable,vakey.TrimEnd('$')))
+                    if (IsCol(subtable, vakey.TrimEnd('$')))
                     {
                         conModels.Add(new ConditionalModel() { FieldName = vakey.TrimEnd('$'), ConditionalType = ConditionalType.Like, FieldValue = va.Value.ToString() });
                     }
@@ -424,7 +500,7 @@
                     conModels.Add(new ConditionalModel() { FieldName = vakey.TrimEnd('@'), ConditionalType = ConditionalType.Equal, FieldValue = value });
 
                 }
-                else if (IsCol(subtable,vakey)) //其他where条件
+                else if (IsCol(subtable, vakey)) //其他where条件
                 {
                     conModels.Add(new ConditionalModel() { FieldName = vakey, ConditionalType = ConditionalType.Equal, FieldValue = va.Value.ToString() });
                 }
@@ -436,7 +512,7 @@
             {
                 foreach (var item in values["@order"].ToString().Split(','))
                 {
-                    if (IsCol(subtable,item.Replace("-", "")))
+                    if (IsCol(subtable, item.Replace("-", "")))
                     {
                         if (item.EndsWith("-"))
                         {
@@ -478,7 +554,7 @@
                     }
                     else if (and.Contains("<="))
                     {
-                        
+
                         model.FieldName = and.Split(new string[] { "<=" }, StringSplitOptions.RemoveEmptyEntries)[0];
                         model.ConditionalType = ConditionalType.LessThanOrEqual;
                         model.FieldValue = and.Split(new string[] { "<=" }, StringSplitOptions.RemoveEmptyEntries)[1];

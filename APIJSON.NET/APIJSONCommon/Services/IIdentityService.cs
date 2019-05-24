@@ -1,4 +1,5 @@
 ﻿using APIJSON.NET.Models;
+using System;
 
 namespace APIJSON.NET.Services
 {
@@ -24,7 +25,7 @@ namespace APIJSON.NET.Services
         /// </summary>
         /// <param name="table"></param>
         /// <returns></returns>
-        (bool, string) GetSelectRole(string table);
+        Tuple<bool, string> GetSelectRole(string table);
 
 
         bool ColIsRole(string col, string[] selectrole);
