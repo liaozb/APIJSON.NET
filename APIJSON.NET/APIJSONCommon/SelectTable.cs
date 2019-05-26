@@ -8,6 +8,7 @@
     using System.Collections.Generic;
     using System.Dynamic;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// 
@@ -74,7 +75,7 @@
         /// <param name="json"></param>
         /// <param name="dd"></param>
         /// <returns></returns>
-        public Tuple<dynamic, int> GetTableData(string subtable, int page, int count, string json, JObject dd)
+        public Tuple<dynamic, int> GetTableData(string subtable, int page, int count, int query, string json, JObject dd)
         {
 
             var role = _identitySvc.GetSelectRole(subtable);
@@ -88,17 +89,31 @@
             JObject values = JObject.Parse(json);
             page = values["page"] == null ? page : int.Parse(values["page"].ToString());
             count = values["count"] == null ? count : int.Parse(values["count"].ToString());
+            query = values["query"] == null ? query : int.Parse(values["query"].ToString());
             values.Remove("page");
             values.Remove("count");
             var tb = sugarQueryable(subtable, selectrole, values, dd);
-            if (count > 0)
-            {
-                int total = 0;
-                return new Tuple<dynamic, int>(tb.ToPageList(page, count, ref total), total);
-            }
+            if (query == 1)//1-总数
+                return new Tuple<dynamic, int>(new List<object>(), tb.Count());
             else
             {
-                return new Tuple<dynamic, int>(tb.ToList(), tb.Count());
+                if (count > 0)
+                {
+                    int total = 0;
+                    if (query == 0)//0-对象
+                        return new Tuple<dynamic, int>(tb.ToPageList(page, count), total);
+                    else
+                        //2-以上全部
+                        return new Tuple<dynamic, int>(tb.ToPageList(page, count, ref total), total);
+
+                }
+                else
+                {
+                    if (query == 0)
+                        return new Tuple<dynamic, int>(tb.ToList(), 0);
+                    else
+                        return new Tuple<dynamic, int>(tb.ToList(), tb.Count());
+                }
             }
         }
 
@@ -187,7 +202,7 @@
 
                     if (key.EndsWith("[]"))
                     {
-                        total = QuerySingleList(resultObj, item,"Infos");
+                        total = QuerySingleList(resultObj, item, "Infos");
                     }
                     else if (key.Equals("func"))
                     {
@@ -265,14 +280,14 @@
             var jb = JObject.Parse(item.Value.ToString());
             int page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString());
             int count = jb["count"] == null ? 10 : int.Parse(jb["count"].ToString());
-            int query = jb["query"] == null ? 1 : int.Parse(jb["query"].ToString());
+            int query = jb["query"] == null ? 0 : int.Parse(jb["query"].ToString());
             int total = 0;
 
             jb.Remove("page"); jb.Remove("count"); jb.Remove("query");
             var htt = new JArray();
             foreach (var t in jb)
             {
-                var datas = GetTableData(t.Key, page, count, t.Value.ToString(), null);
+                var datas = GetTableData(t.Key, page, count, query, t.Value.ToString(), null);
                 if (query > 0)
                 {
                     total = datas.Item2;
@@ -318,7 +333,7 @@
             if (tables.Count > 0)
             {
                 string table = tables[0];
-                var temp = GetTableData(table, page, count, where[0], null);
+                var temp = GetTableData(table, page, count, query, where[0], null);
                 if (query > 0)
                 {
                     total = temp.Item2;
@@ -339,7 +354,7 @@
                             count = jbb["count"] == null ? 0 : int.Parse(jbb["count"].ToString());
 
                             var lt = new JArray();
-                            foreach (var d in GetTableData(subtable, page, count, jbb[subtable].ToString(), zht).Item1)
+                            foreach (var d in GetTableData(subtable, page, count, query, jbb[subtable].ToString(), zht).Item1)
                             {
                                 lt.Add(JToken.FromObject(d));
                             }
@@ -398,31 +413,7 @@
 
             if (values["@column"].IsValue())
             {
-                var str = new System.Text.StringBuilder(100);
-                foreach (var item in values["@column"].ToString().Split(','))
-                {
-                    string[] ziduan = item.Split(':');
-                    if (ziduan.Length > 1)
-                    {
-                        if (IsCol(subtable, ziduan[0]) && _identitySvc.ColIsRole(ziduan[0], selectrole.Split(',')))
-                        {
-
-                            str.Append(ziduan[0] + " as " + ziduan[1] + ",");
-                        }
-                    }
-                    else
-                    {
-                        if (IsCol(subtable, item) && _identitySvc.ColIsRole(item, selectrole.Split(',')))
-                        {
-                            str.Append(item + ",");
-                        }
-                    }
-                }
-                if (string.IsNullOrEmpty(str.ToString()))
-                {
-                    throw new Exception($"表名{subtable}没有可查询的字段！");
-                }
-                tb.Select(str.ToString().TrimEnd(','));
+                ProcessColumn(subtable, selectrole, values, tb);
             }
             else
             {
@@ -437,56 +428,23 @@
             foreach (var va in values)
             {
                 string vakey = va.Key.Trim();
+                string fieldValue = va.Value.ToString();
+
                 if (vakey.EndsWith("$"))//模糊查询
                 {
-                    if (IsCol(subtable, vakey.TrimEnd('$')))
-                    {
-                        conModels.Add(new ConditionalModel() { FieldName = vakey.TrimEnd('$'), ConditionalType = ConditionalType.Like, FieldValue = va.Value.ToString() });
-                    }
+                    FuzzyQuery(subtable, conModels, va);
                 }
                 else if (vakey.EndsWith("{}"))//逻辑运算
                 {
-                    string field = vakey.TrimEnd("{}".ToCharArray());
-                    if (va.Value.HasValues)
-                    {
-                        conModels.Add(new ConditionalModel() { FieldName = field, ConditionalType = field.EndsWith("!") ? ConditionalType.NotIn : ConditionalType.In, FieldValue = va.Value.ToString() });
-                    }
-                    else
-                    {
-                        var ddt = new List<KeyValuePair<WhereType, ConditionalModel>>();
-                        foreach (var and in va.Value.ToString().Split(','))
-                        {
-                            var model = new ConditionalModel();
-                            model.FieldName = field;
-                            if (and.StartsWith(">="))
-                            {
-                                model.ConditionalType = ConditionalType.GreaterThanOrEqual;
-                                model.FieldValue = and.TrimStart(">=".ToCharArray());
-                            }
-                            else if (and.StartsWith("<="))
-                            {
-
-                                model.ConditionalType = ConditionalType.LessThanOrEqual;
-                                model.FieldValue = and.TrimStart("<=".ToCharArray());
-                            }
-                            else if (and.StartsWith(">"))
-                            {
-                                model.ConditionalType = ConditionalType.GreaterThan;
-                                model.FieldValue = and.TrimStart('>');
-                            }
-                            else if (and.StartsWith("<"))
-                            {
-                                model.ConditionalType = ConditionalType.LessThan;
-                                model.FieldValue = and.TrimStart('<');
-                            }
-                            ddt.Add(new KeyValuePair<WhereType, ConditionalModel>((field.EndsWith("&") ? WhereType.And : WhereType.Or), model));
-                        }
-                        conModels.Add(new ConditionalCollections() { ConditionalList = ddt });
-                    }
+                    ConditionQuery(subtable, conModels, va);
+                }
+                else if (vakey.EndsWith("%"))//bwtween查询
+                {
+                    ConditionBetween(subtable, conModels, va);
                 }
                 else if (vakey.EndsWith("@") && dd != null) // 关联上一个table
                 {
-                    string[] str = va.Value.ToString().Split('/');
+                    string[] str = fieldValue.Split('/');
                     string value = string.Empty;
                     if (str.Length == 3)
                     {
@@ -502,47 +460,71 @@
                 }
                 else if (IsCol(subtable, vakey)) //其他where条件
                 {
-                    conModels.Add(new ConditionalModel() { FieldName = vakey, ConditionalType = ConditionalType.Equal, FieldValue = va.Value.ToString() });
+                    conModels.Add(new ConditionalModel() { FieldName = vakey, ConditionalType = ConditionalType.Equal, FieldValue = fieldValue });
                 }
             }
             tb.Where(conModels);
 
             //排序
-            if (values["@order"].IsValue())
-            {
-                foreach (var item in values["@order"].ToString().Split(','))
-                {
-                    if (IsCol(subtable, item.Replace("-", "")))
-                    {
-                        if (item.EndsWith("-"))
-                        {
-                            tb.OrderBy($"{item.Replace("-", " desc")}");
-                        }
-                        else
-                        {
-                            tb.OrderBy($"{item.ToString()}");
-                        }
-                    }
-                }
-            }
+            ProcessOrder(subtable, values, tb);
 
-            if (values["@group"].IsValue())
+            //分组
+            PrccessGroup(subtable, values, tb);
+
+            //Having
+            ProcessHaving(values, tb);
+            return tb;
+        }
+
+        //处理字段重命名 "@column":"toId:parentId"，对应SQL是toId AS parentId，将查询的字段toId变为parentId返回
+        private void ProcessColumn(string subtable, string selectrole, JObject values, ISugarQueryable<ExpandoObject> tb)
+        {
+            var str = new System.Text.StringBuilder(100);
+            foreach (var item in values["@column"].ToString().Split(','))
             {
-                var str = new System.Text.StringBuilder(100);
-                foreach (var and in values["@group"].ToString().Split(','))
+                string[] ziduan = item.Split(':');
+                string colName = ziduan[0];
+                var ma = new Regex(@"\((\w+)\)").Match(colName);
+                //处理max，min这样的函数
+                if (ma.Success && ma.Groups.Count > 1)
                 {
-                    if (IsCol(subtable, and))
-                    {
-                        str.Append(and + ",");
-                    }
+                    colName = ma.Groups[1].Value;
                 }
-                tb.GroupBy(str.ToString().TrimEnd(','));
+
+                //判断列表是否有权限  sum(1)，sum(*),Count(1)这样的值直接有效
+                if (colName == "*" || int.TryParse(colName, out int colNumber) || (IsCol(subtable, colName) && _identitySvc.ColIsRole(colName, selectrole.Split(','))))
+                {
+                    if (ziduan.Length > 1)
+                        str.Append(ziduan[0] + " as " + ziduan[1] + ",");
+                    else
+                        str.Append(ziduan[0] + ",");
+
+                }
             }
+            if (string.IsNullOrEmpty(str.ToString()))
+            {
+                throw new Exception($"表名{subtable}没有可查询的字段！");
+            }
+            tb.Select(str.ToString().TrimEnd(','));
+        }
+
+        // "@having":"function0(...)?value0;function1(...)?value1;function2(...)?value2..."，
+        // SQL函数条件，一般和 @group一起用，函数一般在 @column里声明
+        private void ProcessHaving(JObject values, ISugarQueryable<ExpandoObject> tb)
+        {
             if (values["@having"].IsValue())
             {
                 List<IConditionalModel> hw = new List<IConditionalModel>();
-                JArray jArray = JArray.Parse(values["@having"].ToString());
-                foreach (var item in jArray)
+                List<string> havingItems = new List<string>();
+                if (values["@having"].HasValues)
+                {
+                    havingItems = values["@having"].Select(p => p.ToString()).ToList();
+                }
+                else
+                {
+                    havingItems.Add(values["@having"].ToString());
+                }
+                foreach (var item in havingItems)
                 {
                     string and = item.ToString();
                     var model = new ConditionalModel();
@@ -587,9 +569,180 @@
                 }
 
                 var d = db.Context.Utilities.ConditionalModelToSql(hw);
-                tb.Having(d.Key, d.Value);
+                //tb.Having(d.Key, d.Value);
+                tb.Having(string.Join(",", havingItems));
             }
-            return tb;
+        }
+
+        //"@group":"column0,column1..."，分组方式。如果 @column里声明了Table的id，则id也必须在 @group中声明；其它情况下必须满足至少一个条件:
+        //1.分组的key在 @column里声明
+        //2.Table主键在 @group中声明
+        private void PrccessGroup(string subtable, JObject values, ISugarQueryable<ExpandoObject> tb)
+        {
+            if (values["@group"].IsValue())
+            {
+                var str = new System.Text.StringBuilder(100);
+                foreach (var and in values["@group"].ToString().Split(','))
+                {
+                    if (IsCol(subtable, and))
+                    {
+                        str.Append(and + ",");
+                    }
+                }
+                tb.GroupBy(str.ToString().TrimEnd(','));
+            }
+        }
+
+        //处理排序 "@order":"name-,id"查询按 name降序、id默认顺序 排序的User数组
+        private void ProcessOrder(string subtable, JObject values, ISugarQueryable<ExpandoObject> tb)
+        {
+            if (values["@order"].IsValue())
+            {
+                foreach (var item in values["@order"].ToString().Split(','))
+                {
+                    string col = item.Replace("-", "").Replace("+", "");
+                    if (IsCol(subtable, col))
+                    {
+                        if (item.EndsWith("-"))
+                        {
+                            tb.OrderBy($"{col} desc");
+                        }
+                        else if (item.EndsWith("+"))
+                        {
+                            tb.OrderBy($"{col} asc");
+                        }
+                        else
+                        {
+                            tb.OrderBy($"{col}");
+                        }
+                    }
+                }
+            }
+        }
+
+        //条件查询 "key{}":"条件0,条件1..."，条件为任意SQL比较表达式字符串，非Number类型必须用''包含条件的值，如'a'
+        //&, |, ! 逻辑运算符，对应数据库 SQL 中的 AND, OR, NOT。 
+        //   横或纵与：同一字段的值内条件默认 | 或连接，不同字段的条件默认 & 与连接。 
+        //   ① & 可用于"key&{}":"条件"等 
+        //   ② | 可用于"key|{}":"条件", "key|{}":[] 等，一般可省略 
+        //   ③ ! 可单独使用，如"key!":Object，也可像&,|一样配合其他功能符使用
+        private void ConditionQuery(string subtable, List<IConditionalModel> conModels, KeyValuePair<string, JToken> va)
+        {
+            string vakey = va.Key.Trim();
+            string field = vakey.TrimEnd("{}".ToCharArray());
+            if (va.Value.HasValues)
+            {
+                List<string> inValues = new List<string>();
+                foreach (var cm in va.Value)
+                {
+                    inValues.Add(cm.ToString());
+                }
+
+                conModels.Add(new ConditionalModel() { FieldName = field, ConditionalType = field.EndsWith("!") ? ConditionalType.NotIn : ConditionalType.In, FieldValue = string.Join(",", inValues) });
+
+            }
+            else
+            {
+                var ddt = new List<KeyValuePair<WhereType, ConditionalModel>>();
+                foreach (var and in va.Value.ToString().Split(','))
+                {
+                    var model = new ConditionalModel();
+                    model.FieldName = field.TrimEnd("&".ToCharArray());//处理&()的查询方式
+                    if (and.StartsWith(">="))
+                    {
+                        model.ConditionalType = ConditionalType.GreaterThanOrEqual;
+                        model.FieldValue = and.TrimStart(">=".ToCharArray());
+                    }
+                    else if (and.StartsWith("<="))
+                    {
+
+                        model.ConditionalType = ConditionalType.LessThanOrEqual;
+                        model.FieldValue = and.TrimStart("<=".ToCharArray());
+                    }
+                    else if (and.StartsWith(">"))
+                    {
+                        model.ConditionalType = ConditionalType.GreaterThan;
+                        model.FieldValue = and.TrimStart('>');
+                    }
+                    else if (and.StartsWith("<"))
+                    {
+                        model.ConditionalType = ConditionalType.LessThan;
+                        model.FieldValue = and.TrimStart('<');
+                    }
+                    ddt.Add(new KeyValuePair<WhereType, ConditionalModel>((field.EndsWith("&") ? WhereType.And : WhereType.Or), model));
+                }
+                conModels.Add(new ConditionalCollections() { ConditionalList = ddt });
+            }
+        }
+
+        //"key%":"start,end" => "key%":["start,end"]，其中 start 和 end 都只能为 Boolean, Number, String 中的一种，如 "2017-01-01,2019-01-01" ，["1,90000", "82001,100000"] ，可用于连续范围内的筛选
+        private void ConditionBetween(string subtable, List<IConditionalModel> conModels, KeyValuePair<string, JToken> va)
+        {
+            string vakey = va.Key.Trim();
+            string field = vakey.TrimEnd("%".ToCharArray());
+            List<string> inValues = new List<string>();
+
+            if (va.Value.HasValues)
+            {
+                foreach (var cm in va.Value)
+                {
+                    inValues.Add(cm.ToString());
+                }
+            }
+            else
+            {
+                inValues.Add(va.Value.ToString());
+            }
+            for (var i = 0; i < inValues.Count; i++)
+            {
+                var fileds = inValues[i].Split(',');
+                if (fileds.Length == 2)
+                {
+                    var ddt = new List<KeyValuePair<WhereType, ConditionalModel>>();
+
+                    var leftCondition = new ConditionalModel()
+                    {
+                        FieldName = field,
+                        ConditionalType = ConditionalType.GreaterThanOrEqual,
+                        FieldValue = fileds[0]
+                    };
+                    ddt.Add(new KeyValuePair<WhereType, ConditionalModel>(i == 0 ? WhereType.And : WhereType.Or, leftCondition));
+                    var rightCondition = new ConditionalModel()
+                    {
+                        FieldName = field,
+                        ConditionalType = ConditionalType.LessThanOrEqual,
+                        FieldValue = fileds[1]
+                    };
+                    ddt.Add(new KeyValuePair<WhereType, ConditionalModel>(WhereType.And, rightCondition));
+
+                    conModels.Add(new ConditionalCollections() { ConditionalList = ddt });
+                }
+            }
+        }
+
+        //模糊搜索	"key$":"SQL搜索表达式" => "key$":["SQL搜索表达式"]，任意SQL搜索表达式字符串，如 %key%(包含key), key%(以key开始), %k%e%y%(包含字母k,e,y) 等，%表示任意字符
+        private void FuzzyQuery(string subtable, List<IConditionalModel> conModels, KeyValuePair<string, JToken> va)
+        {
+            string vakey = va.Key.Trim();
+            string fieldValue = va.Value.ToString();
+            var conditionalType = ConditionalType.Like;
+            if (IsCol(subtable, vakey.TrimEnd('$')))
+            {
+                //支持三种like查询
+                if (fieldValue.StartsWith("%") && fieldValue.EndsWith("%"))
+                {
+                    conditionalType = ConditionalType.Like;
+                }
+                else if (fieldValue.StartsWith("%"))
+                {
+                    conditionalType = ConditionalType.LikeRight;
+                }
+                else if (fieldValue.EndsWith("%"))
+                {
+                    conditionalType = ConditionalType.LikeLeft;
+                }
+                conModels.Add(new ConditionalModel() { FieldName = vakey.TrimEnd('$'), ConditionalType = conditionalType, FieldValue = fieldValue.TrimEnd("%".ToArray()).TrimStart("%".ToArray()) });
+            }
         }
     }
 }
