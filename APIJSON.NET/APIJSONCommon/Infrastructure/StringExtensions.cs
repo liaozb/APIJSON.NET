@@ -14,6 +14,12 @@
         {
             return str != null && !string.IsNullOrEmpty(str.ToString());
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         public static string GetParamName(this string param)
         {
             return param + new Random().Next(1, 100);
