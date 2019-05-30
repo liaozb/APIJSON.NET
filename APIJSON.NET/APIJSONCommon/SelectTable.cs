@@ -66,6 +66,19 @@
             return result;
         }
 
+        private string ToSql(string subtable, int page, int count, int query, string json)
+        {
+            JObject values = JObject.Parse(json);
+            page = values["page"] == null ? page : int.Parse(values["page"].ToString());
+            count = values["count"] == null ? count : int.Parse(values["count"].ToString());
+            query = values["query"] == null ? query : int.Parse(values["query"].ToString());
+            values.Remove("page");
+            values.Remove("count");
+            subtable = _tableMapper.GetTableName(subtable);
+            var tb = sugarQueryable(subtable, "*", values,null);
+            var xx= tb.Skip((page - 1) * count).Take(10).ToSql();
+            return xx.Key;
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -187,8 +200,9 @@
         /// 单表查询
         /// </summary>
         /// <param name="queryObj"></param>
+        /// <param name="nodeName">返回数据的节点名称  默认为 infos</param>
         /// <returns></returns>
-        public JObject QuerySingle(JObject queryObj)
+        public JObject QuerySingle(JObject queryObj, string nodeName = "infos")
         {
             JObject resultObj = new JObject();
             resultObj.Add("code", "200");
@@ -202,7 +216,7 @@
 
                     if (key.EndsWith("[]"))
                     {
-                        total = QuerySingleList(resultObj, item, "Infos");
+                        total = QuerySingleList(resultObj, item, nodeName);
                     }
                     else if (key.Equals("func"))
                     {
@@ -220,6 +234,25 @@
                 resultObj["msg"] = ex.Message;
             }
             return resultObj;
+        }
+
+        /// <summary>
+        /// 获取查询语句
+        /// </summary>
+        /// <param name="queryObj"></param>
+        /// <returns></returns>
+        public string ToSql(JObject queryObj)
+        {
+            foreach (var item in queryObj)
+            {
+                string key = item.Key.Trim();
+
+                if (key.EndsWith("[]"))
+                {
+                    return  ToSql(item);
+                }
+            }
+            return string.Empty;
         }
 
         /// <summary>
@@ -284,6 +317,7 @@
             int total = 0;
 
             jb.Remove("page"); jb.Remove("count"); jb.Remove("query");
+
             var htt = new JArray();
             foreach (var t in jb)
             {
@@ -307,6 +341,23 @@
             return total;
         }
 
+        private string ToSql(KeyValuePair<string, JToken> item)
+        {
+            string key = item.Key.Trim();
+            var jb = JObject.Parse(item.Value.ToString());
+            int page = jb["page"] == null ? 0 : int.Parse(jb["page"].ToString());
+            int count = jb["count"] == null ? 10 : int.Parse(jb["count"].ToString());
+            int query = jb["query"] == null ? 0 : int.Parse(jb["query"].ToString());
+
+            jb.Remove("page"); jb.Remove("count"); jb.Remove("query");
+            var htt = new JArray();
+            foreach (var t in jb)
+            {
+                return ToSql(t.Key, page, count, query, t.Value.ToString());
+            }
+
+            return string.Empty;
+        }
         //单表查询
         private int QuerySingleList(JObject resultObj, KeyValuePair<string, JToken> item)
         {
@@ -495,7 +546,13 @@
                 if (colName == "*" || int.TryParse(colName, out int colNumber) || (IsCol(subtable, colName) && _identitySvc.ColIsRole(colName, selectrole.Split(','))))
                 {
                     if (ziduan.Length > 1)
-                        str.Append(ziduan[0] + " as " + ziduan[1] + ",");
+                    {
+                        if (ziduan[1].Length > 20)
+                        {
+                            throw new Exception("别名不能超过20个字符");
+                        }
+                        str.Append(ziduan[0] + " as " + ReplaceSQLChar(ziduan[1]) + ",");
+                    }
                     else
                         str.Append(ziduan[0] + ",");
 
@@ -743,6 +800,41 @@
                 }
                 conModels.Add(new ConditionalModel() { FieldName = vakey.TrimEnd('$'), ConditionalType = conditionalType, FieldValue = fieldValue.TrimEnd("%".ToArray()).TrimStart("%".ToArray()) });
             }
+        }
+
+        public string ReplaceSQLChar(string str)
+        {
+            if (str == String.Empty)
+                return String.Empty;
+            str = str.Replace("'", "");
+            str = str.Replace(";", "");
+            str = str.Replace(",", "");
+            str = str.Replace("?", "");
+            str = str.Replace("<", "");
+            str = str.Replace(">", "");
+            str = str.Replace("(", "");
+            str = str.Replace(")", "");
+            str = str.Replace("@", "");
+            str = str.Replace("=", "");
+            str = str.Replace("+", "");
+            str = str.Replace("*", "");
+            str = str.Replace("&", "");
+            str = str.Replace("#", "");
+            str = str.Replace("%", "");
+            str = str.Replace("$", "");
+            str = str.Replace("\"", "");
+
+            //删除与数据库相关的词
+            str = Regex.Replace(str, "delete from", "", RegexOptions.IgnoreCase);
+            str = Regex.Replace(str, "drop table", "", RegexOptions.IgnoreCase);
+            str = Regex.Replace(str, "truncate", "", RegexOptions.IgnoreCase);
+            str = Regex.Replace(str, "xp_cmdshell", "", RegexOptions.IgnoreCase);
+            str = Regex.Replace(str, "exec master", "", RegexOptions.IgnoreCase);
+            str = Regex.Replace(str, "net localgroup administrators", "", RegexOptions.IgnoreCase);
+            str = Regex.Replace(str, "net user", "", RegexOptions.IgnoreCase);
+            str = Regex.Replace(str, "-", "", RegexOptions.IgnoreCase);
+            str = Regex.Replace(str, "truncate", "", RegexOptions.IgnoreCase);
+            return str;
         }
     }
 }
