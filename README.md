@@ -1,6 +1,7 @@
 # APIJSON.NET
 这是 APIJSON 的 C# .NET CORE 版后端实现。
 
+
 <h1 align="center" style="text-align:center;">
   APIJSON
 </h1>
@@ -14,11 +15,12 @@
   <a href="https://github.com/TommyLemon/APIJSON/tree/master/MySQL"><img src="https://img.shields.io/badge/TiDB-2.1%2B-brightgreen.svg?style=flat"></a>
 </p>
 <p align="center" >
-  <a href="https://github.com/liaozb/APIJSON.NET"><img src="https://img.shields.io/badge/CSharp-2.1%2B-brightgreen.svg?style=flat"></a>
+  <a href="https://github.com/liaozb/APIJSON.NET"><img src="https://img.shields.io/badge/CSharp-2.1%2B-brightgreen.svg?style=flat"></a>
   <a href="https://github.com/TommyLemon/APIJSON/tree/master/APIJSON-Java-Server"><img src="https://img.shields.io/badge/Java-1.7%2B-brightgreen.svg?style=flat"></a>
-  <a href="https://github.com/zhangchunlin/uliweb-apijson"><img src="https://img.shields.io/badge/Python-3%2B-brightgreen.svg?style=flat"></a>
   <a href="https://github.com/qq547057827/apijson-php"><img src="https://img.shields.io/badge/PHP-7.0%2B-brightgreen.svg?style=flat"></a>
   <a href="https://github.com/TEsTsLA/apijson"><img src="https://img.shields.io/badge/Node.js-ES6%2B-brightgreen.svg?style=flat"></a>
+  <a href="https://github.com/crazytaxi824/APIJSON"><img src="https://img.shields.io/badge/Go-1.12.4%2B-brightgreen.svg?style=flat"></a>
+  <a href="https://github.com/zhangchunlin/uliweb-apijson"><img src="https://img.shields.io/badge/Python-3%2B-brightgreen.svg?style=flat"></a>
 </p>
 <p align="center" >
   <a href="https://github.com/TommyLemon/APIJSON/tree/master/APIJSON-Android"><img src="https://img.shields.io/badge/Android-4.0%2B-brightgreen.svg?style=flat"></a>
@@ -29,7 +31,7 @@
   <a href="https://github.com/TommyLemon/APIJSON/blob/master/Document-English.md">English</a>
   <a href="https://github.com/TommyLemon/APIJSON/blob/master/Document.md">通用文档</a>
   <a href="http://i.youku.com/apijson">视频教程</a>
-  <a href="http://apijson.org">在线工具</a>
+  <a href="http://apijson.org/auto">在线工具</a>
 </p>
 
 <p align="center" >
@@ -39,7 +41,7 @@
 ---
 
 
-APIJSON是一种为API而生的JSON网络传输协议。<br />
+APIJSON是一种专为API而生的 JSON网络传输协议 以及 基于这套协议实现的ORM库。<br />
 为 简单的增删改查、复杂的查询、简单的事务操作 提供了完全自动化的API。<br />
 能大幅降低开发和沟通成本，简化开发流程，缩短开发周期。<br />
 适合中小型前后端分离的项目，尤其是互联网创业项目和企业自用项目。<br />
@@ -57,10 +59,10 @@ APIJSON是一种为API而生的JSON网络传输协议。<br />
 
 #### 在线解析
 * 自动生成接口文档，清晰可读永远最新
-* 自动生成请求代码，支持Android和iOS
-* 自动生成JavaBean文件，一键下载
+* 自动校验与格式化，支持高亮和收展
+* 自动生成各种语言代码，一键下载
 * 自动管理与测试接口用例，一键共享
-* 自动校验与格式化JSON，支持高亮和收展
+* 自动给请求JSON加注释，一键切换
 
 #### 对于前端
 * 不用再向后端催接口、求文档
@@ -108,10 +110,17 @@ APIJSON是一种为API而生的JSON网络传输协议。<br />
 <br />
 
 ### 为什么要用APIJSON？
-[前后端10大痛点解析](https://github.com/TommyLemon/APIJSON/wiki)
+[前后端 关于接口的 沟通、文档、联调 等 10 大痛点解析](https://github.com/TommyLemon/APIJSON/wiki)
 
 ### 快速上手
-https://github.com/liaozb/APIJSON.NET/tree/master/APIJSON.NET
+
+#### 1.后端部署
+可以跳过这个步骤，直接用APIJSON服务器IP地址 apijson.cn:8080 来测试接口。<br />
+见&nbsp; [APIJSON后端部署 - Java](https://github.com/TommyLemon/APIJSON/tree/master/APIJSON-Java-Server)<br />
+
+#### 2.前端部署
+可以跳过这个步骤，直接使用 [APIAuto-自动化接口管理工具](https://github.com/TommyLemon/APIAuto) 或 下载客户端App。<br />
+见&nbsp; [Android](https://github.com/TommyLemon/APIJSON/tree/master/APIJSON-Android) &nbsp;或&nbsp; [iOS](https://github.com/TommyLemon/APIJSON/tree/master/APIJSON-iOS) &nbsp;或&nbsp; [JavaScript](https://github.com/TommyLemon/APIJSON/tree/master/APIJSON-JavaScript)<br />
 
 ### 下载客户端App
 
@@ -121,6 +130,22 @@ https://github.com/liaozb/APIJSON.NET/tree/master/APIJSON.NET
 测试及自动生成代码工具<br />
 [APIJSONTest.apk](http://files.cnblogs.com/files/tommylemon/APIJSONTest.apk)
 
+### 使用登记
+<div style="float:left">
+  <a href="http://www.transsion.com"><img src="http://www.transsion.com/static/images/logo.jpg" height="90"></a>
+  <a href="http://shebaochina.com"><img src="http://shebaochina.com/static/cn/img/index/logo.png" height="90"></a>
+  <a href="http://www.xmfish.com"><img src="http://www.xmfish.com/images/chanel/www/f_logo.gif" height="90"></a>
+  <a href="http://www.xxwolo.com"><img src="http://img.qichacha.com/Product/a917fcca-fbb1-44a2-a079-56985ebf8f9c.jpg" height="90"></a>
+  <a href="http://www.8soo.com"><img src="http://ww1.sinaimg.cn/large/756dd729gw1f9n5ckuq6vj208902it8v.jpg" height="90"></a>
+  <a href="http://juting.vip"><img src="http://i.juting.vip/wp-file/2018/12/logo1-1.png" height="90"></a>
+  <a href="http://www.aipaipai-inc.com"><img src="http://www.aipaipai-inc.com/uploadfile/upload/2019042913403029.png" height="90"></a>
+  <a href="http://www.hec-bang.com"><img src="http://www.hec-bang.com/assets/images/logo-200x50.png" height="90"></a>
+  <a href="https://www.shulian8.com"><img src="https://bookstore-prod.oss-cn-hangzhou.aliyuncs.com/%E5%90%8E%E5%8F%B0%E9%A1%B5%E9%9D%A2_03.png" height="90"></a>
+</div>
+<br />
+
+[您在使用APIJSON吗？](https://github.com/TommyLemon/APIJSON/issues/73)
+
 
 ### 技术交流
 如果有什么问题或建议可以 [提ISSUE](https://github.com/liaozb/APIJSON.NET/issues) 或 [加群](https://github.com/TommyLemon/APIJSON#%E6%8A%80%E6%9C%AF%E4%BA%A4%E6%B5%81)，交流技术，分享经验。<br >
@@ -129,11 +154,16 @@ https://github.com/liaozb/APIJSON.NET/tree/master/APIJSON.NET
 ### 贡献者们
 <div style="float:left">
   <a href="https://github.com/liaozb"><img src="https://avatars3.githubusercontent.com/u/12622501?s=400&v=4" height="90" width="90" ></a>
+  <a href="https://avatars0.githubusercontent.com/u/16282949?s=400&v=4"><img src="https://avatars1.githubusercontent.com/u/5738175?s=400&u=5b2f372f0c03fae8f249d2d754e38971c2e17b92&v=4"  height="90" width="90" ></a>
+</div>
   <a href="https://github.com/liaozb/APIJSON.NET/pull/8"><img src="https://avatars0.githubusercontent.com/u/16437853?s=460&v=4" height="90" width="90" ></a>
   <a href="https://github.com/liaozb/APIJSON.NET/pull/9"><img src="https://avatars1.githubusercontent.com/u/5738175?s=400&u=5b2f372f0c03fae8f249d2d754e38971c2e17b92&v=4"  height="90" width="90" ></a>
 </div>
+  <a href="https://github.com/liaozb/APIJSON.NET/pull/3"><img src="https://avatars2.githubusercontent.com/u/13326497?s=400&v=4"  height="90" width="90" ></a>
+</div>
 <br />
 感谢大家的贡献。
+
 
 ### 相关推荐
 [APIJSON, 让接口和文档见鬼去吧！](https://my.oschina.net/tommylemon/blog/805459)
@@ -146,15 +176,39 @@ https://github.com/liaozb/APIJSON.NET/tree/master/APIJSON.NET
 
 [3步创建APIJSON后端新表及配置](https://my.oschina.net/tommylemon/blog/889074)
 
+[APIJSON 自动化接口和文档的快速开发神器 （一）](https://blog.csdn.net/qq_41829492/article/details/88670940)
 
-### 其它项目
-[APIJSON](https://github.com/TommyLemon/APIJSON) 码云最有价值项目：后端接口和文档自动化，前端(客户端) 定制返回JSON的数据和结构
+### 生态项目
+[APIAuto](https://github.com/TommyLemon/APIAuto) 自动化接口管理工具，自动生成文档与注释、自动生成代码、自动化回归测试、自动静态检查等
 
-[APIJSONAuto](https://github.com/TommyLemon/APIJSONAuto) 自动化接口管理工具，自动生成文档与注释、自动生成代码、自动化回归测试、自动静态检查等
+[apijson-doc](https://github.com/vincentCheng/apijson-doc) APIJSON 官方文档，提供排版清晰、搜索方便的文档内容展示，包括设计规范、图文教程等
+
+[apijson.org](https://github.com/APIJSON/apijson.org) APIJSON 官方网站，提供 APIJSON 的 功能简介、登记用户、作者与贡献者、相关链接 等
+
+[APIJSON](https://github.com/APIJSON/APIJSON) Java 版 APIJSON ，支持 MySQL, PostgreSQL, Oracle, TiDB
+
+[apijson-php](https://github.com/qq547057827/apijson-php) PHP 版 APIJSON，基于 ThinkPHP，支持 MySQL, PostgreSQL, MS SQL Server, Oracle 等
+
+[apijson](https://github.com/TEsTsLA/apijson) Node.ts 版 APIJSON，支持 MySQL, PostgreSQL, MS SQL Server, Oracle, SQLite, MariaDB, WebSQL
+
+[uliweb-apijson](https://github.com/zhangchunlin/uliweb-apijson) Python 版 APIJSON，支持 MySQL, PostgreSQL, MS SQL Server, Oracle, SQLite 等
+
+[APIJSON](https://github.com/crazytaxi824/APIJSON) Go 版 APIJSON，功能开发中...
+
+[APIJSONKOTLIN](https://github.com/luckyxiaomo/APIJSONKOTLIN) Kotlin 版 APIJSON，基础框架搭建中...
+
+[APIJSONParser](https://github.com/Zerounary/APIJSONParser) 第三方 APIJSON 解析器，将 JSON 动态解析成 SQL
+
+[ApiJsonByJFinal](https://gitee.com/zhiyuexin/ApiJsonByJFinal) 整合 APIJSON 和 JFinal 的 Demo
+
+[SpringServer1.2-APIJSON](https://github.com/Airforce-1/SpringServer1.2-APIJSON) 智慧党建服务器端，提供 上传 和 下载 文件的接口
+
+[AbsGrade](https://github.com/APIJSON/AbsGrade) 抽象列表分级工具，支持微信朋友圈单层评论、QQ空间双层评论、百度网盘多层(无限层)文件夹等
 
 [APIJSON-Android-RxJava](https://github.com/TommyLemon/APIJSON-Android-RxJava) 仿微信朋友圈动态实战项目，ZBLibrary(UI) + APIJSON(HTTP) + RxJava(Data)
 
 [Android-ZBLibrary](https://github.com/TommyLemon/Android-ZBLibrary) Android MVP快速开发框架，Demo全面，注释详细，使用简单，代码严谨
+
 
 感谢热心的作者们的贡献，点 ⭐Star 支持下他们吧。
 
@@ -166,3 +220,4 @@ https://gitee.com/liaozb/APIJSON.NET
 
 ### 我要赞赏
 如果你喜欢 APIJSON.NET，感觉它帮助到了你，可以点右上角 ⭐Star 支持一下，谢谢 ^_^ 
+
