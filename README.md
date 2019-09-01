@@ -113,14 +113,7 @@ APIJSON是一种专为API而生的 JSON网络传输协议 以及 基于这套协
 [前后端 关于接口的 沟通、文档、联调 等 10 大痛点解析](https://github.com/TommyLemon/APIJSON/wiki)
 
 ### 快速上手
-
-#### 1.后端部署
-可以跳过这个步骤，直接用APIJSON服务器IP地址 apijson.cn:8080 来测试接口。<br />
-见&nbsp; [APIJSON后端部署 - Java](https://github.com/TommyLemon/APIJSON/tree/master/APIJSON-Java-Server)<br />
-
-#### 2.前端部署
-可以跳过这个步骤，直接使用 [APIAuto-自动化接口管理工具](https://github.com/TommyLemon/APIAuto) 或 下载客户端App。<br />
-见&nbsp; [Android](https://github.com/TommyLemon/APIJSON/tree/master/APIJSON-Android) &nbsp;或&nbsp; [iOS](https://github.com/TommyLemon/APIJSON/tree/master/APIJSON-iOS) &nbsp;或&nbsp; [JavaScript](https://github.com/TommyLemon/APIJSON/tree/master/APIJSON-JavaScript)<br />
+https://github.com/liaozb/APIJSON.NET/tree/master/APIJSON.NET
 
 ### 下载客户端App
 
