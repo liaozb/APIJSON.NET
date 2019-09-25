@@ -75,8 +75,8 @@
             values.Remove("page");
             values.Remove("count");
             subtable = _tableMapper.GetTableName(subtable);
-            var tb = sugarQueryable(subtable, "*", values,null);
-            var xx= tb.Skip((page - 1) * count).Take(10).ToSql();
+            var tb = sugarQueryable(subtable, "*", values, null);
+            var xx = tb.Skip((page - 1) * count).Take(10).ToSql();
             return xx.Key;
         }
         /// <summary>
@@ -249,7 +249,7 @@
 
                 if (key.EndsWith("[]"))
                 {
-                    return  ToSql(item);
+                    return ToSql(item);
                 }
             }
             return string.Empty;
@@ -509,6 +509,10 @@
                     conModels.Add(new ConditionalModel() { FieldName = vakey.TrimEnd('@'), ConditionalType = ConditionalType.Equal, FieldValue = value });
 
                 }
+                else if (vakey.EndsWith("~"))//不等于
+                {
+                    conModels.Add(new ConditionalModel() { FieldName = vakey.TrimEnd('~'), ConditionalType = ConditionalType.NoEqual, FieldValue = fieldValue });
+                }
                 else if (IsCol(subtable, vakey)) //其他where条件
                 {
                     conModels.Add(new ConditionalModel() { FieldName = vakey, ConditionalType = ConditionalType.Equal, FieldValue = fieldValue });
@@ -695,7 +699,12 @@
                     inValues.Add(cm.ToString());
                 }
 
-                conModels.Add(new ConditionalModel() { FieldName = field, ConditionalType = field.EndsWith("!") ? ConditionalType.NotIn : ConditionalType.In, FieldValue = string.Join(",", inValues) });
+                conModels.Add(new ConditionalModel()
+                {
+                    FieldName = field.TrimEnd("!".ToCharArray()),
+                    ConditionalType = field.EndsWith("!") ? ConditionalType.NotIn : ConditionalType.In,
+                    FieldValue = string.Join(",", inValues)
+                });
 
             }
             else
