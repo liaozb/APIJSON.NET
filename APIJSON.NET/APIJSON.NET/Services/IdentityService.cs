@@ -10,25 +10,47 @@ using System.Threading.Tasks;
 
 namespace APIJSON.NET.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class IdentityService : IIdentityService
     {
         private IHttpContextAccessor _context;
         private List<Role> roles;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="_roles"></param>
         public IdentityService(IHttpContextAccessor context, IOptions<List<Role>> _roles)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             roles = _roles.Value;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string GetUserIdentity()
         {
             return _context.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string GetUserRoleName()
         {
             return _context.HttpContext.User.FindFirstValue(ClaimTypes.Role);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Role GetRole()
         {
             var role = new Role();
@@ -43,23 +65,37 @@ namespace APIJSON.NET.Services
             }
             return role;
         }
-        public (bool, string) GetSelectRole(string table)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
+        public Tuple<bool, string> GetSelectRole(string table)
         {
             var role = GetRole();
             if (role == null || role.Select == null || role.Select.Table == null)
             {
-                return (false, $"appsettings.json权限配置不正确！");
+                return Tuple.Create(false, $"appsettings.json权限配置不正确！");
             }
             string tablerole = role.Select.Table.FirstOrDefault(it => it == "*" || it.Equals(table, StringComparison.CurrentCultureIgnoreCase));
 
             if (string.IsNullOrEmpty(tablerole))
             {
-                return (false, $"表名{table}没权限查询！");
+                return Tuple.Create(false, $"表名{table}没权限查询！");
             }
             int index = Array.IndexOf(role.Select.Table, tablerole);
             string selectrole = role.Select.Column[index];
-            return (true, selectrole);
+            return Tuple.Create(true, selectrole);
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="col"></param>
+        /// <param name="selectrole"></param>
+        /// <returns></returns>
         public bool ColIsRole(string col, string[] selectrole)
         {
             if (selectrole.Contains("*"))

@@ -2,8 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.0.7</Version>
-    <Description>0.0.7 修复not in的缺陷，增加~ 不等于的支持
+    <Version>0.0.8</Version>
+    <Description>0.0.8 清理SelectTable 支持重载
+0.0.7 修复not in的缺陷，增加~ 不等于的支持
 0.0.6 增加ToSql接口，处理sql注入的情况
 通用查询组件</Description>
     <PackageId>ApiJson.Common.Core</PackageId>

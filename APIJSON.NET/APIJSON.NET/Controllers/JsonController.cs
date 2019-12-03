@@ -57,7 +57,8 @@
 
         public async Task<ActionResult> Query([FromBody] JObject jobject)
         {
-            JObject resultJobj = new SelectTable(_identitySvc, _tableMapper, db.Db).Query(jobject);
+            var st = new SelectTable(_identitySvc, _tableMapper, db.Db);
+            JObject resultJobj = st.Query(jobject);
             return Ok(resultJobj);
         }
 
@@ -75,9 +76,25 @@
 
             JObject jobject = JObject.Parse(json);
             ht.Add(table + "[]", jobject);
-            ht.Add("total@", "");
+
+            if (jobject["query"] != null && jobject["query"].ToString() != "0" && jobject["total@"] == null)
+            {
+                //自动添加总计数量
+                ht.Add("total@", "");
+            }
+
+            //每页最大1000条数据
+            if (jobject["count"] != null && int.Parse(jobject["count"].ToString()) > 1000)
+            {
+                throw new Exception("count分页数量最大不能超过1000");
+            }
+
+            bool isDebug = (jobject["@debug"] != null && jobject["@debug"].ToString() != "0");
+            jobject.Remove("@debug");
 
             bool hasTableKey = false;
+            List<string> ignoreConditions = new List<string> { "page", "count", "query" };
+            JObject tableConditions = new JObject();//表的其它查询条件，比如过滤，字段等
             foreach (var item in jobject)
             {
                 if (item.Key.Equals(table, StringComparison.CurrentCultureIgnoreCase))
@@ -85,10 +102,20 @@
                     hasTableKey = true;
                     break;
                 }
+                if (!ignoreConditions.Contains(item.Key.ToLower()))
+                {
+                    tableConditions.Add(item.Key, item.Value);
+                }
             }
+
+            foreach (var removeKey in tableConditions)
+            {
+                jobject.Remove(removeKey.Key);
+            }
+
             if (!hasTableKey)
             {
-                jobject.Add(table, new JObject());
+                jobject.Add(table, tableConditions);
             }
 
             return await Query(ht);

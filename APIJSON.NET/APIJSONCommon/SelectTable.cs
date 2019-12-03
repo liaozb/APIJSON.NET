@@ -36,7 +36,7 @@
         /// </summary>
         /// <param name="table"></param>
         /// <returns></returns>
-        public bool IsTable(string table)
+        public virtual bool IsTable(string table)
         {
             return db.DbMaintenance.GetTableInfoList().Any(it => it.Name.Equals(table, StringComparison.CurrentCultureIgnoreCase));
         }
@@ -46,39 +46,11 @@
         /// <param name="table"></param>
         /// <param name="col"></param>
         /// <returns></returns>
-        public bool IsCol(string table, string col)
+        public virtual bool IsCol(string table, string col)
         {
             return db.DbMaintenance.GetColumnInfosByTableName(table).Any(it => it.DbColumnName.Equals(col, StringComparison.CurrentCultureIgnoreCase));
         }
-        /// <summary>
-        /// 动态调用方法
-        /// </summary>
-        /// <param name="funcname"></param>
-        /// <param name="param"></param>
-        /// <param name="types"></param>
-        /// <returns></returns>
-        public object ExecFunc(string funcname, object[] param, Type[] types)
-        {
-            var method = typeof(FuncList).GetMethod(funcname);
 
-            var reflector = method.GetReflector();
-            var result = reflector.Invoke(new FuncList(), param);
-            return result;
-        }
-
-        private string ToSql(string subtable, int page, int count, int query, string json)
-        {
-            JObject values = JObject.Parse(json);
-            page = values["page"] == null ? page : int.Parse(values["page"].ToString());
-            count = values["count"] == null ? count : int.Parse(values["count"].ToString());
-            query = values["query"] == null ? query : int.Parse(values["query"].ToString());
-            values.Remove("page");
-            values.Remove("count");
-            subtable = _tableMapper.GetTableName(subtable);
-            var tb = sugarQueryable(subtable, "*", values, null);
-            var xx = tb.Skip((page - 1) * count).Take(10).ToSql();
-            return xx.Key;
-        }
         /// <summary>
         /// 
         /// </summary>
@@ -88,7 +60,7 @@
         /// <param name="json"></param>
         /// <param name="dd"></param>
         /// <returns></returns>
-        public Tuple<dynamic, int> GetTableData(string subtable, int page, int count, int query, string json, JObject dd)
+        public virtual Tuple<dynamic, int> GetTableData(string subtable, int page, int count, int query, string json, JObject dd)
         {
 
             var role = _identitySvc.GetSelectRole(subtable);
@@ -131,13 +103,146 @@
         }
 
         /// <summary>
-        /// 
+        /// 解析并查询
         /// </summary>
-        /// <param name="subtable"></param>
-        /// <param name="json"></param>
-        /// <param name="dd"></param>
+        /// <param name="query"></param>
         /// <returns></returns>
-        public dynamic GetFirstData(string subtable, string json, JObject dd)
+        public virtual JObject Query(string queryJson)
+        {
+            JObject resultObj = new JObject();
+
+            JObject queryJobj = JObject.Parse(queryJson);
+            resultObj = Query(queryJobj);
+            return resultObj;
+        }
+
+        /// <summary>
+        /// 单表查询
+        /// </summary>
+        /// <param name="queryObj"></param>
+        /// <param name="nodeName">返回数据的节点名称  默认为 infos</param>
+        /// <returns></returns>
+        public virtual JObject QuerySingle(JObject queryObj, string nodeName = "infos")
+        {
+            JObject resultObj = new JObject();
+            resultObj.Add("code", "200");
+            resultObj.Add("msg", "success");
+
+            int total = 0;
+            foreach (var item in queryObj)
+            {
+                string key = item.Key.Trim();
+
+                if (key.EndsWith("[]"))
+                {
+                    total = QuerySingleList(resultObj, item, nodeName);
+                }
+                else if (key.Equals("func"))
+                {
+                    ExecFunc(resultObj, item);
+                }
+                else if (key.Equals("total@"))
+                {
+                    resultObj.Add("total", total);
+                }
+            }
+
+            return resultObj;
+        }
+
+        /// <summary>
+        /// 获取查询语句
+        /// </summary>
+        /// <param name="queryObj"></param>
+        /// <returns></returns>
+        public virtual string ToSql(JObject queryObj)
+        {
+            foreach (var item in queryObj)
+            {
+                string key = item.Key.Trim();
+
+                if (key.EndsWith("[]"))
+                {
+                    return ToSql(item);
+                }
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// 解析并查询
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        public virtual JObject Query(JObject queryObj)
+        {
+            JObject resultObj = new JObject();
+            resultObj.Add("code", "200");
+            resultObj.Add("msg", "success");
+
+            int total = 0;
+            foreach (var item in queryObj)
+            {
+                string key = item.Key.Trim();
+
+                if (key.Equals("[]"))
+                {
+                    total = QueryMoreList(resultObj, item);
+                }
+                else if (key.EndsWith("[]"))
+                {
+                    total = QuerySingleList(resultObj, item);
+                }
+                else if (key.Equals("func"))
+                {
+                    ExecFunc(resultObj, item);
+                }
+                else if (key.Equals("total@"))
+                {
+                    resultObj.Add("total", total);
+                }
+                else
+                {
+                    var template = GetFirstData(key, item.Value.ToString(), resultObj);
+                    if (template != null)
+                    {
+                        resultObj.Add(key, JToken.FromObject(template));
+                    }
+                }
+            }
+
+            return resultObj;
+        }
+
+
+
+        //动态调用方法
+        private object ExecFunc(string funcname, object[] param, Type[] types)
+        {
+            var method = typeof(FuncList).GetMethod(funcname);
+
+            var reflector = method.GetReflector();
+            var result = reflector.Invoke(new FuncList(), param);
+            return result;
+        }
+
+        //生成sql
+        private string ToSql(string subtable, int page, int count, int query, string json)
+        {
+            JObject values = JObject.Parse(json);
+            page = values["page"] == null ? page : int.Parse(values["page"].ToString());
+            count = values["count"] == null ? count : int.Parse(values["count"].ToString());
+            query = values["query"] == null ? query : int.Parse(values["query"].ToString());
+            values.Remove("page");
+            values.Remove("count");
+            subtable = _tableMapper.GetTableName(subtable);
+            var tb = sugarQueryable(subtable, "*", values, null);
+            var sqlObj = tb.Skip((page - 1) * count).Take(10).ToSql();
+            return sqlObj.Key;
+        }
+
+        //
+        private dynamic GetFirstData(string subtable, string json, JObject job)
         {
 
             var role = _identitySvc.GetSelectRole(subtable);
@@ -150,7 +255,7 @@
             JObject values = JObject.Parse(json);
             values.Remove("page");
             values.Remove("count");
-            var tb = sugarQueryable(subtable, selectrole, values, dd).First();
+            var tb = sugarQueryable(subtable, selectrole, values, job).First();
             var dic = (IDictionary<string, object>)tb;
             foreach (var item in values.Properties().Where(it => it.Name.EndsWith("()")))
             {
@@ -171,139 +276,6 @@
 
             return tb;
 
-        }
-
-        /// <summary>
-        /// 解析并查询
-        /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        public JObject Query(string queryJson)
-        {
-            JObject resultObj = new JObject();
-
-            try
-            {
-                JObject queryJobj = JObject.Parse(queryJson);
-                resultObj = Query(queryJobj);
-            }
-            catch (Exception ex)
-            {
-                resultObj.Add("code", "500");
-                resultObj.Add("msg", ex.Message);
-            }
-
-            return resultObj;
-        }
-
-        /// <summary>
-        /// 单表查询
-        /// </summary>
-        /// <param name="queryObj"></param>
-        /// <param name="nodeName">返回数据的节点名称  默认为 infos</param>
-        /// <returns></returns>
-        public JObject QuerySingle(JObject queryObj, string nodeName = "infos")
-        {
-            JObject resultObj = new JObject();
-            resultObj.Add("code", "200");
-            resultObj.Add("msg", "success");
-            try
-            {
-                int total = 0;
-                foreach (var item in queryObj)
-                {
-                    string key = item.Key.Trim();
-
-                    if (key.EndsWith("[]"))
-                    {
-                        total = QuerySingleList(resultObj, item, nodeName);
-                    }
-                    else if (key.Equals("func"))
-                    {
-                        ExecFunc(resultObj, item);
-                    }
-                    else if (key.Equals("total@"))
-                    {
-                        resultObj.Add("total", total);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                resultObj["code"] = "500";
-                resultObj["msg"] = ex.Message;
-            }
-            return resultObj;
-        }
-
-        /// <summary>
-        /// 获取查询语句
-        /// </summary>
-        /// <param name="queryObj"></param>
-        /// <returns></returns>
-        public string ToSql(JObject queryObj)
-        {
-            foreach (var item in queryObj)
-            {
-                string key = item.Key.Trim();
-
-                if (key.EndsWith("[]"))
-                {
-                    return ToSql(item);
-                }
-            }
-            return string.Empty;
-        }
-
-        /// <summary>
-        /// 解析并查询
-        /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        public JObject Query(JObject queryObj)
-        {
-            JObject resultObj = new JObject();
-            resultObj.Add("code", "200");
-            resultObj.Add("msg", "success");
-            try
-            {
-                int total = 0;
-                foreach (var item in queryObj)
-                {
-                    string key = item.Key.Trim();
-
-                    if (key.Equals("[]"))
-                    {
-                        total = QueryMoreList(resultObj, item);
-                    }
-                    else if (key.EndsWith("[]"))
-                    {
-                        total = QuerySingleList(resultObj, item);
-                    }
-                    else if (key.Equals("func"))
-                    {
-                        ExecFunc(resultObj, item);
-                    }
-                    else if (key.Equals("total@"))
-                    {
-                        resultObj.Add("total", total);
-                    }
-                    else
-                    {
-                        var template = GetFirstData(key, item.Value.ToString(), resultObj);
-                        if (template != null)
-                        {
-                            resultObj.Add(key, JToken.FromObject(template));
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                resultObj["code"] = "500";
-                resultObj["msg"] = ex.Message;
-            }
-            return resultObj;
         }
 
         //单表查询,返回的数据在指定的NodeName节点
@@ -341,6 +313,7 @@
             return total;
         }
 
+        //生成sql
         private string ToSql(KeyValuePair<string, JToken> item)
         {
             string key = item.Key.Trim();
@@ -358,6 +331,7 @@
 
             return string.Empty;
         }
+
         //单表查询
         private int QuerySingleList(JObject resultObj, KeyValuePair<string, JToken> item)
         {
@@ -433,6 +407,7 @@
             return total;
         }
 
+        //执行方法
         private void ExecFunc(JObject resultObj, KeyValuePair<string, JToken> item)
         {
             JObject jb = JObject.Parse(item.Value.ToString());
@@ -453,6 +428,7 @@
             resultObj.Add("func", dataJObj);
         }
 
+        //
         private ISugarQueryable<ExpandoObject> sugarQueryable(string subtable, string selectrole, JObject values, JObject dd)
         {
             if (!IsTable(subtable))
@@ -811,7 +787,8 @@
             }
         }
 
-        public string ReplaceSQLChar(string str)
+        //处理sql注入
+        private string ReplaceSQLChar(string str)
         {
             if (str == String.Empty)
                 return String.Empty;
