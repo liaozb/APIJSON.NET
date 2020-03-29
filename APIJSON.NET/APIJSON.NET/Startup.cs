@@ -51,8 +51,8 @@
             {
                 c.SwaggerDoc("v1", new Info { Title = "APIJSON.NET", Version = "v1" });
             });
-            services.AddSingleton<DbContext>();
-            services.AddSingleton<SelectTable>();
+            services.AddTransient<DbContext>();
+            services.AddTransient<SelectTable>();
             services.AddSingleton<TokenAuthConfiguration>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IIdentityService, IdentityService>();
