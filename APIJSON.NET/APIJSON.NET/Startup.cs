@@ -12,6 +12,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
+    using Microsoft.OpenApi.Models;
     using Swashbuckle.AspNetCore.Swagger;
 
     public class Startup
@@ -46,10 +47,10 @@
                   .AllowAnyHeader()
                   .AllowAnyMethod().AllowCredentials()
                   ));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "APIJSON.NET", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "APIJSON.NET", Version = "v1" });
             });
             services.AddSingleton<DbContext>();
             services.AddSingleton<SelectTable>();
@@ -61,17 +62,12 @@
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
             app.UseAuthentication();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseRouting();
             app.UseStaticFiles();
             app.UseCors(_defaultCorsPolicyName);
             app.UseSwagger();
@@ -80,7 +76,10 @@
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                
             });
-      
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
             app.UseJwtTokenMiddleware();
             DbInit.Initialize(app);
         }

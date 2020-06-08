@@ -12,9 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspectCore.Extensions.Reflection" Version="1.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.1" />
-    <PackageReference Include="sqlSugarCore" Version="4.9.9.10" />
+    <PackageReference Include="AspectCore.Extensions.Reflection" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.4" />
+    <PackageReference Include="sqlSugarCore" Version="5.0.0.15" />
   </ItemGroup>
 
 </Project>
