@@ -624,9 +624,8 @@
                     }
                     hw.Add(model);
                 }
-
-                var d = db.Context.Utilities.ConditionalModelToSql(hw);
-                //tb.Having(d.Key, d.Value);
+               
+              
                 tb.Having(string.Join(",", havingItems));
             }
         }
