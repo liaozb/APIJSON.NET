@@ -456,7 +456,10 @@
             {
                 string vakey = va.Key.Trim();
                 string fieldValue = va.Value.ToString();
-
+                if (vakey.StartsWith("@"))
+                {
+                    continue;
+                }
                 if (vakey.EndsWith("$"))//模糊查询
                 {
                     FuzzyQuery(subtable, conModels, va);
@@ -531,10 +534,10 @@
                         {
                             throw new Exception("别名不能超过20个字符");
                         }
-                        str.Append(ziduan[0] + " as " + ReplaceSQLChar(ziduan[1]) + ",");
+                        str.Append(ziduan[0] + " as `" + ReplaceSQLChar(ziduan[1]) + "`,");
                     }
                     else
-                        str.Append(ziduan[0] + ",");
+                        str.Append("`" + ziduan[0] + "`" + ",");
 
                 }
             }

@@ -142,12 +142,11 @@
     },
       methods: {
           hpost: function () {
-            
               $.ajax({
                   url: $('#rest-url').val(),
                   type: "POST", dataType: "json",
                   contentType: "application/json;charset=utf-8",
-                  data: $('#vInput').val(),
+                  data: $('#vInput').val(),//JSON.stringify($('#vInput').val()),
                   success: function (data) {
                   
                       App.jsonhtml = data;
