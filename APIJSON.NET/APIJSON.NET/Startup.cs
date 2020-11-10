@@ -41,13 +41,19 @@
             });
             AuthConfigurer.Configure(services, Configuration);
 
+            var origins = Configuration.GetSection("CorsUrls").Value.Split(",");
             services.AddCors( options => options.AddPolicy( _defaultCorsPolicyName, 
                 builder => 
-                builder.AllowAnyOrigin()
+                builder.WithOrigins(origins)
                   .AllowAnyHeader()
                   .AllowAnyMethod().AllowCredentials()
                   ));
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                }); ;
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "APIJSON.NET", Version = "v1" });
