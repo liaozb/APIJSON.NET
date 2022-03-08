@@ -1,5 +1,6 @@
 ﻿using RestSharp;
 using System;
+using System.Text.RegularExpressions;
 
 namespace APIJSON.NET.Test
 {

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("ApiJson.Common")]
-[assembly: AssemblyDescription("增加ToSql接口，处理sql注入的情况")]
+[assembly: AssemblyDescription("0.0.19 处理别名如果为关键字的缺陷")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ApiJson.Common")]
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 //可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值
 //通过使用 "*"，如下所示:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.6.0")]
-[assembly: AssemblyFileVersion("0.0.6.0")]
+[assembly: AssemblyVersion("0.0.10.0")]
+[assembly: AssemblyFileVersion("0.0.10.0")]

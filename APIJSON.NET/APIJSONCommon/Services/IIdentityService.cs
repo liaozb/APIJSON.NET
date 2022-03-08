@@ -25,7 +25,7 @@ namespace APIJSON.NET.Services
         /// </summary>
         /// <param name="table"></param>
         /// <returns></returns>
-        (bool, string) GetSelectRole(string table);
+        Tuple<bool, string> GetSelectRole(string table);
 
 
         bool ColIsRole(string col, string[] selectrole);
