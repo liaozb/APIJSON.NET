@@ -1,13 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.0.10</Version>
-    <Description>0.0.10 处理别名如果为关键字的缺陷
-0.0.8 清理SelectTable 支持重载
-0.0.7 修复not in的缺陷，增加~ 不等于的支持
-0.0.6 增加ToSql接口，处理sql注入的情况
-通用查询组件</Description>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Version>0.0.11</Version>
+    <Description>
+		0.0.11 升级sqlSugarCore版本 解决如果查找字段是关键字(例如:key)时出错的问题
+		0.0.10 处理别名如果为关键字的缺陷
+		0.0.8 清理SelectTable 支持重载
+		0.0.7 修复not in的缺陷，增加~ 不等于的支持
+		0.0.6 增加ToSql接口，处理sql注入的情况
+		通用查询组件</Description>
     <PackageId>ApiJson.Common.Core</PackageId>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
@@ -20,7 +22,7 @@
   <ItemGroup>
     <PackageReference Include="AspectCore.Extensions.Reflection" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.4" />
-    <PackageReference Include="sqlSugarCore" Version="5.0.0.15" />
+    <PackageReference Include="sqlSugarCore" Version="5.0.5.5" />
   </ItemGroup>
 
   <ItemGroup>

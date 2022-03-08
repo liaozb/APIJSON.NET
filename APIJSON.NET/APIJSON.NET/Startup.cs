@@ -70,10 +70,9 @@
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
-            app.UseAuthentication();
-
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseCors(_defaultCorsPolicyName);
             app.UseSwagger();
@@ -84,7 +83,8 @@
             });
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapDefaultControllerRoute();
+                //endpoints.MapControllers();
             });
             app.UseJwtTokenMiddleware();
             DbInit.Initialize(app);

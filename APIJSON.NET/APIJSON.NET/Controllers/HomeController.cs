@@ -10,7 +10,8 @@ namespace APIJSON.NET.Controllers
     {
         public IActionResult Index()
         {
-            return Redirect("index.html");
+            return File("./index.html", "text/html");
+            //return Redirect("index.html");
         }
     }
 }
