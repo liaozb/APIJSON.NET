@@ -1,4 +1,4 @@
-﻿using APIJSON.NET.Models;
+﻿using APIJSON.NET.Data.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using SqlSugar;

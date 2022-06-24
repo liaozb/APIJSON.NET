@@ -19,7 +19,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+    options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
  
@@ -42,23 +46,18 @@ builder.Services.AddCors(options => options.AddPolicy(_defaultCorsPolicyName,
       .AllowAnyHeader()
       .AllowAnyMethod().AllowCredentials()
       ));
-builder.Services.AddControllers()
-    .AddNewtonsoftJson(options =>
-    {
-        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-        options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-    }); ;
+ 
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "APIJSON.NET", Version = "v1" });
 });
 builder.Services.AddSingleton<DbContext>();
-builder.Services.AddSingleton<SelectTable>();
+
 builder.Services.AddSingleton<TokenAuthConfiguration>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<IIdentityService, IdentityService>();
 builder.Services.AddTransient<ITableMapper, TableMapper>();
-
+ 
 
 var app = builder.Build();
 
@@ -74,6 +73,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseDefaultFiles();
 app.UseStaticFiles();
 app.UseAuthorization();
 app.UseCors(_defaultCorsPolicyName);

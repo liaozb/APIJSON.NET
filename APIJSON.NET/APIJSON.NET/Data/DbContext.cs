@@ -1,4 +1,4 @@
-﻿using APIJSON.NET.Models;
+﻿using APIJSON.NET.Data.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using SqlSugar;
