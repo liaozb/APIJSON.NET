@@ -1,0 +1,1491 @@
+2024-02-04 11:08:04.221 +08:00 [INF] Starting APIJSON.NET.Host.
+2024-02-04 11:08:07.352 +08:00 [INF] Loaded ABP modules:
+2024-02-04 11:08:07.353 +08:00 [INF] - APIJSON.NET.AppModule
+2024-02-04 11:08:07.353 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2024-02-04 11:08:07.353 +08:00 [INF]     - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2024-02-04 11:08:07.353 +08:00 [INF]       - Volo.Abp.Auditing.AbpAuditingModule
+2024-02-04 11:08:07.353 +08:00 [INF]         - Volo.Abp.Data.AbpDataModule
+2024-02-04 11:08:07.353 +08:00 [INF]           - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2024-02-04 11:08:07.353 +08:00 [INF]             - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2024-02-04 11:08:07.353 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2024-02-04 11:08:07.353 +08:00 [INF]           - Volo.Abp.Uow.AbpUnitOfWorkModule
+2024-02-04 11:08:07.353 +08:00 [INF]           - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2024-02-04 11:08:07.353 +08:00 [INF]         - Volo.Abp.Json.AbpJsonModule
+2024-02-04 11:08:07.353 +08:00 [INF]           - Volo.Abp.Json.SystemTextJson.AbpJsonSystemTextJsonModule
+2024-02-04 11:08:07.353 +08:00 [INF]             - Volo.Abp.Json.AbpJsonAbstractionsModule
+2024-02-04 11:08:07.353 +08:00 [INF]             - Volo.Abp.Timing.AbpTimingModule
+2024-02-04 11:08:07.353 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2024-02-04 11:08:07.353 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2024-02-04 11:08:07.353 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2024-02-04 11:08:07.353 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2024-02-04 11:08:07.353 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2024-02-04 11:08:07.353 +08:00 [INF]         - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2024-02-04 11:08:07.353 +08:00 [INF]           - Volo.Abp.MultiTenancy.AbpMultiTenancyAbstractionsModule
+2024-02-04 11:08:07.353 +08:00 [INF]         - Volo.Abp.Auditing.AbpAuditingContractsModule
+2024-02-04 11:08:07.353 +08:00 [INF]       - Volo.Abp.Http.AbpHttpModule
+2024-02-04 11:08:07.353 +08:00 [INF]         - Volo.Abp.Http.AbpHttpAbstractionsModule
+2024-02-04 11:08:07.353 +08:00 [INF]         - Volo.Abp.Minify.AbpMinifyModule
+2024-02-04 11:08:07.353 +08:00 [INF]       - Volo.Abp.Authorization.AbpAuthorizationModule
+2024-02-04 11:08:07.353 +08:00 [INF]         - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2024-02-04 11:08:07.353 +08:00 [INF]       - Volo.Abp.Validation.AbpValidationModule
+2024-02-04 11:08:07.353 +08:00 [INF]       - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2024-02-04 11:08:07.353 +08:00 [INF]     - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2024-02-04 11:08:07.353 +08:00 [INF]     - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2024-02-04 11:08:07.353 +08:00 [INF]       - Volo.Abp.Application.AbpDddApplicationContractsModule
+2024-02-04 11:08:07.353 +08:00 [INF]     - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2024-02-04 11:08:07.353 +08:00 [INF]       - Volo.Abp.UI.AbpUiModule
+2024-02-04 11:08:07.353 +08:00 [INF]     - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2024-02-04 11:08:07.353 +08:00 [INF]     - Volo.Abp.Application.AbpDddApplicationModule
+2024-02-04 11:08:07.353 +08:00 [INF]       - Volo.Abp.Domain.AbpDddDomainModule
+2024-02-04 11:08:07.353 +08:00 [INF]         - Volo.Abp.EventBus.AbpEventBusModule
+2024-02-04 11:08:07.353 +08:00 [INF]           - Volo.Abp.Guids.AbpGuidsModule
+2024-02-04 11:08:07.353 +08:00 [INF]           - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2024-02-04 11:08:07.353 +08:00 [INF]           - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2024-02-04 11:08:07.353 +08:00 [INF]         - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2024-02-04 11:08:07.353 +08:00 [INF]         - Volo.Abp.Specifications.AbpSpecificationsModule
+2024-02-04 11:08:07.353 +08:00 [INF]         - Volo.Abp.Caching.AbpCachingModule
+2024-02-04 11:08:07.353 +08:00 [INF]           - Volo.Abp.Serialization.AbpSerializationModule
+2024-02-04 11:08:07.353 +08:00 [INF]         - Volo.Abp.Domain.AbpDddDomainSharedModule
+2024-02-04 11:08:07.353 +08:00 [INF]       - Volo.Abp.Features.AbpFeaturesModule
+2024-02-04 11:08:07.353 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2024-02-04 11:08:07.353 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2024-02-04 11:08:07.353 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2024-02-04 11:08:07.353 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2024-02-04 11:08:07.890 +08:00 [INF] User profile is available. Using 'C:\Users\liaozb\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 11:09:22.623 +08:00 [INF] Starting APIJSON.NET.Host.
+2024-02-04 11:09:24.232 +08:00 [INF] Loaded ABP modules:
+2024-02-04 11:09:24.233 +08:00 [INF] - APIJSON.NET.AppModule
+2024-02-04 11:09:24.233 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2024-02-04 11:09:24.233 +08:00 [INF]     - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2024-02-04 11:09:24.233 +08:00 [INF]       - Volo.Abp.Auditing.AbpAuditingModule
+2024-02-04 11:09:24.233 +08:00 [INF]         - Volo.Abp.Data.AbpDataModule
+2024-02-04 11:09:24.233 +08:00 [INF]           - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2024-02-04 11:09:24.233 +08:00 [INF]             - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2024-02-04 11:09:24.233 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2024-02-04 11:09:24.233 +08:00 [INF]           - Volo.Abp.Uow.AbpUnitOfWorkModule
+2024-02-04 11:09:24.233 +08:00 [INF]           - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2024-02-04 11:09:24.233 +08:00 [INF]         - Volo.Abp.Json.AbpJsonModule
+2024-02-04 11:09:24.233 +08:00 [INF]           - Volo.Abp.Json.SystemTextJson.AbpJsonSystemTextJsonModule
+2024-02-04 11:09:24.233 +08:00 [INF]             - Volo.Abp.Json.AbpJsonAbstractionsModule
+2024-02-04 11:09:24.233 +08:00 [INF]             - Volo.Abp.Timing.AbpTimingModule
+2024-02-04 11:09:24.233 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2024-02-04 11:09:24.233 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2024-02-04 11:09:24.233 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2024-02-04 11:09:24.233 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2024-02-04 11:09:24.233 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2024-02-04 11:09:24.233 +08:00 [INF]         - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2024-02-04 11:09:24.233 +08:00 [INF]           - Volo.Abp.MultiTenancy.AbpMultiTenancyAbstractionsModule
+2024-02-04 11:09:24.233 +08:00 [INF]         - Volo.Abp.Auditing.AbpAuditingContractsModule
+2024-02-04 11:09:24.233 +08:00 [INF]       - Volo.Abp.Http.AbpHttpModule
+2024-02-04 11:09:24.233 +08:00 [INF]         - Volo.Abp.Http.AbpHttpAbstractionsModule
+2024-02-04 11:09:24.233 +08:00 [INF]         - Volo.Abp.Minify.AbpMinifyModule
+2024-02-04 11:09:24.233 +08:00 [INF]       - Volo.Abp.Authorization.AbpAuthorizationModule
+2024-02-04 11:09:24.233 +08:00 [INF]         - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2024-02-04 11:09:24.233 +08:00 [INF]       - Volo.Abp.Validation.AbpValidationModule
+2024-02-04 11:09:24.233 +08:00 [INF]       - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2024-02-04 11:09:24.233 +08:00 [INF]     - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2024-02-04 11:09:24.233 +08:00 [INF]     - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2024-02-04 11:09:24.233 +08:00 [INF]       - Volo.Abp.Application.AbpDddApplicationContractsModule
+2024-02-04 11:09:24.233 +08:00 [INF]     - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2024-02-04 11:09:24.233 +08:00 [INF]       - Volo.Abp.UI.AbpUiModule
+2024-02-04 11:09:24.233 +08:00 [INF]     - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2024-02-04 11:09:24.233 +08:00 [INF]     - Volo.Abp.Application.AbpDddApplicationModule
+2024-02-04 11:09:24.233 +08:00 [INF]       - Volo.Abp.Domain.AbpDddDomainModule
+2024-02-04 11:09:24.233 +08:00 [INF]         - Volo.Abp.EventBus.AbpEventBusModule
+2024-02-04 11:09:24.233 +08:00 [INF]           - Volo.Abp.Guids.AbpGuidsModule
+2024-02-04 11:09:24.233 +08:00 [INF]           - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2024-02-04 11:09:24.233 +08:00 [INF]           - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2024-02-04 11:09:24.233 +08:00 [INF]         - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2024-02-04 11:09:24.233 +08:00 [INF]         - Volo.Abp.Specifications.AbpSpecificationsModule
+2024-02-04 11:09:24.233 +08:00 [INF]         - Volo.Abp.Caching.AbpCachingModule
+2024-02-04 11:09:24.233 +08:00 [INF]           - Volo.Abp.Serialization.AbpSerializationModule
+2024-02-04 11:09:24.233 +08:00 [INF]         - Volo.Abp.Domain.AbpDddDomainSharedModule
+2024-02-04 11:09:24.233 +08:00 [INF]       - Volo.Abp.Features.AbpFeaturesModule
+2024-02-04 11:09:24.233 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2024-02-04 11:09:24.233 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2024-02-04 11:09:24.233 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2024-02-04 11:09:24.233 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2024-02-04 11:09:24.536 +08:00 [INF] User profile is available. Using 'C:\Users\liaozb\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 11:15:37.016 +08:00 [INF] Starting APIJSON.NET.Host.
+2024-02-04 11:15:38.749 +08:00 [INF] Loaded ABP modules:
+2024-02-04 11:15:38.750 +08:00 [INF] - APIJSON.NET.AppModule
+2024-02-04 11:15:38.750 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2024-02-04 11:15:38.750 +08:00 [INF]     - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2024-02-04 11:15:38.750 +08:00 [INF]       - Volo.Abp.Auditing.AbpAuditingModule
+2024-02-04 11:15:38.750 +08:00 [INF]         - Volo.Abp.Data.AbpDataModule
+2024-02-04 11:15:38.750 +08:00 [INF]           - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2024-02-04 11:15:38.750 +08:00 [INF]             - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2024-02-04 11:15:38.750 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2024-02-04 11:15:38.750 +08:00 [INF]           - Volo.Abp.Uow.AbpUnitOfWorkModule
+2024-02-04 11:15:38.750 +08:00 [INF]           - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2024-02-04 11:15:38.750 +08:00 [INF]         - Volo.Abp.Json.AbpJsonModule
+2024-02-04 11:15:38.750 +08:00 [INF]           - Volo.Abp.Json.SystemTextJson.AbpJsonSystemTextJsonModule
+2024-02-04 11:15:38.750 +08:00 [INF]             - Volo.Abp.Json.AbpJsonAbstractionsModule
+2024-02-04 11:15:38.750 +08:00 [INF]             - Volo.Abp.Timing.AbpTimingModule
+2024-02-04 11:15:38.750 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2024-02-04 11:15:38.750 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2024-02-04 11:15:38.750 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2024-02-04 11:15:38.750 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2024-02-04 11:15:38.750 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2024-02-04 11:15:38.750 +08:00 [INF]         - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2024-02-04 11:15:38.750 +08:00 [INF]           - Volo.Abp.MultiTenancy.AbpMultiTenancyAbstractionsModule
+2024-02-04 11:15:38.750 +08:00 [INF]         - Volo.Abp.Auditing.AbpAuditingContractsModule
+2024-02-04 11:15:38.750 +08:00 [INF]       - Volo.Abp.Http.AbpHttpModule
+2024-02-04 11:15:38.750 +08:00 [INF]         - Volo.Abp.Http.AbpHttpAbstractionsModule
+2024-02-04 11:15:38.750 +08:00 [INF]         - Volo.Abp.Minify.AbpMinifyModule
+2024-02-04 11:15:38.750 +08:00 [INF]       - Volo.Abp.Authorization.AbpAuthorizationModule
+2024-02-04 11:15:38.750 +08:00 [INF]         - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2024-02-04 11:15:38.750 +08:00 [INF]       - Volo.Abp.Validation.AbpValidationModule
+2024-02-04 11:15:38.750 +08:00 [INF]       - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2024-02-04 11:15:38.750 +08:00 [INF]     - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2024-02-04 11:15:38.750 +08:00 [INF]     - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2024-02-04 11:15:38.750 +08:00 [INF]       - Volo.Abp.Application.AbpDddApplicationContractsModule
+2024-02-04 11:15:38.750 +08:00 [INF]     - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2024-02-04 11:15:38.750 +08:00 [INF]       - Volo.Abp.UI.AbpUiModule
+2024-02-04 11:15:38.750 +08:00 [INF]     - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2024-02-04 11:15:38.750 +08:00 [INF]     - Volo.Abp.Application.AbpDddApplicationModule
+2024-02-04 11:15:38.750 +08:00 [INF]       - Volo.Abp.Domain.AbpDddDomainModule
+2024-02-04 11:15:38.750 +08:00 [INF]         - Volo.Abp.EventBus.AbpEventBusModule
+2024-02-04 11:15:38.750 +08:00 [INF]           - Volo.Abp.Guids.AbpGuidsModule
+2024-02-04 11:15:38.750 +08:00 [INF]           - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2024-02-04 11:15:38.750 +08:00 [INF]           - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2024-02-04 11:15:38.750 +08:00 [INF]         - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2024-02-04 11:15:38.750 +08:00 [INF]         - Volo.Abp.Specifications.AbpSpecificationsModule
+2024-02-04 11:15:38.750 +08:00 [INF]         - Volo.Abp.Caching.AbpCachingModule
+2024-02-04 11:15:38.750 +08:00 [INF]           - Volo.Abp.Serialization.AbpSerializationModule
+2024-02-04 11:15:38.750 +08:00 [INF]         - Volo.Abp.Domain.AbpDddDomainSharedModule
+2024-02-04 11:15:38.750 +08:00 [INF]       - Volo.Abp.Features.AbpFeaturesModule
+2024-02-04 11:15:38.750 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2024-02-04 11:15:38.751 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2024-02-04 11:15:38.751 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2024-02-04 11:15:38.751 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2024-02-04 11:15:39.027 +08:00 [INF] User profile is available. Using 'C:\Users\liaozb\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 11:15:56.937 +08:00 [INF] Starting APIJSON.NET.Host.
+2024-02-04 11:15:58.558 +08:00 [INF] Loaded ABP modules:
+2024-02-04 11:15:58.559 +08:00 [INF] - APIJSON.NET.AppModule
+2024-02-04 11:15:58.559 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2024-02-04 11:15:58.559 +08:00 [INF]     - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2024-02-04 11:15:58.559 +08:00 [INF]       - Volo.Abp.Auditing.AbpAuditingModule
+2024-02-04 11:15:58.559 +08:00 [INF]         - Volo.Abp.Data.AbpDataModule
+2024-02-04 11:15:58.559 +08:00 [INF]           - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2024-02-04 11:15:58.559 +08:00 [INF]             - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2024-02-04 11:15:58.559 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2024-02-04 11:15:58.559 +08:00 [INF]           - Volo.Abp.Uow.AbpUnitOfWorkModule
+2024-02-04 11:15:58.559 +08:00 [INF]           - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2024-02-04 11:15:58.559 +08:00 [INF]         - Volo.Abp.Json.AbpJsonModule
+2024-02-04 11:15:58.559 +08:00 [INF]           - Volo.Abp.Json.SystemTextJson.AbpJsonSystemTextJsonModule
+2024-02-04 11:15:58.559 +08:00 [INF]             - Volo.Abp.Json.AbpJsonAbstractionsModule
+2024-02-04 11:15:58.559 +08:00 [INF]             - Volo.Abp.Timing.AbpTimingModule
+2024-02-04 11:15:58.559 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2024-02-04 11:15:58.559 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2024-02-04 11:15:58.559 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2024-02-04 11:15:58.559 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2024-02-04 11:15:58.559 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2024-02-04 11:15:58.559 +08:00 [INF]         - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2024-02-04 11:15:58.559 +08:00 [INF]           - Volo.Abp.MultiTenancy.AbpMultiTenancyAbstractionsModule
+2024-02-04 11:15:58.559 +08:00 [INF]         - Volo.Abp.Auditing.AbpAuditingContractsModule
+2024-02-04 11:15:58.559 +08:00 [INF]       - Volo.Abp.Http.AbpHttpModule
+2024-02-04 11:15:58.559 +08:00 [INF]         - Volo.Abp.Http.AbpHttpAbstractionsModule
+2024-02-04 11:15:58.559 +08:00 [INF]         - Volo.Abp.Minify.AbpMinifyModule
+2024-02-04 11:15:58.559 +08:00 [INF]       - Volo.Abp.Authorization.AbpAuthorizationModule
+2024-02-04 11:15:58.559 +08:00 [INF]         - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2024-02-04 11:15:58.559 +08:00 [INF]       - Volo.Abp.Validation.AbpValidationModule
+2024-02-04 11:15:58.559 +08:00 [INF]       - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2024-02-04 11:15:58.559 +08:00 [INF]     - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2024-02-04 11:15:58.559 +08:00 [INF]     - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2024-02-04 11:15:58.559 +08:00 [INF]       - Volo.Abp.Application.AbpDddApplicationContractsModule
+2024-02-04 11:15:58.559 +08:00 [INF]     - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2024-02-04 11:15:58.559 +08:00 [INF]       - Volo.Abp.UI.AbpUiModule
+2024-02-04 11:15:58.559 +08:00 [INF]     - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2024-02-04 11:15:58.559 +08:00 [INF]     - Volo.Abp.Application.AbpDddApplicationModule
+2024-02-04 11:15:58.559 +08:00 [INF]       - Volo.Abp.Domain.AbpDddDomainModule
+2024-02-04 11:15:58.559 +08:00 [INF]         - Volo.Abp.EventBus.AbpEventBusModule
+2024-02-04 11:15:58.559 +08:00 [INF]           - Volo.Abp.Guids.AbpGuidsModule
+2024-02-04 11:15:58.559 +08:00 [INF]           - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2024-02-04 11:15:58.559 +08:00 [INF]           - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2024-02-04 11:15:58.559 +08:00 [INF]         - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2024-02-04 11:15:58.559 +08:00 [INF]         - Volo.Abp.Specifications.AbpSpecificationsModule
+2024-02-04 11:15:58.559 +08:00 [INF]         - Volo.Abp.Caching.AbpCachingModule
+2024-02-04 11:15:58.559 +08:00 [INF]           - Volo.Abp.Serialization.AbpSerializationModule
+2024-02-04 11:15:58.559 +08:00 [INF]         - Volo.Abp.Domain.AbpDddDomainSharedModule
+2024-02-04 11:15:58.559 +08:00 [INF]       - Volo.Abp.Features.AbpFeaturesModule
+2024-02-04 11:15:58.559 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2024-02-04 11:15:58.559 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2024-02-04 11:15:58.559 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2024-02-04 11:15:58.559 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2024-02-04 11:15:58.887 +08:00 [INF] User profile is available. Using 'C:\Users\liaozb\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 11:18:32.544 +08:00 [INF] Starting APIJSON.NET.Host.
+2024-02-04 11:18:34.289 +08:00 [INF] Loaded ABP modules:
+2024-02-04 11:18:34.290 +08:00 [INF] - APIJSON.NET.AppModule
+2024-02-04 11:18:34.290 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2024-02-04 11:18:34.290 +08:00 [INF]     - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2024-02-04 11:18:34.290 +08:00 [INF]       - Volo.Abp.Auditing.AbpAuditingModule
+2024-02-04 11:18:34.290 +08:00 [INF]         - Volo.Abp.Data.AbpDataModule
+2024-02-04 11:18:34.290 +08:00 [INF]           - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2024-02-04 11:18:34.290 +08:00 [INF]             - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2024-02-04 11:18:34.290 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2024-02-04 11:18:34.290 +08:00 [INF]           - Volo.Abp.Uow.AbpUnitOfWorkModule
+2024-02-04 11:18:34.290 +08:00 [INF]           - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2024-02-04 11:18:34.290 +08:00 [INF]         - Volo.Abp.Json.AbpJsonModule
+2024-02-04 11:18:34.290 +08:00 [INF]           - Volo.Abp.Json.SystemTextJson.AbpJsonSystemTextJsonModule
+2024-02-04 11:18:34.290 +08:00 [INF]             - Volo.Abp.Json.AbpJsonAbstractionsModule
+2024-02-04 11:18:34.290 +08:00 [INF]             - Volo.Abp.Timing.AbpTimingModule
+2024-02-04 11:18:34.290 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2024-02-04 11:18:34.290 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2024-02-04 11:18:34.290 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2024-02-04 11:18:34.290 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2024-02-04 11:18:34.290 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2024-02-04 11:18:34.290 +08:00 [INF]         - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2024-02-04 11:18:34.290 +08:00 [INF]           - Volo.Abp.MultiTenancy.AbpMultiTenancyAbstractionsModule
+2024-02-04 11:18:34.290 +08:00 [INF]         - Volo.Abp.Auditing.AbpAuditingContractsModule
+2024-02-04 11:18:34.290 +08:00 [INF]       - Volo.Abp.Http.AbpHttpModule
+2024-02-04 11:18:34.290 +08:00 [INF]         - Volo.Abp.Http.AbpHttpAbstractionsModule
+2024-02-04 11:18:34.290 +08:00 [INF]         - Volo.Abp.Minify.AbpMinifyModule
+2024-02-04 11:18:34.290 +08:00 [INF]       - Volo.Abp.Authorization.AbpAuthorizationModule
+2024-02-04 11:18:34.290 +08:00 [INF]         - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2024-02-04 11:18:34.290 +08:00 [INF]       - Volo.Abp.Validation.AbpValidationModule
+2024-02-04 11:18:34.290 +08:00 [INF]       - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2024-02-04 11:18:34.290 +08:00 [INF]     - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2024-02-04 11:18:34.290 +08:00 [INF]     - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2024-02-04 11:18:34.290 +08:00 [INF]       - Volo.Abp.Application.AbpDddApplicationContractsModule
+2024-02-04 11:18:34.290 +08:00 [INF]     - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2024-02-04 11:18:34.290 +08:00 [INF]       - Volo.Abp.UI.AbpUiModule
+2024-02-04 11:18:34.290 +08:00 [INF]     - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2024-02-04 11:18:34.290 +08:00 [INF]     - Volo.Abp.Application.AbpDddApplicationModule
+2024-02-04 11:18:34.290 +08:00 [INF]       - Volo.Abp.Domain.AbpDddDomainModule
+2024-02-04 11:18:34.290 +08:00 [INF]         - Volo.Abp.EventBus.AbpEventBusModule
+2024-02-04 11:18:34.290 +08:00 [INF]           - Volo.Abp.Guids.AbpGuidsModule
+2024-02-04 11:18:34.290 +08:00 [INF]           - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2024-02-04 11:18:34.290 +08:00 [INF]           - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2024-02-04 11:18:34.290 +08:00 [INF]         - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2024-02-04 11:18:34.290 +08:00 [INF]         - Volo.Abp.Specifications.AbpSpecificationsModule
+2024-02-04 11:18:34.290 +08:00 [INF]         - Volo.Abp.Caching.AbpCachingModule
+2024-02-04 11:18:34.290 +08:00 [INF]           - Volo.Abp.Serialization.AbpSerializationModule
+2024-02-04 11:18:34.290 +08:00 [INF]         - Volo.Abp.Domain.AbpDddDomainSharedModule
+2024-02-04 11:18:34.290 +08:00 [INF]       - Volo.Abp.Features.AbpFeaturesModule
+2024-02-04 11:18:34.290 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2024-02-04 11:18:34.290 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2024-02-04 11:18:34.290 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2024-02-04 11:18:34.290 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2024-02-04 11:18:34.641 +08:00 [INF] User profile is available. Using 'C:\Users\liaozb\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 11:23:04.119 +08:00 [INF] Starting APIJSON.NET.Host.
+2024-02-04 11:23:05.977 +08:00 [INF] Loaded ABP modules:
+2024-02-04 11:23:05.978 +08:00 [INF] - APIJSON.NET.AppModule
+2024-02-04 11:23:05.978 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2024-02-04 11:23:05.978 +08:00 [INF]     - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2024-02-04 11:23:05.978 +08:00 [INF]       - Volo.Abp.Auditing.AbpAuditingModule
+2024-02-04 11:23:05.978 +08:00 [INF]         - Volo.Abp.Data.AbpDataModule
+2024-02-04 11:23:05.978 +08:00 [INF]           - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2024-02-04 11:23:05.978 +08:00 [INF]             - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2024-02-04 11:23:05.978 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2024-02-04 11:23:05.978 +08:00 [INF]           - Volo.Abp.Uow.AbpUnitOfWorkModule
+2024-02-04 11:23:05.978 +08:00 [INF]           - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2024-02-04 11:23:05.978 +08:00 [INF]         - Volo.Abp.Json.AbpJsonModule
+2024-02-04 11:23:05.978 +08:00 [INF]           - Volo.Abp.Json.SystemTextJson.AbpJsonSystemTextJsonModule
+2024-02-04 11:23:05.978 +08:00 [INF]             - Volo.Abp.Json.AbpJsonAbstractionsModule
+2024-02-04 11:23:05.978 +08:00 [INF]             - Volo.Abp.Timing.AbpTimingModule
+2024-02-04 11:23:05.978 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2024-02-04 11:23:05.978 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2024-02-04 11:23:05.978 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2024-02-04 11:23:05.978 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2024-02-04 11:23:05.978 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2024-02-04 11:23:05.978 +08:00 [INF]         - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2024-02-04 11:23:05.978 +08:00 [INF]           - Volo.Abp.MultiTenancy.AbpMultiTenancyAbstractionsModule
+2024-02-04 11:23:05.978 +08:00 [INF]         - Volo.Abp.Auditing.AbpAuditingContractsModule
+2024-02-04 11:23:05.978 +08:00 [INF]       - Volo.Abp.Http.AbpHttpModule
+2024-02-04 11:23:05.978 +08:00 [INF]         - Volo.Abp.Http.AbpHttpAbstractionsModule
+2024-02-04 11:23:05.978 +08:00 [INF]         - Volo.Abp.Minify.AbpMinifyModule
+2024-02-04 11:23:05.978 +08:00 [INF]       - Volo.Abp.Authorization.AbpAuthorizationModule
+2024-02-04 11:23:05.978 +08:00 [INF]         - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2024-02-04 11:23:05.978 +08:00 [INF]       - Volo.Abp.Validation.AbpValidationModule
+2024-02-04 11:23:05.978 +08:00 [INF]       - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2024-02-04 11:23:05.978 +08:00 [INF]     - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2024-02-04 11:23:05.978 +08:00 [INF]     - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2024-02-04 11:23:05.978 +08:00 [INF]       - Volo.Abp.Application.AbpDddApplicationContractsModule
+2024-02-04 11:23:05.978 +08:00 [INF]     - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2024-02-04 11:23:05.978 +08:00 [INF]       - Volo.Abp.UI.AbpUiModule
+2024-02-04 11:23:05.978 +08:00 [INF]     - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2024-02-04 11:23:05.978 +08:00 [INF]     - Volo.Abp.Application.AbpDddApplicationModule
+2024-02-04 11:23:05.978 +08:00 [INF]       - Volo.Abp.Domain.AbpDddDomainModule
+2024-02-04 11:23:05.978 +08:00 [INF]         - Volo.Abp.EventBus.AbpEventBusModule
+2024-02-04 11:23:05.978 +08:00 [INF]           - Volo.Abp.Guids.AbpGuidsModule
+2024-02-04 11:23:05.978 +08:00 [INF]           - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2024-02-04 11:23:05.978 +08:00 [INF]           - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2024-02-04 11:23:05.978 +08:00 [INF]         - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2024-02-04 11:23:05.978 +08:00 [INF]         - Volo.Abp.Specifications.AbpSpecificationsModule
+2024-02-04 11:23:05.978 +08:00 [INF]         - Volo.Abp.Caching.AbpCachingModule
+2024-02-04 11:23:05.978 +08:00 [INF]           - Volo.Abp.Serialization.AbpSerializationModule
+2024-02-04 11:23:05.978 +08:00 [INF]         - Volo.Abp.Domain.AbpDddDomainSharedModule
+2024-02-04 11:23:05.978 +08:00 [INF]       - Volo.Abp.Features.AbpFeaturesModule
+2024-02-04 11:23:05.978 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2024-02-04 11:23:05.978 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2024-02-04 11:23:05.978 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2024-02-04 11:23:05.978 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2024-02-04 11:23:06.289 +08:00 [INF] User profile is available. Using 'C:\Users\liaozb\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 11:24:23.469 +08:00 [INF] Starting APIJSON.NET.Host.
+2024-02-04 11:24:25.014 +08:00 [INF] Loaded ABP modules:
+2024-02-04 11:24:25.015 +08:00 [INF] - APIJSON.NET.AppModule
+2024-02-04 11:24:25.015 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2024-02-04 11:24:25.015 +08:00 [INF]     - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2024-02-04 11:24:25.015 +08:00 [INF]       - Volo.Abp.Auditing.AbpAuditingModule
+2024-02-04 11:24:25.015 +08:00 [INF]         - Volo.Abp.Data.AbpDataModule
+2024-02-04 11:24:25.015 +08:00 [INF]           - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2024-02-04 11:24:25.015 +08:00 [INF]             - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2024-02-04 11:24:25.015 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2024-02-04 11:24:25.015 +08:00 [INF]           - Volo.Abp.Uow.AbpUnitOfWorkModule
+2024-02-04 11:24:25.015 +08:00 [INF]           - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2024-02-04 11:24:25.015 +08:00 [INF]         - Volo.Abp.Json.AbpJsonModule
+2024-02-04 11:24:25.015 +08:00 [INF]           - Volo.Abp.Json.SystemTextJson.AbpJsonSystemTextJsonModule
+2024-02-04 11:24:25.015 +08:00 [INF]             - Volo.Abp.Json.AbpJsonAbstractionsModule
+2024-02-04 11:24:25.015 +08:00 [INF]             - Volo.Abp.Timing.AbpTimingModule
+2024-02-04 11:24:25.015 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2024-02-04 11:24:25.015 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2024-02-04 11:24:25.015 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2024-02-04 11:24:25.015 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2024-02-04 11:24:25.015 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2024-02-04 11:24:25.015 +08:00 [INF]         - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2024-02-04 11:24:25.015 +08:00 [INF]           - Volo.Abp.MultiTenancy.AbpMultiTenancyAbstractionsModule
+2024-02-04 11:24:25.015 +08:00 [INF]         - Volo.Abp.Auditing.AbpAuditingContractsModule
+2024-02-04 11:24:25.015 +08:00 [INF]       - Volo.Abp.Http.AbpHttpModule
+2024-02-04 11:24:25.015 +08:00 [INF]         - Volo.Abp.Http.AbpHttpAbstractionsModule
+2024-02-04 11:24:25.015 +08:00 [INF]         - Volo.Abp.Minify.AbpMinifyModule
+2024-02-04 11:24:25.015 +08:00 [INF]       - Volo.Abp.Authorization.AbpAuthorizationModule
+2024-02-04 11:24:25.015 +08:00 [INF]         - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2024-02-04 11:24:25.015 +08:00 [INF]       - Volo.Abp.Validation.AbpValidationModule
+2024-02-04 11:24:25.015 +08:00 [INF]       - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2024-02-04 11:24:25.015 +08:00 [INF]     - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2024-02-04 11:24:25.015 +08:00 [INF]     - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2024-02-04 11:24:25.015 +08:00 [INF]       - Volo.Abp.Application.AbpDddApplicationContractsModule
+2024-02-04 11:24:25.015 +08:00 [INF]     - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2024-02-04 11:24:25.015 +08:00 [INF]       - Volo.Abp.UI.AbpUiModule
+2024-02-04 11:24:25.015 +08:00 [INF]     - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2024-02-04 11:24:25.015 +08:00 [INF]     - Volo.Abp.Application.AbpDddApplicationModule
+2024-02-04 11:24:25.015 +08:00 [INF]       - Volo.Abp.Domain.AbpDddDomainModule
+2024-02-04 11:24:25.015 +08:00 [INF]         - Volo.Abp.EventBus.AbpEventBusModule
+2024-02-04 11:24:25.015 +08:00 [INF]           - Volo.Abp.Guids.AbpGuidsModule
+2024-02-04 11:24:25.015 +08:00 [INF]           - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2024-02-04 11:24:25.015 +08:00 [INF]           - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2024-02-04 11:24:25.015 +08:00 [INF]         - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2024-02-04 11:24:25.015 +08:00 [INF]         - Volo.Abp.Specifications.AbpSpecificationsModule
+2024-02-04 11:24:25.015 +08:00 [INF]         - Volo.Abp.Caching.AbpCachingModule
+2024-02-04 11:24:25.015 +08:00 [INF]           - Volo.Abp.Serialization.AbpSerializationModule
+2024-02-04 11:24:25.015 +08:00 [INF]         - Volo.Abp.Domain.AbpDddDomainSharedModule
+2024-02-04 11:24:25.015 +08:00 [INF]       - Volo.Abp.Features.AbpFeaturesModule
+2024-02-04 11:24:25.015 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2024-02-04 11:24:25.015 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2024-02-04 11:24:25.015 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2024-02-04 11:24:25.015 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2024-02-04 11:24:25.330 +08:00 [INF] User profile is available. Using 'C:\Users\liaozb\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 11:27:00.865 +08:00 [INF] Starting APIJSON.NET.Host.
+2024-02-04 11:27:02.613 +08:00 [INF] Loaded ABP modules:
+2024-02-04 11:27:02.614 +08:00 [INF] - APIJSON.NET.AppModule
+2024-02-04 11:27:02.614 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2024-02-04 11:27:02.614 +08:00 [INF]     - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2024-02-04 11:27:02.614 +08:00 [INF]       - Volo.Abp.Auditing.AbpAuditingModule
+2024-02-04 11:27:02.614 +08:00 [INF]         - Volo.Abp.Data.AbpDataModule
+2024-02-04 11:27:02.614 +08:00 [INF]           - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2024-02-04 11:27:02.614 +08:00 [INF]             - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2024-02-04 11:27:02.614 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2024-02-04 11:27:02.614 +08:00 [INF]           - Volo.Abp.Uow.AbpUnitOfWorkModule
+2024-02-04 11:27:02.614 +08:00 [INF]           - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2024-02-04 11:27:02.614 +08:00 [INF]         - Volo.Abp.Json.AbpJsonModule
+2024-02-04 11:27:02.614 +08:00 [INF]           - Volo.Abp.Json.SystemTextJson.AbpJsonSystemTextJsonModule
+2024-02-04 11:27:02.614 +08:00 [INF]             - Volo.Abp.Json.AbpJsonAbstractionsModule
+2024-02-04 11:27:02.614 +08:00 [INF]             - Volo.Abp.Timing.AbpTimingModule
+2024-02-04 11:27:02.614 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2024-02-04 11:27:02.614 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2024-02-04 11:27:02.614 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2024-02-04 11:27:02.614 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2024-02-04 11:27:02.614 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2024-02-04 11:27:02.614 +08:00 [INF]         - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2024-02-04 11:27:02.614 +08:00 [INF]           - Volo.Abp.MultiTenancy.AbpMultiTenancyAbstractionsModule
+2024-02-04 11:27:02.614 +08:00 [INF]         - Volo.Abp.Auditing.AbpAuditingContractsModule
+2024-02-04 11:27:02.614 +08:00 [INF]       - Volo.Abp.Http.AbpHttpModule
+2024-02-04 11:27:02.614 +08:00 [INF]         - Volo.Abp.Http.AbpHttpAbstractionsModule
+2024-02-04 11:27:02.614 +08:00 [INF]         - Volo.Abp.Minify.AbpMinifyModule
+2024-02-04 11:27:02.614 +08:00 [INF]       - Volo.Abp.Authorization.AbpAuthorizationModule
+2024-02-04 11:27:02.614 +08:00 [INF]         - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2024-02-04 11:27:02.614 +08:00 [INF]       - Volo.Abp.Validation.AbpValidationModule
+2024-02-04 11:27:02.614 +08:00 [INF]       - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2024-02-04 11:27:02.614 +08:00 [INF]     - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2024-02-04 11:27:02.614 +08:00 [INF]     - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2024-02-04 11:27:02.614 +08:00 [INF]       - Volo.Abp.Application.AbpDddApplicationContractsModule
+2024-02-04 11:27:02.614 +08:00 [INF]     - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2024-02-04 11:27:02.614 +08:00 [INF]       - Volo.Abp.UI.AbpUiModule
+2024-02-04 11:27:02.614 +08:00 [INF]     - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2024-02-04 11:27:02.614 +08:00 [INF]     - Volo.Abp.Application.AbpDddApplicationModule
+2024-02-04 11:27:02.614 +08:00 [INF]       - Volo.Abp.Domain.AbpDddDomainModule
+2024-02-04 11:27:02.614 +08:00 [INF]         - Volo.Abp.EventBus.AbpEventBusModule
+2024-02-04 11:27:02.614 +08:00 [INF]           - Volo.Abp.Guids.AbpGuidsModule
+2024-02-04 11:27:02.614 +08:00 [INF]           - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2024-02-04 11:27:02.614 +08:00 [INF]           - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2024-02-04 11:27:02.614 +08:00 [INF]         - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2024-02-04 11:27:02.614 +08:00 [INF]         - Volo.Abp.Specifications.AbpSpecificationsModule
+2024-02-04 11:27:02.614 +08:00 [INF]         - Volo.Abp.Caching.AbpCachingModule
+2024-02-04 11:27:02.614 +08:00 [INF]           - Volo.Abp.Serialization.AbpSerializationModule
+2024-02-04 11:27:02.614 +08:00 [INF]         - Volo.Abp.Domain.AbpDddDomainSharedModule
+2024-02-04 11:27:02.614 +08:00 [INF]       - Volo.Abp.Features.AbpFeaturesModule
+2024-02-04 11:27:02.614 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2024-02-04 11:27:02.614 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2024-02-04 11:27:02.614 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2024-02-04 11:27:02.614 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2024-02-04 11:27:02.894 +08:00 [INF] User profile is available. Using 'C:\Users\liaozb\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 11:28:15.811 +08:00 [INF] Starting APIJSON.NET.Host.
+2024-02-04 11:28:17.591 +08:00 [INF] Loaded ABP modules:
+2024-02-04 11:28:17.592 +08:00 [INF] - APIJSON.NET.AppModule
+2024-02-04 11:28:17.592 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2024-02-04 11:28:17.592 +08:00 [INF]     - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2024-02-04 11:28:17.592 +08:00 [INF]       - Volo.Abp.Auditing.AbpAuditingModule
+2024-02-04 11:28:17.592 +08:00 [INF]         - Volo.Abp.Data.AbpDataModule
+2024-02-04 11:28:17.592 +08:00 [INF]           - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2024-02-04 11:28:17.592 +08:00 [INF]             - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2024-02-04 11:28:17.592 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2024-02-04 11:28:17.592 +08:00 [INF]           - Volo.Abp.Uow.AbpUnitOfWorkModule
+2024-02-04 11:28:17.592 +08:00 [INF]           - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2024-02-04 11:28:17.592 +08:00 [INF]         - Volo.Abp.Json.AbpJsonModule
+2024-02-04 11:28:17.592 +08:00 [INF]           - Volo.Abp.Json.SystemTextJson.AbpJsonSystemTextJsonModule
+2024-02-04 11:28:17.592 +08:00 [INF]             - Volo.Abp.Json.AbpJsonAbstractionsModule
+2024-02-04 11:28:17.592 +08:00 [INF]             - Volo.Abp.Timing.AbpTimingModule
+2024-02-04 11:28:17.592 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2024-02-04 11:28:17.592 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2024-02-04 11:28:17.592 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2024-02-04 11:28:17.592 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2024-02-04 11:28:17.592 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2024-02-04 11:28:17.592 +08:00 [INF]         - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2024-02-04 11:28:17.592 +08:00 [INF]           - Volo.Abp.MultiTenancy.AbpMultiTenancyAbstractionsModule
+2024-02-04 11:28:17.592 +08:00 [INF]         - Volo.Abp.Auditing.AbpAuditingContractsModule
+2024-02-04 11:28:17.592 +08:00 [INF]       - Volo.Abp.Http.AbpHttpModule
+2024-02-04 11:28:17.592 +08:00 [INF]         - Volo.Abp.Http.AbpHttpAbstractionsModule
+2024-02-04 11:28:17.592 +08:00 [INF]         - Volo.Abp.Minify.AbpMinifyModule
+2024-02-04 11:28:17.592 +08:00 [INF]       - Volo.Abp.Authorization.AbpAuthorizationModule
+2024-02-04 11:28:17.592 +08:00 [INF]         - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2024-02-04 11:28:17.592 +08:00 [INF]       - Volo.Abp.Validation.AbpValidationModule
+2024-02-04 11:28:17.592 +08:00 [INF]       - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2024-02-04 11:28:17.592 +08:00 [INF]     - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2024-02-04 11:28:17.592 +08:00 [INF]     - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2024-02-04 11:28:17.592 +08:00 [INF]       - Volo.Abp.Application.AbpDddApplicationContractsModule
+2024-02-04 11:28:17.592 +08:00 [INF]     - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2024-02-04 11:28:17.592 +08:00 [INF]       - Volo.Abp.UI.AbpUiModule
+2024-02-04 11:28:17.592 +08:00 [INF]     - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2024-02-04 11:28:17.592 +08:00 [INF]     - Volo.Abp.Application.AbpDddApplicationModule
+2024-02-04 11:28:17.592 +08:00 [INF]       - Volo.Abp.Domain.AbpDddDomainModule
+2024-02-04 11:28:17.592 +08:00 [INF]         - Volo.Abp.EventBus.AbpEventBusModule
+2024-02-04 11:28:17.592 +08:00 [INF]           - Volo.Abp.Guids.AbpGuidsModule
+2024-02-04 11:28:17.592 +08:00 [INF]           - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2024-02-04 11:28:17.592 +08:00 [INF]           - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2024-02-04 11:28:17.592 +08:00 [INF]         - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2024-02-04 11:28:17.592 +08:00 [INF]         - Volo.Abp.Specifications.AbpSpecificationsModule
+2024-02-04 11:28:17.592 +08:00 [INF]         - Volo.Abp.Caching.AbpCachingModule
+2024-02-04 11:28:17.592 +08:00 [INF]           - Volo.Abp.Serialization.AbpSerializationModule
+2024-02-04 11:28:17.592 +08:00 [INF]         - Volo.Abp.Domain.AbpDddDomainSharedModule
+2024-02-04 11:28:17.592 +08:00 [INF]       - Volo.Abp.Features.AbpFeaturesModule
+2024-02-04 11:28:17.592 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2024-02-04 11:28:17.592 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2024-02-04 11:28:17.592 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2024-02-04 11:28:17.592 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2024-02-04 11:28:17.865 +08:00 [INF] User profile is available. Using 'C:\Users\liaozb\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 11:28:20.705 +08:00 [INF] Initialized all ABP modules.
+2024-02-04 11:28:20.873 +08:00 [INF] Unable to bind to https://localhost:49796 on the IPv4 loopback interface: '以一种访问权限不允许的方式做了一个访问套接字的尝试。'.
+2024-02-04 11:28:20.874 +08:00 [INF] Unable to bind to https://localhost:49796 on the IPv6 loopback interface: '以一种访问权限不允许的方式做了一个访问套接字的尝试。'.
+2024-02-04 11:28:20.881 +08:00 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address https://localhost:49796.
+ ---> System.AggregateException: One or more errors occurred. (以一种访问权限不允许的方式做了一个访问套接字的尝试。) (以一种访问权限不允许的方式做了一个访问套接字的尝试。)
+ ---> System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+ ---> (Inner Exception #1) System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)<---
+
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at APIJSON.NET.Program.Main(String[] args) in E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\Program.cs:line 36
+2024-02-04 11:28:20.910 +08:00 [FTL] Host terminated unexpectedly!
+System.IO.IOException: Failed to bind to address https://localhost:49796.
+ ---> System.AggregateException: One or more errors occurred. (以一种访问权限不允许的方式做了一个访问套接字的尝试。) (以一种访问权限不允许的方式做了一个访问套接字的尝试。)
+ ---> System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+ ---> (Inner Exception #1) System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)<---
+
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at APIJSON.NET.Program.Main(String[] args) in E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\Program.cs:line 36
+2024-02-04 12:33:07.600 +08:00 [INF] Starting APIJSON.NET.Host.
+2024-02-04 12:33:09.298 +08:00 [INF] Loaded ABP modules:
+2024-02-04 12:33:09.299 +08:00 [INF] - APIJSON.NET.AppModule
+2024-02-04 12:33:09.299 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2024-02-04 12:33:09.299 +08:00 [INF]     - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2024-02-04 12:33:09.299 +08:00 [INF]       - Volo.Abp.Auditing.AbpAuditingModule
+2024-02-04 12:33:09.299 +08:00 [INF]         - Volo.Abp.Data.AbpDataModule
+2024-02-04 12:33:09.299 +08:00 [INF]           - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2024-02-04 12:33:09.299 +08:00 [INF]             - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2024-02-04 12:33:09.299 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2024-02-04 12:33:09.299 +08:00 [INF]           - Volo.Abp.Uow.AbpUnitOfWorkModule
+2024-02-04 12:33:09.299 +08:00 [INF]           - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2024-02-04 12:33:09.299 +08:00 [INF]         - Volo.Abp.Json.AbpJsonModule
+2024-02-04 12:33:09.299 +08:00 [INF]           - Volo.Abp.Json.SystemTextJson.AbpJsonSystemTextJsonModule
+2024-02-04 12:33:09.299 +08:00 [INF]             - Volo.Abp.Json.AbpJsonAbstractionsModule
+2024-02-04 12:33:09.299 +08:00 [INF]             - Volo.Abp.Timing.AbpTimingModule
+2024-02-04 12:33:09.299 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2024-02-04 12:33:09.299 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2024-02-04 12:33:09.299 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2024-02-04 12:33:09.299 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2024-02-04 12:33:09.299 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2024-02-04 12:33:09.299 +08:00 [INF]         - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2024-02-04 12:33:09.299 +08:00 [INF]           - Volo.Abp.MultiTenancy.AbpMultiTenancyAbstractionsModule
+2024-02-04 12:33:09.299 +08:00 [INF]         - Volo.Abp.Auditing.AbpAuditingContractsModule
+2024-02-04 12:33:09.299 +08:00 [INF]       - Volo.Abp.Http.AbpHttpModule
+2024-02-04 12:33:09.299 +08:00 [INF]         - Volo.Abp.Http.AbpHttpAbstractionsModule
+2024-02-04 12:33:09.299 +08:00 [INF]         - Volo.Abp.Minify.AbpMinifyModule
+2024-02-04 12:33:09.299 +08:00 [INF]       - Volo.Abp.Authorization.AbpAuthorizationModule
+2024-02-04 12:33:09.299 +08:00 [INF]         - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2024-02-04 12:33:09.299 +08:00 [INF]       - Volo.Abp.Validation.AbpValidationModule
+2024-02-04 12:33:09.299 +08:00 [INF]       - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2024-02-04 12:33:09.299 +08:00 [INF]     - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2024-02-04 12:33:09.299 +08:00 [INF]     - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2024-02-04 12:33:09.299 +08:00 [INF]       - Volo.Abp.Application.AbpDddApplicationContractsModule
+2024-02-04 12:33:09.299 +08:00 [INF]     - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2024-02-04 12:33:09.299 +08:00 [INF]       - Volo.Abp.UI.AbpUiModule
+2024-02-04 12:33:09.299 +08:00 [INF]     - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2024-02-04 12:33:09.299 +08:00 [INF]     - Volo.Abp.Application.AbpDddApplicationModule
+2024-02-04 12:33:09.299 +08:00 [INF]       - Volo.Abp.Domain.AbpDddDomainModule
+2024-02-04 12:33:09.299 +08:00 [INF]         - Volo.Abp.EventBus.AbpEventBusModule
+2024-02-04 12:33:09.299 +08:00 [INF]           - Volo.Abp.Guids.AbpGuidsModule
+2024-02-04 12:33:09.299 +08:00 [INF]           - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2024-02-04 12:33:09.299 +08:00 [INF]           - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2024-02-04 12:33:09.299 +08:00 [INF]         - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2024-02-04 12:33:09.299 +08:00 [INF]         - Volo.Abp.Specifications.AbpSpecificationsModule
+2024-02-04 12:33:09.299 +08:00 [INF]         - Volo.Abp.Caching.AbpCachingModule
+2024-02-04 12:33:09.299 +08:00 [INF]           - Volo.Abp.Serialization.AbpSerializationModule
+2024-02-04 12:33:09.299 +08:00 [INF]         - Volo.Abp.Domain.AbpDddDomainSharedModule
+2024-02-04 12:33:09.299 +08:00 [INF]       - Volo.Abp.Features.AbpFeaturesModule
+2024-02-04 12:33:09.299 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2024-02-04 12:33:09.299 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2024-02-04 12:33:09.299 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2024-02-04 12:33:09.299 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2024-02-04 12:33:09.576 +08:00 [INF] User profile is available. Using 'C:\Users\liaozb\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 12:33:10.388 +08:00 [INF] Initialized all ABP modules.
+2024-02-04 12:33:10.527 +08:00 [INF] Unable to bind to https://localhost:49796 on the IPv4 loopback interface: '以一种访问权限不允许的方式做了一个访问套接字的尝试。'.
+2024-02-04 12:33:10.529 +08:00 [INF] Unable to bind to https://localhost:49796 on the IPv6 loopback interface: '以一种访问权限不允许的方式做了一个访问套接字的尝试。'.
+2024-02-04 12:33:10.536 +08:00 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address https://localhost:49796.
+ ---> System.AggregateException: One or more errors occurred. (以一种访问权限不允许的方式做了一个访问套接字的尝试。) (以一种访问权限不允许的方式做了一个访问套接字的尝试。)
+ ---> System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+ ---> (Inner Exception #1) System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)<---
+
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at APIJSON.NET.Program.Main(String[] args) in E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\Program.cs:line 36
+2024-02-04 12:33:10.562 +08:00 [FTL] Host terminated unexpectedly!
+System.IO.IOException: Failed to bind to address https://localhost:49796.
+ ---> System.AggregateException: One or more errors occurred. (以一种访问权限不允许的方式做了一个访问套接字的尝试。) (以一种访问权限不允许的方式做了一个访问套接字的尝试。)
+ ---> System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+ ---> (Inner Exception #1) System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)<---
+
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at APIJSON.NET.Program.Main(String[] args) in E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\Program.cs:line 36
+2024-02-04 12:34:34.568 +08:00 [INF] Starting APIJSON.NET.Host.
+2024-02-04 12:34:36.444 +08:00 [INF] Loaded ABP modules:
+2024-02-04 12:34:36.444 +08:00 [INF] - APIJSON.NET.AppModule
+2024-02-04 12:34:36.445 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2024-02-04 12:34:36.445 +08:00 [INF]     - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2024-02-04 12:34:36.445 +08:00 [INF]       - Volo.Abp.Auditing.AbpAuditingModule
+2024-02-04 12:34:36.445 +08:00 [INF]         - Volo.Abp.Data.AbpDataModule
+2024-02-04 12:34:36.445 +08:00 [INF]           - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2024-02-04 12:34:36.445 +08:00 [INF]             - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2024-02-04 12:34:36.445 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2024-02-04 12:34:36.445 +08:00 [INF]           - Volo.Abp.Uow.AbpUnitOfWorkModule
+2024-02-04 12:34:36.445 +08:00 [INF]           - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2024-02-04 12:34:36.445 +08:00 [INF]         - Volo.Abp.Json.AbpJsonModule
+2024-02-04 12:34:36.445 +08:00 [INF]           - Volo.Abp.Json.SystemTextJson.AbpJsonSystemTextJsonModule
+2024-02-04 12:34:36.445 +08:00 [INF]             - Volo.Abp.Json.AbpJsonAbstractionsModule
+2024-02-04 12:34:36.445 +08:00 [INF]             - Volo.Abp.Timing.AbpTimingModule
+2024-02-04 12:34:36.445 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2024-02-04 12:34:36.445 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2024-02-04 12:34:36.445 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2024-02-04 12:34:36.445 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2024-02-04 12:34:36.445 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2024-02-04 12:34:36.445 +08:00 [INF]         - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2024-02-04 12:34:36.445 +08:00 [INF]           - Volo.Abp.MultiTenancy.AbpMultiTenancyAbstractionsModule
+2024-02-04 12:34:36.445 +08:00 [INF]         - Volo.Abp.Auditing.AbpAuditingContractsModule
+2024-02-04 12:34:36.445 +08:00 [INF]       - Volo.Abp.Http.AbpHttpModule
+2024-02-04 12:34:36.445 +08:00 [INF]         - Volo.Abp.Http.AbpHttpAbstractionsModule
+2024-02-04 12:34:36.445 +08:00 [INF]         - Volo.Abp.Minify.AbpMinifyModule
+2024-02-04 12:34:36.445 +08:00 [INF]       - Volo.Abp.Authorization.AbpAuthorizationModule
+2024-02-04 12:34:36.445 +08:00 [INF]         - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2024-02-04 12:34:36.445 +08:00 [INF]       - Volo.Abp.Validation.AbpValidationModule
+2024-02-04 12:34:36.445 +08:00 [INF]       - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2024-02-04 12:34:36.445 +08:00 [INF]     - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2024-02-04 12:34:36.445 +08:00 [INF]     - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2024-02-04 12:34:36.445 +08:00 [INF]       - Volo.Abp.Application.AbpDddApplicationContractsModule
+2024-02-04 12:34:36.445 +08:00 [INF]     - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2024-02-04 12:34:36.445 +08:00 [INF]       - Volo.Abp.UI.AbpUiModule
+2024-02-04 12:34:36.445 +08:00 [INF]     - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2024-02-04 12:34:36.445 +08:00 [INF]     - Volo.Abp.Application.AbpDddApplicationModule
+2024-02-04 12:34:36.445 +08:00 [INF]       - Volo.Abp.Domain.AbpDddDomainModule
+2024-02-04 12:34:36.445 +08:00 [INF]         - Volo.Abp.EventBus.AbpEventBusModule
+2024-02-04 12:34:36.445 +08:00 [INF]           - Volo.Abp.Guids.AbpGuidsModule
+2024-02-04 12:34:36.445 +08:00 [INF]           - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2024-02-04 12:34:36.445 +08:00 [INF]           - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2024-02-04 12:34:36.445 +08:00 [INF]         - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2024-02-04 12:34:36.445 +08:00 [INF]         - Volo.Abp.Specifications.AbpSpecificationsModule
+2024-02-04 12:34:36.445 +08:00 [INF]         - Volo.Abp.Caching.AbpCachingModule
+2024-02-04 12:34:36.445 +08:00 [INF]           - Volo.Abp.Serialization.AbpSerializationModule
+2024-02-04 12:34:36.445 +08:00 [INF]         - Volo.Abp.Domain.AbpDddDomainSharedModule
+2024-02-04 12:34:36.445 +08:00 [INF]       - Volo.Abp.Features.AbpFeaturesModule
+2024-02-04 12:34:36.445 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2024-02-04 12:34:36.445 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2024-02-04 12:34:36.445 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2024-02-04 12:34:36.445 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2024-02-04 12:34:36.735 +08:00 [INF] User profile is available. Using 'C:\Users\liaozb\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 12:34:37.549 +08:00 [INF] Initialized all ABP modules.
+2024-02-04 12:34:37.667 +08:00 [INF] Unable to bind to https://localhost:49796 on the IPv4 loopback interface: '以一种访问权限不允许的方式做了一个访问套接字的尝试。'.
+2024-02-04 12:34:37.668 +08:00 [INF] Unable to bind to https://localhost:49796 on the IPv6 loopback interface: '以一种访问权限不允许的方式做了一个访问套接字的尝试。'.
+2024-02-04 12:34:37.674 +08:00 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address https://localhost:49796.
+ ---> System.AggregateException: One or more errors occurred. (以一种访问权限不允许的方式做了一个访问套接字的尝试。) (以一种访问权限不允许的方式做了一个访问套接字的尝试。)
+ ---> System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+ ---> (Inner Exception #1) System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)<---
+
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at APIJSON.NET.Program.Main(String[] args) in E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\Program.cs:line 36
+2024-02-04 12:34:37.703 +08:00 [FTL] Host terminated unexpectedly!
+System.IO.IOException: Failed to bind to address https://localhost:49796.
+ ---> System.AggregateException: One or more errors occurred. (以一种访问权限不允许的方式做了一个访问套接字的尝试。) (以一种访问权限不允许的方式做了一个访问套接字的尝试。)
+ ---> System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+ ---> (Inner Exception #1) System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)<---
+
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at APIJSON.NET.Program.Main(String[] args) in E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\Program.cs:line 36
+2024-02-04 12:36:06.186 +08:00 [INF] Starting APIJSON.NET.Host.
+2024-02-04 12:36:07.838 +08:00 [INF] Loaded ABP modules:
+2024-02-04 12:36:07.839 +08:00 [INF] - APIJSON.NET.AppModule
+2024-02-04 12:36:07.839 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2024-02-04 12:36:07.839 +08:00 [INF]     - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2024-02-04 12:36:07.839 +08:00 [INF]       - Volo.Abp.Auditing.AbpAuditingModule
+2024-02-04 12:36:07.839 +08:00 [INF]         - Volo.Abp.Data.AbpDataModule
+2024-02-04 12:36:07.839 +08:00 [INF]           - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2024-02-04 12:36:07.839 +08:00 [INF]             - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2024-02-04 12:36:07.839 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2024-02-04 12:36:07.839 +08:00 [INF]           - Volo.Abp.Uow.AbpUnitOfWorkModule
+2024-02-04 12:36:07.839 +08:00 [INF]           - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2024-02-04 12:36:07.839 +08:00 [INF]         - Volo.Abp.Json.AbpJsonModule
+2024-02-04 12:36:07.839 +08:00 [INF]           - Volo.Abp.Json.SystemTextJson.AbpJsonSystemTextJsonModule
+2024-02-04 12:36:07.839 +08:00 [INF]             - Volo.Abp.Json.AbpJsonAbstractionsModule
+2024-02-04 12:36:07.839 +08:00 [INF]             - Volo.Abp.Timing.AbpTimingModule
+2024-02-04 12:36:07.839 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2024-02-04 12:36:07.839 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2024-02-04 12:36:07.839 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2024-02-04 12:36:07.839 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2024-02-04 12:36:07.839 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2024-02-04 12:36:07.839 +08:00 [INF]         - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2024-02-04 12:36:07.839 +08:00 [INF]           - Volo.Abp.MultiTenancy.AbpMultiTenancyAbstractionsModule
+2024-02-04 12:36:07.839 +08:00 [INF]         - Volo.Abp.Auditing.AbpAuditingContractsModule
+2024-02-04 12:36:07.839 +08:00 [INF]       - Volo.Abp.Http.AbpHttpModule
+2024-02-04 12:36:07.839 +08:00 [INF]         - Volo.Abp.Http.AbpHttpAbstractionsModule
+2024-02-04 12:36:07.839 +08:00 [INF]         - Volo.Abp.Minify.AbpMinifyModule
+2024-02-04 12:36:07.839 +08:00 [INF]       - Volo.Abp.Authorization.AbpAuthorizationModule
+2024-02-04 12:36:07.839 +08:00 [INF]         - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2024-02-04 12:36:07.839 +08:00 [INF]       - Volo.Abp.Validation.AbpValidationModule
+2024-02-04 12:36:07.839 +08:00 [INF]       - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2024-02-04 12:36:07.839 +08:00 [INF]     - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2024-02-04 12:36:07.839 +08:00 [INF]     - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2024-02-04 12:36:07.839 +08:00 [INF]       - Volo.Abp.Application.AbpDddApplicationContractsModule
+2024-02-04 12:36:07.839 +08:00 [INF]     - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2024-02-04 12:36:07.840 +08:00 [INF]       - Volo.Abp.UI.AbpUiModule
+2024-02-04 12:36:07.840 +08:00 [INF]     - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2024-02-04 12:36:07.840 +08:00 [INF]     - Volo.Abp.Application.AbpDddApplicationModule
+2024-02-04 12:36:07.840 +08:00 [INF]       - Volo.Abp.Domain.AbpDddDomainModule
+2024-02-04 12:36:07.840 +08:00 [INF]         - Volo.Abp.EventBus.AbpEventBusModule
+2024-02-04 12:36:07.840 +08:00 [INF]           - Volo.Abp.Guids.AbpGuidsModule
+2024-02-04 12:36:07.840 +08:00 [INF]           - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2024-02-04 12:36:07.840 +08:00 [INF]           - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2024-02-04 12:36:07.840 +08:00 [INF]         - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2024-02-04 12:36:07.840 +08:00 [INF]         - Volo.Abp.Specifications.AbpSpecificationsModule
+2024-02-04 12:36:07.840 +08:00 [INF]         - Volo.Abp.Caching.AbpCachingModule
+2024-02-04 12:36:07.840 +08:00 [INF]           - Volo.Abp.Serialization.AbpSerializationModule
+2024-02-04 12:36:07.840 +08:00 [INF]         - Volo.Abp.Domain.AbpDddDomainSharedModule
+2024-02-04 12:36:07.840 +08:00 [INF]       - Volo.Abp.Features.AbpFeaturesModule
+2024-02-04 12:36:07.840 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2024-02-04 12:36:07.840 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2024-02-04 12:36:07.840 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2024-02-04 12:36:07.840 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2024-02-04 12:36:08.113 +08:00 [INF] User profile is available. Using 'C:\Users\liaozb\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 12:36:08.881 +08:00 [INF] Initialized all ABP modules.
+2024-02-04 12:36:08.991 +08:00 [INF] Unable to bind to https://localhost:49796 on the IPv4 loopback interface: '以一种访问权限不允许的方式做了一个访问套接字的尝试。'.
+2024-02-04 12:36:08.992 +08:00 [INF] Unable to bind to https://localhost:49796 on the IPv6 loopback interface: '以一种访问权限不允许的方式做了一个访问套接字的尝试。'.
+2024-02-04 12:36:08.997 +08:00 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address https://localhost:49796.
+ ---> System.AggregateException: One or more errors occurred. (以一种访问权限不允许的方式做了一个访问套接字的尝试。) (以一种访问权限不允许的方式做了一个访问套接字的尝试。)
+ ---> System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+ ---> (Inner Exception #1) System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)<---
+
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at APIJSON.NET.Program.Main(String[] args) in E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\Program.cs:line 36
+2024-02-04 12:36:09.024 +08:00 [FTL] Host terminated unexpectedly!
+System.IO.IOException: Failed to bind to address https://localhost:49796.
+ ---> System.AggregateException: One or more errors occurred. (以一种访问权限不允许的方式做了一个访问套接字的尝试。) (以一种访问权限不允许的方式做了一个访问套接字的尝试。)
+ ---> System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+ ---> (Inner Exception #1) System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)<---
+
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at APIJSON.NET.Program.Main(String[] args) in E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\Program.cs:line 36
+2024-02-04 12:36:28.324 +08:00 [INF] Starting APIJSON.NET.Host.
+2024-02-04 12:36:30.059 +08:00 [INF] Loaded ABP modules:
+2024-02-04 12:36:30.060 +08:00 [INF] - APIJSON.NET.AppModule
+2024-02-04 12:36:30.060 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2024-02-04 12:36:30.060 +08:00 [INF]     - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2024-02-04 12:36:30.060 +08:00 [INF]       - Volo.Abp.Auditing.AbpAuditingModule
+2024-02-04 12:36:30.060 +08:00 [INF]         - Volo.Abp.Data.AbpDataModule
+2024-02-04 12:36:30.060 +08:00 [INF]           - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2024-02-04 12:36:30.060 +08:00 [INF]             - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2024-02-04 12:36:30.060 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2024-02-04 12:36:30.060 +08:00 [INF]           - Volo.Abp.Uow.AbpUnitOfWorkModule
+2024-02-04 12:36:30.060 +08:00 [INF]           - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2024-02-04 12:36:30.060 +08:00 [INF]         - Volo.Abp.Json.AbpJsonModule
+2024-02-04 12:36:30.060 +08:00 [INF]           - Volo.Abp.Json.SystemTextJson.AbpJsonSystemTextJsonModule
+2024-02-04 12:36:30.060 +08:00 [INF]             - Volo.Abp.Json.AbpJsonAbstractionsModule
+2024-02-04 12:36:30.060 +08:00 [INF]             - Volo.Abp.Timing.AbpTimingModule
+2024-02-04 12:36:30.060 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2024-02-04 12:36:30.060 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2024-02-04 12:36:30.060 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2024-02-04 12:36:30.060 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2024-02-04 12:36:30.060 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2024-02-04 12:36:30.060 +08:00 [INF]         - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2024-02-04 12:36:30.060 +08:00 [INF]           - Volo.Abp.MultiTenancy.AbpMultiTenancyAbstractionsModule
+2024-02-04 12:36:30.060 +08:00 [INF]         - Volo.Abp.Auditing.AbpAuditingContractsModule
+2024-02-04 12:36:30.060 +08:00 [INF]       - Volo.Abp.Http.AbpHttpModule
+2024-02-04 12:36:30.060 +08:00 [INF]         - Volo.Abp.Http.AbpHttpAbstractionsModule
+2024-02-04 12:36:30.060 +08:00 [INF]         - Volo.Abp.Minify.AbpMinifyModule
+2024-02-04 12:36:30.060 +08:00 [INF]       - Volo.Abp.Authorization.AbpAuthorizationModule
+2024-02-04 12:36:30.060 +08:00 [INF]         - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2024-02-04 12:36:30.060 +08:00 [INF]       - Volo.Abp.Validation.AbpValidationModule
+2024-02-04 12:36:30.060 +08:00 [INF]       - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2024-02-04 12:36:30.060 +08:00 [INF]     - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2024-02-04 12:36:30.060 +08:00 [INF]     - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2024-02-04 12:36:30.060 +08:00 [INF]       - Volo.Abp.Application.AbpDddApplicationContractsModule
+2024-02-04 12:36:30.060 +08:00 [INF]     - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2024-02-04 12:36:30.060 +08:00 [INF]       - Volo.Abp.UI.AbpUiModule
+2024-02-04 12:36:30.060 +08:00 [INF]     - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2024-02-04 12:36:30.060 +08:00 [INF]     - Volo.Abp.Application.AbpDddApplicationModule
+2024-02-04 12:36:30.060 +08:00 [INF]       - Volo.Abp.Domain.AbpDddDomainModule
+2024-02-04 12:36:30.060 +08:00 [INF]         - Volo.Abp.EventBus.AbpEventBusModule
+2024-02-04 12:36:30.060 +08:00 [INF]           - Volo.Abp.Guids.AbpGuidsModule
+2024-02-04 12:36:30.060 +08:00 [INF]           - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2024-02-04 12:36:30.060 +08:00 [INF]           - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2024-02-04 12:36:30.060 +08:00 [INF]         - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2024-02-04 12:36:30.060 +08:00 [INF]         - Volo.Abp.Specifications.AbpSpecificationsModule
+2024-02-04 12:36:30.060 +08:00 [INF]         - Volo.Abp.Caching.AbpCachingModule
+2024-02-04 12:36:30.060 +08:00 [INF]           - Volo.Abp.Serialization.AbpSerializationModule
+2024-02-04 12:36:30.060 +08:00 [INF]         - Volo.Abp.Domain.AbpDddDomainSharedModule
+2024-02-04 12:36:30.060 +08:00 [INF]       - Volo.Abp.Features.AbpFeaturesModule
+2024-02-04 12:36:30.060 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2024-02-04 12:36:30.060 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2024-02-04 12:36:30.060 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2024-02-04 12:36:30.060 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2024-02-04 12:36:30.329 +08:00 [INF] User profile is available. Using 'C:\Users\liaozb\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 12:36:31.096 +08:00 [INF] Initialized all ABP modules.
+2024-02-04 12:36:31.208 +08:00 [INF] Unable to bind to https://localhost:49786 on the IPv4 loopback interface: '以一种访问权限不允许的方式做了一个访问套接字的尝试。'.
+2024-02-04 12:36:31.208 +08:00 [INF] Unable to bind to https://localhost:49786 on the IPv6 loopback interface: '以一种访问权限不允许的方式做了一个访问套接字的尝试。'.
+2024-02-04 12:36:31.215 +08:00 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address https://localhost:49786.
+ ---> System.AggregateException: One or more errors occurred. (以一种访问权限不允许的方式做了一个访问套接字的尝试。) (以一种访问权限不允许的方式做了一个访问套接字的尝试。)
+ ---> System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+ ---> (Inner Exception #1) System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)<---
+
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at APIJSON.NET.Program.Main(String[] args) in E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\Program.cs:line 36
+2024-02-04 12:36:31.245 +08:00 [FTL] Host terminated unexpectedly!
+System.IO.IOException: Failed to bind to address https://localhost:49786.
+ ---> System.AggregateException: One or more errors occurred. (以一种访问权限不允许的方式做了一个访问套接字的尝试。) (以一种访问权限不允许的方式做了一个访问套接字的尝试。)
+ ---> System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+ ---> (Inner Exception #1) System.Net.Sockets.SocketException (10013): 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)<---
+
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at APIJSON.NET.Program.Main(String[] args) in E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\Program.cs:line 36
+2024-02-04 13:24:01.883 +08:00 [INF] Starting APIJSON.NET.Host.
+2024-02-04 13:24:03.930 +08:00 [INF] Loaded ABP modules:
+2024-02-04 13:24:03.930 +08:00 [INF] - APIJSON.NET.AppModule
+2024-02-04 13:24:03.930 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2024-02-04 13:24:03.930 +08:00 [INF]     - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2024-02-04 13:24:03.930 +08:00 [INF]       - Volo.Abp.Auditing.AbpAuditingModule
+2024-02-04 13:24:03.930 +08:00 [INF]         - Volo.Abp.Data.AbpDataModule
+2024-02-04 13:24:03.930 +08:00 [INF]           - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2024-02-04 13:24:03.930 +08:00 [INF]             - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2024-02-04 13:24:03.930 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2024-02-04 13:24:03.930 +08:00 [INF]           - Volo.Abp.Uow.AbpUnitOfWorkModule
+2024-02-04 13:24:03.930 +08:00 [INF]           - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2024-02-04 13:24:03.930 +08:00 [INF]         - Volo.Abp.Json.AbpJsonModule
+2024-02-04 13:24:03.930 +08:00 [INF]           - Volo.Abp.Json.SystemTextJson.AbpJsonSystemTextJsonModule
+2024-02-04 13:24:03.930 +08:00 [INF]             - Volo.Abp.Json.AbpJsonAbstractionsModule
+2024-02-04 13:24:03.930 +08:00 [INF]             - Volo.Abp.Timing.AbpTimingModule
+2024-02-04 13:24:03.930 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2024-02-04 13:24:03.930 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2024-02-04 13:24:03.930 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2024-02-04 13:24:03.930 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2024-02-04 13:24:03.930 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2024-02-04 13:24:03.930 +08:00 [INF]         - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2024-02-04 13:24:03.930 +08:00 [INF]           - Volo.Abp.MultiTenancy.AbpMultiTenancyAbstractionsModule
+2024-02-04 13:24:03.930 +08:00 [INF]         - Volo.Abp.Auditing.AbpAuditingContractsModule
+2024-02-04 13:24:03.930 +08:00 [INF]       - Volo.Abp.Http.AbpHttpModule
+2024-02-04 13:24:03.930 +08:00 [INF]         - Volo.Abp.Http.AbpHttpAbstractionsModule
+2024-02-04 13:24:03.931 +08:00 [INF]         - Volo.Abp.Minify.AbpMinifyModule
+2024-02-04 13:24:03.931 +08:00 [INF]       - Volo.Abp.Authorization.AbpAuthorizationModule
+2024-02-04 13:24:03.931 +08:00 [INF]         - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2024-02-04 13:24:03.931 +08:00 [INF]       - Volo.Abp.Validation.AbpValidationModule
+2024-02-04 13:24:03.931 +08:00 [INF]       - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2024-02-04 13:24:03.931 +08:00 [INF]     - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2024-02-04 13:24:03.931 +08:00 [INF]     - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2024-02-04 13:24:03.931 +08:00 [INF]       - Volo.Abp.Application.AbpDddApplicationContractsModule
+2024-02-04 13:24:03.931 +08:00 [INF]     - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2024-02-04 13:24:03.931 +08:00 [INF]       - Volo.Abp.UI.AbpUiModule
+2024-02-04 13:24:03.931 +08:00 [INF]     - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2024-02-04 13:24:03.931 +08:00 [INF]     - Volo.Abp.Application.AbpDddApplicationModule
+2024-02-04 13:24:03.931 +08:00 [INF]       - Volo.Abp.Domain.AbpDddDomainModule
+2024-02-04 13:24:03.931 +08:00 [INF]         - Volo.Abp.EventBus.AbpEventBusModule
+2024-02-04 13:24:03.931 +08:00 [INF]           - Volo.Abp.Guids.AbpGuidsModule
+2024-02-04 13:24:03.931 +08:00 [INF]           - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2024-02-04 13:24:03.931 +08:00 [INF]           - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2024-02-04 13:24:03.931 +08:00 [INF]         - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2024-02-04 13:24:03.931 +08:00 [INF]         - Volo.Abp.Specifications.AbpSpecificationsModule
+2024-02-04 13:24:03.931 +08:00 [INF]         - Volo.Abp.Caching.AbpCachingModule
+2024-02-04 13:24:03.931 +08:00 [INF]           - Volo.Abp.Serialization.AbpSerializationModule
+2024-02-04 13:24:03.931 +08:00 [INF]         - Volo.Abp.Domain.AbpDddDomainSharedModule
+2024-02-04 13:24:03.931 +08:00 [INF]       - Volo.Abp.Features.AbpFeaturesModule
+2024-02-04 13:24:03.931 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2024-02-04 13:24:03.931 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2024-02-04 13:24:03.931 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2024-02-04 13:24:03.931 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2024-02-04 13:24:04.366 +08:00 [INF] User profile is available. Using 'C:\Users\liaozb\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 13:24:05.279 +08:00 [INF] Initialized all ABP modules.
+2024-02-04 13:24:05.460 +08:00 [INF] Now listening on: https://localhost:42786
+2024-02-04 13:24:05.460 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-04 13:24:05.460 +08:00 [INF] Hosting environment: Development
+2024-02-04 13:24:05.460 +08:00 [INF] Content root path: E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET
+2024-02-04 13:24:09.244 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/ - null null
+2024-02-04 13:24:09.607 +08:00 [INF] Executing endpoint 'APIJSON.NET.Controllers.HomeController.Index (APIJSON.NET)'
+2024-02-04 13:24:09.640 +08:00 [INF] Route matched with {action = "Index", controller = "Home", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller APIJSON.NET.Controllers.HomeController (APIJSON.NET).
+2024-02-04 13:24:09.759 +08:00 [INF] Executing action method APIJSON.NET.Controllers.HomeController.Index (APIJSON.NET) - Validation state: "Valid"
+2024-02-04 13:24:09.762 +08:00 [INF] Executed action method APIJSON.NET.Controllers.HomeController.Index (APIJSON.NET), returned result Microsoft.AspNetCore.Mvc.VirtualFileResult in 0.4545ms.
+2024-02-04 13:24:09.773 +08:00 [INF] Executing VirtualFileResult, sending file './index.html' with download name '' ...
+2024-02-04 13:24:09.808 +08:00 [INF] Executed action APIJSON.NET.Controllers.HomeController.Index (APIJSON.NET) in 165.4196ms
+2024-02-04 13:24:09.809 +08:00 [INF] Executed endpoint 'APIJSON.NET.Controllers.HomeController.Index (APIJSON.NET)'
+2024-02-04 13:24:09.810 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/css/hint.min.css - null null
+2024-02-04 13:24:09.810 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/css/loading.css - null null
+2024-02-04 13:24:09.812 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/css/main.css - null null
+2024-02-04 13:24:09.820 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/js/vue.min.js - null null
+2024-02-04 13:24:09.821 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/js/jquery.js - null null
+2024-02-04 13:24:09.829 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/js/jsonlint.js - null null
+2024-02-04 13:24:09.876 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/js/editor.js - null null
+2024-02-04 13:24:09.876 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/js/parse.js - null null
+2024-02-04 13:24:09.947 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/js/localforage.min.js - null null
+2024-02-04 13:24:09.959 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/js/FileSaver.js - null null
+2024-02-04 13:24:09.974 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/js/helper.js - null null
+2024-02-04 13:24:09.974 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/js/uuid.js - null null
+2024-02-04 13:24:09.974 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/js/main.js - null null
+2024-02-04 13:24:09.974 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/js/clipboard.min.js - null null
+2024-02-04 13:24:09.974 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/_framework/aspnetcore-browser-refresh.js - null null
+2024-02-04 13:24:09.974 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/svg/icon.svg - null null
+2024-02-04 13:24:09.974 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/_vs/browserLink - null null
+2024-02-04 13:24:09.978 +08:00 [INF] Sending file. Request path: '/js/editor.js'. Physical path: 'E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\wwwroot\js\editor.js'
+2024-02-04 13:24:09.978 +08:00 [INF] Sending file. Request path: '/css/loading.css'. Physical path: 'E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\wwwroot\css\loading.css'
+2024-02-04 13:24:09.978 +08:00 [INF] Sending file. Request path: '/js/parse.js'. Physical path: 'E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\wwwroot\js\parse.js'
+2024-02-04 13:24:09.979 +08:00 [INF] Sending file. Request path: '/css/hint.min.css'. Physical path: 'E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\wwwroot\css\hint.min.css'
+2024-02-04 13:24:09.980 +08:00 [INF] Sending file. Request path: '/css/main.css'. Physical path: 'E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\wwwroot\css\main.css'
+2024-02-04 13:24:09.981 +08:00 [INF] Sending file. Request path: '/js/jsonlint.js'. Physical path: 'E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\wwwroot\js\jsonlint.js'
+2024-02-04 13:24:09.981 +08:00 [INF] Sending file. Request path: '/js/FileSaver.js'. Physical path: 'E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\wwwroot\js\FileSaver.js'
+2024-02-04 13:24:09.982 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/css/hint.min.css - 200 9631 text/css 170.5663ms
+2024-02-04 13:24:09.982 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/css/main.css - 200 8617 text/css 169.3931ms
+2024-02-04 13:24:09.982 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/js/FileSaver.js - 200 12533 application/javascript 23.2624ms
+2024-02-04 13:24:09.982 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/js/parse.js - 200 1903 application/javascript 103.4859ms
+2024-02-04 13:24:09.982 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/ - 200 null text/html 741.4393ms
+2024-02-04 13:24:09.982 +08:00 [INF] Sending file. Request path: '/js/helper.js'. Physical path: 'E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\wwwroot\js\helper.js'
+2024-02-04 13:24:09.982 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/css/loading.css - 200 2012 text/css 169.4139ms
+2024-02-04 13:24:09.982 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/js/jsonlint.js - 200 8831 application/javascript 152.9287ms
+2024-02-04 13:24:09.982 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/js/editor.js - 200 964 application/javascript 103.5691ms
+2024-02-04 13:24:09.982 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/js/helper.js - 200 314 application/javascript 8.5496ms
+2024-02-04 13:24:09.985 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 10.8048ms
+2024-02-04 13:24:10.023 +08:00 [INF] Sending file. Request path: '/js/uuid.js'. Physical path: 'E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\wwwroot\js\uuid.js'
+2024-02-04 13:24:10.023 +08:00 [INF] Sending file. Request path: '/js/clipboard.min.js'. Physical path: 'E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\wwwroot\js\clipboard.min.js'
+2024-02-04 13:24:10.023 +08:00 [INF] Sending file. Request path: '/js/localforage.min.js'. Physical path: 'E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\wwwroot\js\localforage.min.js'
+2024-02-04 13:24:10.023 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/js/uuid.js - 200 2332 application/javascript 50.2195ms
+2024-02-04 13:24:10.023 +08:00 [INF] Sending file. Request path: '/js/main.js'. Physical path: 'E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\wwwroot\js\main.js'
+2024-02-04 13:24:10.023 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/js/clipboard.min.js - 200 10923 application/javascript 50.1902ms
+2024-02-04 13:24:10.023 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/js/localforage.min.js - 200 25354 application/javascript 76.9606ms
+2024-02-04 13:24:10.024 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/js/main.js - 200 10840 application/javascript 49.5733ms
+2024-02-04 13:24:10.024 +08:00 [INF] Sending file. Request path: '/svg/icon.svg'. Physical path: 'E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\wwwroot\svg\icon.svg'
+2024-02-04 13:24:10.025 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/svg/icon.svg - 200 16669 image/svg+xml 50.2147ms
+2024-02-04 13:24:10.026 +08:00 [INF] Sending file. Request path: '/js/vue.min.js'. Physical path: 'E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\wwwroot\js\vue.min.js'
+2024-02-04 13:24:10.026 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/js/vue.min.js - 200 72070 application/javascript 206.547ms
+2024-02-04 13:24:10.034 +08:00 [INF] Sending file. Request path: '/js/jquery.js'. Physical path: 'E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET\wwwroot\js\jquery.js'
+2024-02-04 13:24:10.034 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/js/jquery.js - 200 276875 application/javascript 213.8547ms
+2024-02-04 13:24:10.135 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/_vs/browserLink - 200 null text/javascript; charset=UTF-8 160.4953ms
+2024-02-04 13:24:10.149 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/favicon.ico - null null
+2024-02-04 13:24:10.154 +08:00 [INF] Executing endpoint '405 HTTP Method Not Supported'
+2024-02-04 13:24:10.154 +08:00 [INF] Executed endpoint '405 HTTP Method Not Supported'
+2024-02-04 13:24:10.154 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/favicon.ico - 405 0 null 5.4415ms
+2024-02-04 13:24:19.899 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/favicon.ico - null null
+2024-02-04 13:24:19.901 +08:00 [INF] Executing endpoint '405 HTTP Method Not Supported'
+2024-02-04 13:24:19.901 +08:00 [INF] Executed endpoint '405 HTTP Method Not Supported'
+2024-02-04 13:24:19.901 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/favicon.ico - 405 0 null 2.8212ms
+2024-02-04 15:23:50.160 +08:00 [INF] Starting APIJSON.NET.Host.
+2024-02-04 15:23:51.820 +08:00 [INF] Loaded ABP modules:
+2024-02-04 15:23:51.821 +08:00 [INF] - APIJSON.NET.AppModule
+2024-02-04 15:23:51.821 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2024-02-04 15:23:51.821 +08:00 [INF]     - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2024-02-04 15:23:51.821 +08:00 [INF]       - Volo.Abp.Auditing.AbpAuditingModule
+2024-02-04 15:23:51.821 +08:00 [INF]         - Volo.Abp.Data.AbpDataModule
+2024-02-04 15:23:51.821 +08:00 [INF]           - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2024-02-04 15:23:51.821 +08:00 [INF]             - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2024-02-04 15:23:51.821 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2024-02-04 15:23:51.821 +08:00 [INF]           - Volo.Abp.Uow.AbpUnitOfWorkModule
+2024-02-04 15:23:51.821 +08:00 [INF]           - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2024-02-04 15:23:51.821 +08:00 [INF]         - Volo.Abp.Json.AbpJsonModule
+2024-02-04 15:23:51.821 +08:00 [INF]           - Volo.Abp.Json.SystemTextJson.AbpJsonSystemTextJsonModule
+2024-02-04 15:23:51.821 +08:00 [INF]             - Volo.Abp.Json.AbpJsonAbstractionsModule
+2024-02-04 15:23:51.821 +08:00 [INF]             - Volo.Abp.Timing.AbpTimingModule
+2024-02-04 15:23:51.821 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2024-02-04 15:23:51.821 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2024-02-04 15:23:51.821 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2024-02-04 15:23:51.821 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2024-02-04 15:23:51.821 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2024-02-04 15:23:51.821 +08:00 [INF]         - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2024-02-04 15:23:51.821 +08:00 [INF]           - Volo.Abp.MultiTenancy.AbpMultiTenancyAbstractionsModule
+2024-02-04 15:23:51.821 +08:00 [INF]         - Volo.Abp.Auditing.AbpAuditingContractsModule
+2024-02-04 15:23:51.821 +08:00 [INF]       - Volo.Abp.Http.AbpHttpModule
+2024-02-04 15:23:51.821 +08:00 [INF]         - Volo.Abp.Http.AbpHttpAbstractionsModule
+2024-02-04 15:23:51.821 +08:00 [INF]         - Volo.Abp.Minify.AbpMinifyModule
+2024-02-04 15:23:51.821 +08:00 [INF]       - Volo.Abp.Authorization.AbpAuthorizationModule
+2024-02-04 15:23:51.821 +08:00 [INF]         - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2024-02-04 15:23:51.821 +08:00 [INF]       - Volo.Abp.Validation.AbpValidationModule
+2024-02-04 15:23:51.821 +08:00 [INF]       - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2024-02-04 15:23:51.821 +08:00 [INF]     - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2024-02-04 15:23:51.821 +08:00 [INF]     - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2024-02-04 15:23:51.821 +08:00 [INF]       - Volo.Abp.Application.AbpDddApplicationContractsModule
+2024-02-04 15:23:51.821 +08:00 [INF]     - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2024-02-04 15:23:51.821 +08:00 [INF]       - Volo.Abp.UI.AbpUiModule
+2024-02-04 15:23:51.821 +08:00 [INF]     - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2024-02-04 15:23:51.821 +08:00 [INF]     - Volo.Abp.Application.AbpDddApplicationModule
+2024-02-04 15:23:51.821 +08:00 [INF]       - Volo.Abp.Domain.AbpDddDomainModule
+2024-02-04 15:23:51.821 +08:00 [INF]         - Volo.Abp.EventBus.AbpEventBusModule
+2024-02-04 15:23:51.821 +08:00 [INF]           - Volo.Abp.Guids.AbpGuidsModule
+2024-02-04 15:23:51.821 +08:00 [INF]           - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2024-02-04 15:23:51.821 +08:00 [INF]           - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2024-02-04 15:23:51.821 +08:00 [INF]         - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2024-02-04 15:23:51.821 +08:00 [INF]         - Volo.Abp.Specifications.AbpSpecificationsModule
+2024-02-04 15:23:51.821 +08:00 [INF]         - Volo.Abp.Caching.AbpCachingModule
+2024-02-04 15:23:51.821 +08:00 [INF]           - Volo.Abp.Serialization.AbpSerializationModule
+2024-02-04 15:23:51.821 +08:00 [INF]         - Volo.Abp.Domain.AbpDddDomainSharedModule
+2024-02-04 15:23:51.821 +08:00 [INF]       - Volo.Abp.Features.AbpFeaturesModule
+2024-02-04 15:23:51.821 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2024-02-04 15:23:51.821 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2024-02-04 15:23:51.821 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2024-02-04 15:23:51.821 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2024-02-04 15:23:52.130 +08:00 [INF] User profile is available. Using 'C:\Users\liaozb\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 15:24:59.065 +08:00 [INF] Starting APIJSON.NET.Host.
+2024-02-04 15:25:00.673 +08:00 [INF] Loaded ABP modules:
+2024-02-04 15:25:00.673 +08:00 [INF] - APIJSON.NET.AppModule
+2024-02-04 15:25:00.673 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2024-02-04 15:25:00.673 +08:00 [INF]     - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2024-02-04 15:25:00.673 +08:00 [INF]       - Volo.Abp.Auditing.AbpAuditingModule
+2024-02-04 15:25:00.673 +08:00 [INF]         - Volo.Abp.Data.AbpDataModule
+2024-02-04 15:25:00.673 +08:00 [INF]           - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2024-02-04 15:25:00.673 +08:00 [INF]             - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2024-02-04 15:25:00.673 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2024-02-04 15:25:00.673 +08:00 [INF]           - Volo.Abp.Uow.AbpUnitOfWorkModule
+2024-02-04 15:25:00.673 +08:00 [INF]           - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2024-02-04 15:25:00.673 +08:00 [INF]         - Volo.Abp.Json.AbpJsonModule
+2024-02-04 15:25:00.673 +08:00 [INF]           - Volo.Abp.Json.SystemTextJson.AbpJsonSystemTextJsonModule
+2024-02-04 15:25:00.673 +08:00 [INF]             - Volo.Abp.Json.AbpJsonAbstractionsModule
+2024-02-04 15:25:00.673 +08:00 [INF]             - Volo.Abp.Timing.AbpTimingModule
+2024-02-04 15:25:00.673 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2024-02-04 15:25:00.673 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2024-02-04 15:25:00.673 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2024-02-04 15:25:00.673 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2024-02-04 15:25:00.673 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2024-02-04 15:25:00.673 +08:00 [INF]         - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2024-02-04 15:25:00.673 +08:00 [INF]           - Volo.Abp.MultiTenancy.AbpMultiTenancyAbstractionsModule
+2024-02-04 15:25:00.673 +08:00 [INF]         - Volo.Abp.Auditing.AbpAuditingContractsModule
+2024-02-04 15:25:00.673 +08:00 [INF]       - Volo.Abp.Http.AbpHttpModule
+2024-02-04 15:25:00.673 +08:00 [INF]         - Volo.Abp.Http.AbpHttpAbstractionsModule
+2024-02-04 15:25:00.673 +08:00 [INF]         - Volo.Abp.Minify.AbpMinifyModule
+2024-02-04 15:25:00.674 +08:00 [INF]       - Volo.Abp.Authorization.AbpAuthorizationModule
+2024-02-04 15:25:00.674 +08:00 [INF]         - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2024-02-04 15:25:00.674 +08:00 [INF]       - Volo.Abp.Validation.AbpValidationModule
+2024-02-04 15:25:00.674 +08:00 [INF]       - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2024-02-04 15:25:00.674 +08:00 [INF]     - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2024-02-04 15:25:00.674 +08:00 [INF]     - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2024-02-04 15:25:00.674 +08:00 [INF]       - Volo.Abp.Application.AbpDddApplicationContractsModule
+2024-02-04 15:25:00.674 +08:00 [INF]     - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2024-02-04 15:25:00.674 +08:00 [INF]       - Volo.Abp.UI.AbpUiModule
+2024-02-04 15:25:00.674 +08:00 [INF]     - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2024-02-04 15:25:00.674 +08:00 [INF]     - Volo.Abp.Application.AbpDddApplicationModule
+2024-02-04 15:25:00.674 +08:00 [INF]       - Volo.Abp.Domain.AbpDddDomainModule
+2024-02-04 15:25:00.674 +08:00 [INF]         - Volo.Abp.EventBus.AbpEventBusModule
+2024-02-04 15:25:00.674 +08:00 [INF]           - Volo.Abp.Guids.AbpGuidsModule
+2024-02-04 15:25:00.674 +08:00 [INF]           - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2024-02-04 15:25:00.674 +08:00 [INF]           - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2024-02-04 15:25:00.674 +08:00 [INF]         - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2024-02-04 15:25:00.674 +08:00 [INF]         - Volo.Abp.Specifications.AbpSpecificationsModule
+2024-02-04 15:25:00.674 +08:00 [INF]         - Volo.Abp.Caching.AbpCachingModule
+2024-02-04 15:25:00.674 +08:00 [INF]           - Volo.Abp.Serialization.AbpSerializationModule
+2024-02-04 15:25:00.674 +08:00 [INF]         - Volo.Abp.Domain.AbpDddDomainSharedModule
+2024-02-04 15:25:00.674 +08:00 [INF]       - Volo.Abp.Features.AbpFeaturesModule
+2024-02-04 15:25:00.674 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2024-02-04 15:25:00.674 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2024-02-04 15:25:00.674 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2024-02-04 15:25:00.674 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2024-02-04 15:25:00.674 +08:00 [INF]   - APIJSON.NET.SqlSugar.ApiJsonNetDataModule
+2024-02-04 15:25:00.989 +08:00 [INF] User profile is available. Using 'C:\Users\liaozb\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 15:25:01.767 +08:00 [INF] Initialized all ABP modules.
+2024-02-04 15:25:01.886 +08:00 [INF] Now listening on: https://localhost:42786
+2024-02-04 15:25:01.886 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-04 15:25:01.886 +08:00 [INF] Hosting environment: Development
+2024-02-04 15:25:01.886 +08:00 [INF] Content root path: E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET
+2024-02-04 15:25:12.932 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/_framework/aspnetcore-browser-refresh.js - null null
+2024-02-04 15:25:12.932 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/_vs/browserLink - null null
+2024-02-04 15:25:12.956 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 23.8275ms
+2024-02-04 15:25:12.990 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/_vs/browserLink - 200 null text/javascript; charset=UTF-8 61.6177ms
+2024-02-04 15:25:13.027 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/favicon.ico - null null
+2024-02-04 15:25:13.145 +08:00 [INF] Executing endpoint '405 HTTP Method Not Supported'
+2024-02-04 15:25:13.145 +08:00 [INF] Executed endpoint '405 HTTP Method Not Supported'
+2024-02-04 15:25:13.148 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/favicon.ico - 405 0 null 121.7504ms
+2024-02-04 15:47:22.194 +08:00 [INF] Starting APIJSON.NET.Host.
+2024-02-04 15:47:24.493 +08:00 [INF] Loaded ABP modules:
+2024-02-04 15:47:24.494 +08:00 [INF] - APIJSON.NET.AppModule
+2024-02-04 15:47:24.494 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2024-02-04 15:47:24.494 +08:00 [INF]     - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2024-02-04 15:47:24.494 +08:00 [INF]       - Volo.Abp.Auditing.AbpAuditingModule
+2024-02-04 15:47:24.494 +08:00 [INF]         - Volo.Abp.Data.AbpDataModule
+2024-02-04 15:47:24.494 +08:00 [INF]           - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2024-02-04 15:47:24.494 +08:00 [INF]             - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2024-02-04 15:47:24.494 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2024-02-04 15:47:24.494 +08:00 [INF]           - Volo.Abp.Uow.AbpUnitOfWorkModule
+2024-02-04 15:47:24.494 +08:00 [INF]           - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2024-02-04 15:47:24.494 +08:00 [INF]         - Volo.Abp.Json.AbpJsonModule
+2024-02-04 15:47:24.494 +08:00 [INF]           - Volo.Abp.Json.SystemTextJson.AbpJsonSystemTextJsonModule
+2024-02-04 15:47:24.494 +08:00 [INF]             - Volo.Abp.Json.AbpJsonAbstractionsModule
+2024-02-04 15:47:24.494 +08:00 [INF]             - Volo.Abp.Timing.AbpTimingModule
+2024-02-04 15:47:24.494 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2024-02-04 15:47:24.494 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2024-02-04 15:47:24.494 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2024-02-04 15:47:24.494 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2024-02-04 15:47:24.494 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2024-02-04 15:47:24.494 +08:00 [INF]         - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2024-02-04 15:47:24.494 +08:00 [INF]           - Volo.Abp.MultiTenancy.AbpMultiTenancyAbstractionsModule
+2024-02-04 15:47:24.494 +08:00 [INF]         - Volo.Abp.Auditing.AbpAuditingContractsModule
+2024-02-04 15:47:24.494 +08:00 [INF]       - Volo.Abp.Http.AbpHttpModule
+2024-02-04 15:47:24.494 +08:00 [INF]         - Volo.Abp.Http.AbpHttpAbstractionsModule
+2024-02-04 15:47:24.494 +08:00 [INF]         - Volo.Abp.Minify.AbpMinifyModule
+2024-02-04 15:47:24.494 +08:00 [INF]       - Volo.Abp.Authorization.AbpAuthorizationModule
+2024-02-04 15:47:24.494 +08:00 [INF]         - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2024-02-04 15:47:24.494 +08:00 [INF]       - Volo.Abp.Validation.AbpValidationModule
+2024-02-04 15:47:24.494 +08:00 [INF]       - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2024-02-04 15:47:24.494 +08:00 [INF]     - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2024-02-04 15:47:24.494 +08:00 [INF]     - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2024-02-04 15:47:24.494 +08:00 [INF]       - Volo.Abp.Application.AbpDddApplicationContractsModule
+2024-02-04 15:47:24.494 +08:00 [INF]     - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2024-02-04 15:47:24.494 +08:00 [INF]       - Volo.Abp.UI.AbpUiModule
+2024-02-04 15:47:24.494 +08:00 [INF]     - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2024-02-04 15:47:24.494 +08:00 [INF]     - Volo.Abp.Application.AbpDddApplicationModule
+2024-02-04 15:47:24.494 +08:00 [INF]       - Volo.Abp.Domain.AbpDddDomainModule
+2024-02-04 15:47:24.494 +08:00 [INF]         - Volo.Abp.EventBus.AbpEventBusModule
+2024-02-04 15:47:24.494 +08:00 [INF]           - Volo.Abp.Guids.AbpGuidsModule
+2024-02-04 15:47:24.494 +08:00 [INF]           - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2024-02-04 15:47:24.494 +08:00 [INF]           - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2024-02-04 15:47:24.494 +08:00 [INF]         - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2024-02-04 15:47:24.494 +08:00 [INF]         - Volo.Abp.Specifications.AbpSpecificationsModule
+2024-02-04 15:47:24.494 +08:00 [INF]         - Volo.Abp.Caching.AbpCachingModule
+2024-02-04 15:47:24.494 +08:00 [INF]           - Volo.Abp.Serialization.AbpSerializationModule
+2024-02-04 15:47:24.494 +08:00 [INF]         - Volo.Abp.Domain.AbpDddDomainSharedModule
+2024-02-04 15:47:24.494 +08:00 [INF]       - Volo.Abp.Features.AbpFeaturesModule
+2024-02-04 15:47:24.494 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2024-02-04 15:47:24.495 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2024-02-04 15:47:24.495 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2024-02-04 15:47:24.495 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2024-02-04 15:47:24.495 +08:00 [INF]   - APIJSON.Data.ApiJsonNetDataModule
+2024-02-04 15:47:24.780 +08:00 [INF] User profile is available. Using 'C:\Users\liaozb\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 15:47:25.532 +08:00 [INF] Initialized all ABP modules.
+2024-02-04 15:47:25.651 +08:00 [INF] Now listening on: https://localhost:42786
+2024-02-04 15:47:25.651 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-04 15:47:25.652 +08:00 [INF] Hosting environment: Development
+2024-02-04 15:47:25.652 +08:00 [INF] Content root path: E:\Github\APIJSON.NET\APIJSON.NET\APIJSON.NET
+2024-02-04 15:47:32.943 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/_framework/aspnetcore-browser-refresh.js - null null
+2024-02-04 15:47:32.943 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/_vs/browserLink - null null
+2024-02-04 15:47:32.968 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 29.0063ms
+2024-02-04 15:47:33.000 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/_vs/browserLink - 200 null text/javascript; charset=UTF-8 61.8765ms
+2024-02-04 15:47:33.025 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/favicon.ico - null null
+2024-02-04 15:47:33.138 +08:00 [INF] Executing endpoint '405 HTTP Method Not Supported'
+2024-02-04 15:47:33.139 +08:00 [INF] Executed endpoint '405 HTTP Method Not Supported'
+2024-02-04 15:47:33.142 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/favicon.ico - 405 0 null 116.8573ms
+2024-02-04 15:47:39.867 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/swagger - null null
+2024-02-04 15:47:40.108 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/swagger - 301 0 null 240.6922ms
+2024-02-04 15:47:40.111 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/swagger/index.html - null null
+2024-02-04 15:47:40.191 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/swagger/index.html - 200 null text/html;charset=utf-8 79.9549ms
+2024-02-04 15:47:40.197 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/swagger/swagger-ui.css - null null
+2024-02-04 15:47:40.200 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/swagger/swagger-ui-bundle.js - null null
+2024-02-04 15:47:40.200 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/swagger/ui/abp.swagger.js - null null
+2024-02-04 15:47:40.200 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/swagger/ui/abp.js - null null
+2024-02-04 15:47:40.200 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/_framework/aspnetcore-browser-refresh.js - null null
+2024-02-04 15:47:40.200 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/swagger/swagger-ui-standalone-preset.js - null null
+2024-02-04 15:47:40.209 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 8.3443ms
+2024-02-04 15:47:40.236 +08:00 [INF] Sending file. Request path: '/swagger/ui/abp.js'. Physical path: 'N/A'
+2024-02-04 15:47:40.237 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/swagger/ui/abp.js - 200 3122 application/javascript 36.343ms
+2024-02-04 15:47:40.245 +08:00 [INF] Sending file. Request path: '/swagger/ui/abp.swagger.js'. Physical path: 'N/A'
+2024-02-04 15:47:40.247 +08:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2024-02-04 15:47:40.251 +08:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2024-02-04 15:47:40.253 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/swagger/swagger-ui.css - 200 144929 text/css 56.0193ms
+2024-02-04 15:47:40.253 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/swagger/ui/abp.swagger.js - 200 4375 application/javascript 53.1194ms
+2024-02-04 15:47:40.253 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/swagger/swagger-ui-standalone-preset.js - 200 312163 text/javascript 52.6814ms
+2024-02-04 15:47:40.262 +08:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2024-02-04 15:47:40.262 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/_vs/browserLink - null null
+2024-02-04 15:47:40.263 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/swagger/swagger-ui-bundle.js - 200 1061536 text/javascript 62.882ms
+2024-02-04 15:47:40.281 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/_vs/browserLink - 200 null text/javascript; charset=UTF-8 18.3651ms
+2024-02-04 15:47:40.394 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/api/abp/application-configuration - null null
+2024-02-04 15:47:40.396 +08:00 [INF] Executing endpoint 'Volo.Abp.AspNetCore.Mvc.ApplicationConfigurations.AbpApplicationConfigurationController.GetAsync (Volo.Abp.AspNetCore.Mvc)'
+2024-02-04 15:47:40.417 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/swagger/v1/swagger.json - null null
+2024-02-04 15:47:40.425 +08:00 [INF] Request starting HTTP/2 GET https://localhost:42786/swagger/favicon-32x32.png - null null
+2024-02-04 15:47:40.426 +08:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2024-02-04 15:47:40.427 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/swagger/favicon-32x32.png - 200 628 image/png 1.9458ms
+2024-02-04 15:47:40.445 +08:00 [INF] Route matched with {area = "abp", action = "Get", controller = "AbpApplicationConfiguration"}. Executing controller action with signature System.Threading.Tasks.Task`1[Volo.Abp.AspNetCore.Mvc.ApplicationConfigurations.ApplicationConfigurationDto] GetAsync(Volo.Abp.AspNetCore.Mvc.ApplicationConfigurations.ApplicationConfigurationRequestOptions) on controller Volo.Abp.AspNetCore.Mvc.ApplicationConfigurations.AbpApplicationConfigurationController (Volo.Abp.AspNetCore.Mvc).
+2024-02-04 15:47:40.539 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 121.9611ms
+2024-02-04 15:47:40.588 +08:00 [INF] Executing action method Volo.Abp.AspNetCore.Mvc.ApplicationConfigurations.AbpApplicationConfigurationController.GetAsync (Volo.Abp.AspNetCore.Mvc) - Validation state: "Valid"
+2024-02-04 15:47:40.639 +08:00 [DBG] Executing AbpApplicationConfigurationAppService.GetAsync()...
+2024-02-04 15:47:40.800 +08:00 [DBG] Executed AbpApplicationConfigurationAppService.GetAsync().
+2024-02-04 15:47:40.804 +08:00 [INF] Executed action method Volo.Abp.AspNetCore.Mvc.ApplicationConfigurations.AbpApplicationConfigurationController.GetAsync (Volo.Abp.AspNetCore.Mvc), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 213.9227ms.
+2024-02-04 15:47:40.812 +08:00 [INF] Executing ObjectResult, writing value of type 'Volo.Abp.AspNetCore.Mvc.ApplicationConfigurations.ApplicationConfigurationDto'.
+2024-02-04 15:47:40.844 +08:00 [INF] Executed action Volo.Abp.AspNetCore.Mvc.ApplicationConfigurations.AbpApplicationConfigurationController.GetAsync (Volo.Abp.AspNetCore.Mvc) in 395.6075ms
+2024-02-04 15:47:40.845 +08:00 [INF] Executed endpoint 'Volo.Abp.AspNetCore.Mvc.ApplicationConfigurations.AbpApplicationConfigurationController.GetAsync (Volo.Abp.AspNetCore.Mvc)'
+2024-02-04 15:47:40.845 +08:00 [INF] Request finished HTTP/2 GET https://localhost:42786/api/abp/application-configuration - 200 null application/json; charset=utf-8 451.1174ms

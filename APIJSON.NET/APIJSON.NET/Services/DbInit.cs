@@ -1,20 +1,27 @@
-﻿using APIJSON.NET.Data.Models;
+﻿using APIJSON.Data;
+using APIJSON.Data.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Text;
-namespace APIJSON.NET
+
+namespace APIJSON.NET.Data;
+
+public static class DbInit
 {
-    public static class DbInit
+    /// <summary>
+    /// 初始化用户表和数据
+    /// </summary>
+    /// <param name="app"></param>
+    public static void Initialize(IApplicationBuilder app)
     {
-        public static void Initialize(IApplicationBuilder app)
+        using (var scope = app.ApplicationServices.CreateScope())
         {
-            var db = app.ApplicationServices.GetRequiredService<DbContext>();
+            var db = scope.ServiceProvider.GetRequiredService<DbContext>();
 
             db.Db.CodeFirst.InitTables(typeof(Login));
-            if (!db.LoginDb.IsAny(it=>it.userId>0))
+            if (!db.LoginDb.IsAny(it => it.userId > 0))
             {
                 var ds = new List<Login>();
 
@@ -22,7 +29,7 @@ namespace APIJSON.NET
                 {
                     var d = new Login();
                     d.userId = i;
-                    d.userName = "admin"+i.ToString();
+                    d.userName = "admin" + i.ToString();
                     d.passWordSalt = Guid.NewGuid().ToString();
                     d.passWord = SimpleStringCipher.Instance.Encrypt("123456", null, Encoding.ASCII.GetBytes(d.passWordSalt));
                     d.roleCode = "role1";
@@ -32,7 +39,8 @@ namespace APIJSON.NET
 
 
             }
-            
         }
+
+
     }
 }

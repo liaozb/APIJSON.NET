@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+	 <TargetFramework>net8.0</TargetFramework>
     <Version>0.0.11</Version>
     <Description>
 		0.0.11 升级sqlSugarCore版本 解决如果查找字段是关键字(例如:key)时出错的问题
@@ -20,13 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspectCore.Extensions.Reflection" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
-    <PackageReference Include="sqlSugarCore" Version="5.0.9.1" />
+    <PackageReference Include="AspectCore.Extensions.Reflection" Version="2.4.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.1" />
+    <PackageReference Include="sqlSugarCore" Version="5.1.4.140" />
+	<PackageReference Include="Volo.Abp.Autofac" Version="8.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
+
 
 </Project>

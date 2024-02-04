@@ -1,4 +1,5 @@
-﻿using APIJSON.NET.Models;
+﻿using APIJSON.Data;
+using APIJSON.Data.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using System;
@@ -7,13 +8,14 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Volo.Abp.DependencyInjection;
 
 namespace APIJSON.NET.Services
 {
     /// <summary>
     /// 
     /// </summary>
-    public class IdentityService : IIdentityService
+    public class IdentityService : IIdentityService,ITransientDependency
     {
         private IHttpContextAccessor _context;
         private List<Role> roles;

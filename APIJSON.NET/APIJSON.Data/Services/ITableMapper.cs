@@ -1,5 +1,5 @@
-﻿namespace APIJSON.NET.Services
-{
+﻿namespace APIJSON.Data;
+
     public interface ITableMapper
     {
         /// <summary>
@@ -9,4 +9,4 @@
         /// <returns></returns>
           string GetTableName(string oldname);
     }
-}
+

@@ -1,54 +1,55 @@
 ﻿using RestSharp;
 using System;
-using System.Text.RegularExpressions;
+ 
 
-namespace APIJSON.NET.Test
+namespace APIJSON.NET.Test;
+
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            var client = new RestClient("http://localhost:5000/");
+        var client = new RestClient("http://localhost:5000/");
 
-            var login = new RestRequest("token", Method.POST);
-            login.AddJsonBody(new TokenInput() { username = "admin1", password = "123456" });
-            IRestResponse<TokenData> token = client.Execute<TokenData>(login);
+        var login = new RestRequest("token");
+        login.Method= Method.Post;
+        login.AddJsonBody(new TokenInput() { username = "admin1", password = "123456" });
+        var token = client.Post<TokenData>(login);
 
-            Console.WriteLine(token.Data.data.AccessToken);
+        Console.WriteLine(token.data.AccessToken);
 
-            var request = new RestRequest("get", Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-            request.AddHeader("Authorization", "Bearer " + token.Data.data.AccessToken);
-            request.AddJsonBody(@"{
+        var request = new RestRequest("get");
+        request.Method = Method.Post;
+        request.AddHeader("Content-Type", "application/json");
+        request.AddHeader("Authorization", "Bearer " + token.data.AccessToken);
+        request.AddJsonBody(@"{
                             'User': {
                                 'id': 38710
                             }
                         }
                         ");
-            IRestResponse response = client.Execute(request);
-            Console.WriteLine(response.Content);
- 
-       
+        var response = client.Execute(request);
+        Console.WriteLine(response.Content);
+
+   
 
 
-            Console.ReadLine();
-        }
+        Console.ReadLine();
     }
-    public class TokenInput
-    {
-        public string username { get; set; }
-        public string password { get; set; }
-    }
-    public class TokenData
-    {
-        public AuthenticateResultModel data { get; set; }
-    }
-    public class AuthenticateResultModel
-    {
-        public string AccessToken { get; set; }
+}
+public class TokenInput
+{
+    public string username { get; set; }
+    public string password { get; set; }
+}
+public class TokenData
+{
+    public AuthenticateResultModel data { get; set; }
+}
+public class AuthenticateResultModel
+{
+    public string AccessToken { get; set; }
 
-        public int ExpireInSeconds { get; set; }
+    public int ExpireInSeconds { get; set; }
 
 
-    }
 }
