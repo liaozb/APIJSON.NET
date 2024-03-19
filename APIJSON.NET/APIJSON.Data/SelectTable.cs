@@ -140,7 +140,7 @@ public class SelectTable
             {
                 ExecFunc(resultObj, item);
             }
-            else if (key.Equals("total@"))
+            else if (key.Equals("total@")|| key.Equals("total"))
             {
                 resultObj.Add("total", total);
             }
@@ -196,7 +196,7 @@ public class SelectTable
             {
                 ExecFunc(resultObj, item);
             }
-            else if (key.Equals("total@"))
+            else if (key.Equals("total@")|| key.Equals("total"))
             {
                 resultObj.Add("total", total);
             }
@@ -534,6 +534,11 @@ public class SelectTable
                         throw new Exception("别名不能超过20个字符");
                     }
                     str.Append(ziduan[0] + " as `" + ReplaceSQLChar(ziduan[1]) + "`,");
+                }
+                //不对函数加``,解决sum(*),Count(1)等不能使用的问题
+                else if (ziduan[0].Contains('('))
+                {
+                    str.Append(ziduan[0] + ",");
                 }
                 else
                     str.Append("`" + ziduan[0] + "`" + ",");
